@@ -1,0 +1,31 @@
+.carousel {
+    position: relative;
+    
+    box-sizing: border-box;
+    padding: var(--gap);
+    overflow: auto;
+}
+.content {
+    --gap: clamp(0.4rem, 1vw, 1rem);
+    // for poster
+    --height: clamp(
+        100px,
+        calc((33vw / var(--aspect-ratio)) - var(--gap) * 2 - 10px),
+        350px
+    );
+    position: relative;
+    display: flex;
+    gap: var(--gap);
+    padding: var(--gap) 0;
+    width: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    //scroll-behavior: smooth;
+    @media (pointer: coarse) {
+        scroll-snap-type: x mandatory;
+    }
+
+    > * {
+        flex: none;
+    }
+}

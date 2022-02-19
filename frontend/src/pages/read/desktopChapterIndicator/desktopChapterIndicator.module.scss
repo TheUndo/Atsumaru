@@ -1,0 +1,18 @@
+.desktopChapterIndicator {
+    position: absolute;
+    bottom: 0.5rem;
+    transition: all 0.25s ease-in-out;
+    will-change: bottom;
+    left: 0.5rem;
+    display: flex;
+    align-items: center;
+    background: var(--button-bg);
+    border-radius: 0.3em;
+    &.desktopChapterIndicatorShifted {
+        bottom: calc(100% - 20px);
+    }
+    &.desktopChapterHidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+}

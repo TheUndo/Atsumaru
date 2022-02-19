@@ -1,0 +1,33 @@
+{
+  "name": "atsumaru-frontend",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --skipLibCheck && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@types/body-scroll-lock": "^3.1.0",
+    "body-scroll-lock": "^4.0.0-beta.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.1",
+    "react-use-measure": "^2.1.1",
+    "sass": "^1.49.0",
+    "use-debounce": "^7.0.1",
+    "use-draggable-scroll": "^0.1.0",
+    "use-keyboard-shortcut": "^1.1.3",
+    "use-ripple-hook": "^1.0.17"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.17",
+    "@types/react": "^17.0.33",
+    "@types/react-dom": "^17.0.10",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/recoil": "^0.0.9",
+    "@vitejs/plugin-react": "^1.0.7",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2",
+    "vite-plugin-pwa": "^0.11.13"
+  }
+}

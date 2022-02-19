@@ -1,0 +1,13 @@
+.desktopSettingsBurger {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    z-index: 4;
+    transition: opacity 0.1s ease-in-out;
+    @media screen and (max-width: 1000px) {
+        display: none;
+    }
+}
+:global(.hide-desktop-controls) .desktopSettingsBurger {
+    opacity: 0;
+}

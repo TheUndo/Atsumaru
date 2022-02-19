@@ -1,0 +1,48 @@
+.radioCircle {
+    position: relative;
+    height: 1em;
+    width: 1em;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 2px solid rgb(122, 122, 122);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    &::before {
+        content: "";
+        position: relative;
+        height: 65%;
+        width: 65%;
+        border-radius: inherit;
+        transform: scale(0);
+        opacity: 0;
+        transform-origin: center center;
+        transition: all .1s ease-in-out;
+        background: var(--accent);
+    }
+    &.active {
+        border-color: var(--accent);
+        &::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    &.checkbox {
+        border-radius: .1em;
+        
+        &::before {
+            display: none;
+        }
+        :global(.icon) {
+            transform: scale(1.5) translate(20%, -10%);
+            color: #fff;
+            display: none;
+        }
+        &.active :global(.icon) {
+            display: block;
+        }
+    }
+}

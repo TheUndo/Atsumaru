@@ -1,0 +1,25 @@
+{
+  "name": "atsumaru-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:prod": "ts-node src/index.ts",
+    "start:dev": "nodemon --legacy-watch --ext \"ts,json\" --ignore \"./**/*.spec.ts\" --exec \"ts-node src/index.ts\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "@types/cheerio": "^0.22.30",
+    "@types/mongodb": "^4.0.7",
+    "axios": "^0.25.0",
+    "cheerio": "^1.0.0-rc.10",
+    "mongodb": "^4.3.1",
+    "slugify": "^1.6.5",
+    "ts-node": "^10.4.0"
+  }
+}

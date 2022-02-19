@@ -1,0 +1,1 @@
+export const msURL = (path: string) => `https://mangasee123.com${path}`;

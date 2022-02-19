@@ -1,0 +1,30 @@
+.nextChapterIndicator {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 120px;
+    transform: translateY(calc(-50% - 35px));
+    transform-origin: right center;
+    pointer-events: none;
+    display: none;
+    &.nextChapterIndicatorPrevious {
+        left: 0;
+        right: unset;
+        transform-origin: right center;
+    }
+    :global(.icon) {
+        position: absolute;
+        top: calc(50% - 2px);
+        color: #fff;
+        left: 34px;
+        transform: translateY(calc(-50% - 7px));
+        width: 1.3rem;
+    }
+
+    svg {
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+}

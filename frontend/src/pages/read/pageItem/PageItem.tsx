@@ -1,0 +1,46 @@
+import React, { useContext, useMemo } from "react";
+import { AppContext } from "../../../App";
+import { Page } from "../../../types";
+import ImageItem from "../imageItem/ImageItem";
+import { PageState } from "../Reader";
+import classes from "./pageItem.module.scss";
+
+export default function PageItem({
+    page,
+    pages,
+    idx,
+    state,
+}: {
+    page: Page;
+    pages: Page[];
+    idx: number;
+    state: PageState;
+}) {
+    const [{ pagesModifyColors }] = useContext(AppContext)?.settings ?? [{}];
+
+    const filter = useMemo(() => {
+        switch (pagesModifyColors) {
+            case "DARKEN":
+                return "brightness(50%)";
+            case "INVERT":
+                return "invert(100%)";
+            case "NONE":
+                return "";
+            case "WARM":
+                return "sepia(30%)";
+        }
+    }, [pagesModifyColors]);
+
+    return (
+        <>
+            <div
+                className={classes.page}
+                style={{
+                    filter,
+                }}
+            >
+                <ImageItem {...state} page={page} />
+            </div>
+        </>
+    );
+}

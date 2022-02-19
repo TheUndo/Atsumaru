@@ -1,0 +1,89 @@
+.reader {
+    position: relative;
+    height: 100%;
+    isolation: isolate;
+    height: 100vh;
+    min-height: 100vh;
+    z-index: 11;
+    width: 100%;
+    &.readerWithTransparentControls :global(.reader-control-button),
+    &.readerWithHollowControls :global(.reader-control-button) {
+        background-color: transparent;
+        & svg {
+            filter: drop-shadow(0 0 5px #000);
+        }
+    }
+    &.readerWithHollowControls :global(.reader-control-button) {
+        background-color: transparent;
+        border: 1px solid rgb(158, 158, 158);
+    }
+    /* &.readerWithTransparentControls :global(.reader-control-button) {
+
+    } */
+    &.hideCursor {
+        cursor: none;
+    }
+}
+.inner {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.content {
+    position: relative;
+    flex: 1;
+    z-index: 3;
+    overflow: hidden;
+}
+
+.aside {
+    position: relative;
+    flex: none;
+    --width: 330px;
+    //z-index: 4;
+    @media screen and (max-width: 1000px) {
+        display: none;
+    }
+}
+
+
+
+
+
+
+
+.dummyButton {
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.1s ease-in-out;
+    will-change: transform;
+    @media only screen and (max-width: 1000px) {
+        transform: scaleX(0);
+    }
+    &.dummyButtonHidden {
+        transform: scaleX(0);
+    }
+    margin-left: 0.5rem;
+}
+
+.slash {
+    width: 2px;
+    margin: 0 0.5em;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    &::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 110%;
+        background: currentColor;
+        opacity: 0.6;
+        width: 100%;
+        transform: translate(-50%, calc(-50% - 1px)) rotateZ(15deg);
+        transform-origin: center center;
+    }
+}
+

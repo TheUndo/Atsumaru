@@ -1,0 +1,62 @@
+.navbar {
+    width: var(--navbar-width);
+    position: absolute;
+    height: 100vh;
+    overflow: auto;
+    top: 0;
+    right: 0;
+    background: var(--bg2);
+    box-shadow: 0 0 15px -3px #000;
+}
+
+.inner {
+    position: relative;
+    box-sizing: border-box;
+    height: 100%;
+    padding: calc(50px + 0.5rem) 0.5rem 0.5rem 0.5rem;
+}
+
+.items {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    //gap: 0.25rem;
+}
+
+.burger {
+    position: fixed;
+    top: 0.5rem;
+    left: 1.25rem;
+    z-index: 10;
+    transition: opacity 0.1s ease-in-out;
+
+    @media only screen and (max-width: 1000px) {
+        display: none;
+    }
+    &.navShown {
+        &:global(.button) {
+            background-color: transparent;
+            transition: background-color 0.1s ease-in-out;
+            &:hover {
+                background-color: var(--button-bg);
+            }
+        }
+    }
+}
+
+:global(.hide-desktop-controls) .burger {
+    opacity: 0;
+}
+
+.item {
+    :global(.button) {
+        background-color: transparent;
+        transition: none;
+        &:hover {
+            background-color: var(--button-bg);
+        }
+        :global(.iconCont) {
+            padding: 0 1em;
+        }
+    }
+}

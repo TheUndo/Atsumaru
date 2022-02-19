@@ -4,3 +4,4 @@ storage/mongo/
 storage/redis/data/
 ./.env
 .env
+storage/

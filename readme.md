@@ -1,3 +1,7 @@
+# Atsumaru is currently in alpha pre-release
+We're still working on vital components for the reader, follow this repo for updates or join our Discord server.
+***
+
 # Atsumaru | Manga Reader
 Atsumaru is an open source manga reader application for Android, IOS & Web
 

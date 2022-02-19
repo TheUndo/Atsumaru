@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import { AppContext } from "../../../App";
 import { Page } from "../../../types";
+import cm from "../../../utils/classMerger";
 import ImageItem from "../imageItem/ImageItem";
 import { PageState } from "../Reader";
 import classes from "./pageItem.module.scss";
@@ -16,7 +17,8 @@ export default function PageItem({
     idx: number;
     state: PageState;
 }) {
-    const [{ pagesModifyColors }] = useContext(AppContext)?.settings ?? [{}];
+    const [{ pagesModifyColors, readingDirection }] = useContext(AppContext)
+        ?.settings ?? [{}];
 
     const filter = useMemo(() => {
         switch (pagesModifyColors) {
@@ -34,7 +36,11 @@ export default function PageItem({
     return (
         <>
             <div
-                className={classes.page}
+                className={cm(
+                    classes.page,
+                    "page",
+                    readingDirection === "TOP-TO-BOTTOM" && classes.topToBottom
+                )}
                 style={{
                     filter,
                 }}

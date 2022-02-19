@@ -1,4 +1,3 @@
-
 .renderPages {
     position: relative;
     height: 100vh;
@@ -135,21 +134,14 @@
         .pageContent {
             scroll-snap-type: unset;
             flex-direction: column;
-            img {
-                margin: 0;
-            }
-            .page {
-                height: unset;
-                min-height: 300px;
-            }
         }
-        &.stripWidthAuto .page {
+        &.stripWidthAuto :global(.page) {
             @media screen and (min-width: 800px) {
                 max-width: min(100%, 1000px);
                 margin: 0 auto;
             }
         }
-        &.stripWidthManual .page {
+        &.stripWidthManual :global(.page) {
             max-width: clamp(330px, var(--width), 2000px);
             margin: 0 auto;
         }

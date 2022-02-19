@@ -5,8 +5,6 @@ import { loadPagesSequentially } from "../helpers";
 import PageItem from "../pageItem/PageItem";
 import { ReaderContext } from "../Reader";
 
-type Props = {};
-
 export default function Pages({
     pages,
     chapterName,

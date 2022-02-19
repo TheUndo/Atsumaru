@@ -1,4 +1,3 @@
-
 .page {
     scroll-snap-align: start;
     position: relative;
@@ -52,5 +51,17 @@
                 margin: 0;
             }
         }
+    }
+    &.topToBottom {
+        img {
+            height: unset;
+            margin: 0;
+        }
+        .imgContainer {
+            height: unset;
+        }
+
+        height: unset;
+        min-height: 300px;
     }
 }

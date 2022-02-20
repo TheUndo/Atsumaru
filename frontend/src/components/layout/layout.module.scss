@@ -5,6 +5,7 @@
     padding-top: env(safe-area-inset-top, 0);
     box-sizing: border-box;
     display: flex;
+    overflow: hidden;
     width: 100%;
     --navbar-width: 250px;
 }
@@ -35,7 +36,7 @@
 }
 .content {
     --constrain: 1200px;
-    max-width: min(100vw, var(--constrain));
+    max-width: calc(min(100%, var(--constrain)));
     width: 100%;
     margin: 0 auto;
     padding: 0.5rem;

@@ -1,5 +1,4 @@
 .poster {
-    
     height: var(--height);
     width: calc(var(--height) * var(--aspect-ratio));
     position: relative;
@@ -8,7 +7,6 @@
     background: transparent;
     padding: 0;
     margin: 0;
-    display: block;
     cursor: pointer;
     @media (pointer: coarse) {
         scroll-snap-align: start;
@@ -52,7 +50,6 @@
         height: 101%;
         transform: translate(-50%, -50%);
         background: red;
-        
     }
     /* &:active {
         opacity: 0.6;
@@ -71,4 +68,23 @@
     to {
         left: 100%;
     }
+}
+
+.label {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(100%);
+    left: 0;
+    text-overflow: ellipsis;
+    height: 2em;
+    width: 100%;
+    color: var(--color);
+    text-align: left;
+    padding: 0.3em;
+    /* word-break: break-all; */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: var(--font-size);
 }

@@ -3,7 +3,6 @@
     
     box-sizing: border-box;
     padding: var(--gap);
-    overflow: auto;
 }
 .content {
     --gap: clamp(0.4rem, 1vw, 1rem);
@@ -13,12 +12,15 @@
         calc((33vw / var(--aspect-ratio)) - var(--gap) * 2 - 10px),
         350px
     );
+    --font-size: clamp(.7rem, 2vw, 1.3rem);
+    font-size: var(--font-size);
     position: relative;
     display: flex;
     gap: var(--gap);
     padding: var(--gap) 0;
     width: 100%;
     overflow: auto;
+    padding-bottom: calc(2em + .6em);
     -webkit-overflow-scrolling: touch;
     //scroll-behavior: smooth;
     @media (pointer: coarse) {

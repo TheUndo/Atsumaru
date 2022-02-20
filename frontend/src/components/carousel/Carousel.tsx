@@ -34,7 +34,7 @@ export default function Carousel(props: Props) {
                                 manga.slug
                             }`}
                         >
-                            <Poster manga={manga} />
+                            <Poster label={manga.title} manga={manga} />
                         </Link>
                     ))}
                 </div>

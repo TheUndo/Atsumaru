@@ -6,9 +6,10 @@ import classes from "./poster.module.scss";
 
 type Props = {
     manga?: MangaInfo;
+    label?: string;
 };
 
-export default function Poster({ manga }: Props) {
+export default function Poster({ manga, label }: Props) {
     const [ripple, event] = useRipple();
     const {
         src: image,
@@ -23,8 +24,9 @@ export default function Poster({ manga }: Props) {
 
     return (
         <>
-            <button className={classes.poster} ref={ripple} onMouseDown={event}>
+            <button className={classes.poster} onMouseDown={event}>
                 <div
+                    ref={ripple}
                     className={classes.posterImage}
                     style={{
                         backgroundImage: `url("${image}")`,
@@ -32,6 +34,7 @@ export default function Poster({ manga }: Props) {
                 >
                     {loading && <div className={classes.loader}></div>}
                 </div>
+                <div className={classes.label}>{label}</div>
             </button>
         </>
     );

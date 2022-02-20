@@ -16,7 +16,7 @@
     width: 0;
     transition: width 0.2s ease-in-out;
     will-change: width;
-    overflow: hidden;
+
     height: 100%;
     &.shown {
         transition: width 0.17s ease-out;
@@ -27,12 +27,13 @@
     }
 }
 
-    .sidebar {
+.sidebar {
     position: relative;
 }
 .freeContent {
     position: relative;
     width: 100%;
+    overflow: hidden;
 }
 .content {
     --constrain: 1200px;

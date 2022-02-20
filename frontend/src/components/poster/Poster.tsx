@@ -7,9 +7,10 @@ import classes from "./poster.module.scss";
 type Props = {
     manga?: MangaInfo;
     label?: string;
-};
+} & React.ComponentProps<"div">;
 
-export default function Poster({ manga, label }: Props) {
+export default function Poster(props: Props) {
+    const { manga, label, ...compProps } = props;
     const [ripple, event] = useRipple();
     const {
         src: image,
@@ -24,7 +25,7 @@ export default function Poster({ manga, label }: Props) {
 
     return (
         <>
-            <button className={classes.poster} onMouseDown={event}>
+            <div className={classes.poster} onMouseDown={event} {...compProps}>
                 <div
                     ref={ripple}
                     className={classes.posterImage}
@@ -35,7 +36,7 @@ export default function Poster({ manga, label }: Props) {
                     {loading && <div className={classes.loader}></div>}
                 </div>
                 <div className={classes.label}>{label}</div>
-            </button>
+            </div>
         </>
     );
 }

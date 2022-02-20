@@ -4,8 +4,15 @@ import Header from "../header/Header";
 import Poster from "../poster/Poster";
 import classes from "./carousel.module.scss";
 import cm from "../../utils/classMerger";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import useMedia from "../../hooks/useMedia";
 
 export type CarouselItem = {
     header: string;
@@ -19,6 +26,11 @@ type Props = {
 
 export default function Carousel(props: Props) {
     const { item } = props;
+    const mobile = useMedia(
+        ["(pointer: coarse)", "(pointer: fine)"],
+        [true, false],
+        false
+    );
     /* const ref = useRef(null); */
     /* const { onMouseDown } = useDraggableScroll(ref); */
 
@@ -27,18 +39,74 @@ export default function Carousel(props: Props) {
             <div className={classes.carousel}>
                 <Header level={1}>{item.header}</Header>
                 <div className={cm(classes.content)}>
-                    {item.items.map((manga) => (
-                        <Link
-                            key={manga._id}
-                            to={`/manga/${resolveVendorSlug(manga.vendor)}/${
-                                manga.slug
-                            }`}
-                        >
-                            <Poster label={manga.title} manga={manga} />
-                        </Link>
-                    ))}
+                    {mobile ? (
+                        item.items.map((manga) => <Item manga={manga} />)
+                    ) : (
+                        <Desktop items={item.items} />
+                    )}
                 </div>
             </div>
         </>
     );
+}
+
+function Desktop({ items }: { items: MangaInfo[] }) {
+    return (
+        <div className={classes.desktop}>
+            <Swiper
+                // install Swiper modules
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                spaceBetween={10}
+                slidesPerView={5}
+                navigation
+                preventClicksPropagation={true}
+                preventClicks={false}
+                pagination={{ clickable: true }}
+                scrollbar={{ draggable: true }}
+                onSwiper={(swiper) => console.log(swiper)}
+                onSlideChange={() => console.log("slide change")}
+            >
+                {items.map((manga) => (
+                    <SwiperSlide>
+                        <div className={classes.desktopInner}>
+                            <Item manga={manga} />
+                            {/* <div
+                            style={{
+                                background: "red",
+                                height: "300px"
+                            }}
+                        >
+                        </div> */}
+                        </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </div>
+    );
+}
+
+function Item({ manga }: { manga: MangaInfo }) {
+    const navigate = useNavigate();
+    return (
+        <Poster
+            onClick={() =>
+                navigate(
+                    `/manga/${resolveVendorSlug(manga.vendor)}/${manga.slug}`
+                )
+            }
+            label={manga.title}
+            manga={manga}
+        />
+    );
+    /* return (
+        <Link
+            style={{
+                pointerEvents: "none",
+            }}
+            key={manga._id}
+            to={`/manga/${resolveVendorSlug(manga.vendor)}/${manga.slug}`}
+        >
+            <Poster label={manga.title} manga={manga} />
+        </Link>
+    ); */
 }

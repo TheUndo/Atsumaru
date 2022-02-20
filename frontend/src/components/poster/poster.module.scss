@@ -1,6 +1,6 @@
 .poster {
     height: var(--height);
-    width: calc(var(--height) * var(--aspect-ratio));
+    width: var(--width, calc(var(--height) * var(--aspect-ratio)));
     position: relative;
 
     border: none;

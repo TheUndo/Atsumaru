@@ -1,6 +1,6 @@
 .carousel {
     position: relative;
-    
+
     box-sizing: border-box;
     padding: var(--gap);
 }
@@ -12,7 +12,7 @@
         calc((33vw / var(--aspect-ratio)) - var(--gap) * 2 - 10px),
         350px
     );
-    --font-size: clamp(.7rem, 2vw, 1.3rem);
+    --font-size: clamp(0.7rem, 2vw, 1.3rem);
     font-size: var(--font-size);
     position: relative;
     display: flex;
@@ -20,7 +20,8 @@
     padding: var(--gap) 0;
     width: 100%;
     overflow: auto;
-    padding-bottom: calc(2em + .6em);
+    min-height: 200px;
+    padding-bottom: calc(2em + 0.6em);
     -webkit-overflow-scrolling: touch;
     //scroll-behavior: smooth;
     @media (pointer: coarse) {
@@ -29,5 +30,29 @@
 
     > * {
         flex: none;
+    }
+}
+
+.desktop {
+    position: relative;
+    --height: unset;
+    --width: 100%;
+    width: 100%;
+    :global(.swiper-pagination) {
+        position: absolute;
+        /* bottom: 0;
+        transform: translateY(calc(100% + 1rem)); */
+    }
+    :global(.swiper) {
+        --swiper-theme-color: var(--accent);
+        --swiper-pagination-bullet-inactive-color: var(--color2);
+        padding-bottom: 30px !important;
+        :global(.swiper-scrollbar-drag) {
+            background-color: var(--color);
+            opacity: .3;
+        }
+    }
+    .desktopInner {
+        padding-bottom: 3.5rem;
     }
 }

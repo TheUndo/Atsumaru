@@ -1,18 +1,19 @@
 .poster {
     height: var(--height);
-    width: var(--width, calc(var(--height) * var(--aspect-ratio)));
+    /* width: var(--width, calc(var(--height) * var(--aspect-ratio))); */
     position: relative;
 
     border: none;
     background: transparent;
     padding: 0;
+    padding-bottom: calc(var(--height) * (1 / var(--aspect-ratio)));
     margin: 0;
     cursor: pointer;
     @media (pointer: coarse) {
         scroll-snap-align: start;
     }
     .posterImage {
-        position: relative;
+        position: absolute;
         height: 100%;
         width: 100%;
         overflow: hidden;

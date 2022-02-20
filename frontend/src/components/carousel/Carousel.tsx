@@ -51,13 +51,23 @@ export default function Carousel(props: Props) {
 }
 
 function Desktop({ items }: { items: MangaInfo[] }) {
+    const columns = useMedia(
+        [
+            "(min-width: 1400px)",
+            "(min-width: 1000px)",
+            "(min-width: 600px)",
+            "(min-width: 0px)",
+        ],
+        [5, 4, 3, 2],
+        5
+    );
     return (
         <div className={classes.desktop}>
             <Swiper
                 // install Swiper modules
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
                 spaceBetween={10}
-                slidesPerView={5}
+                slidesPerView={columns}
                 navigation
                 preventClicksPropagation={true}
                 preventClicks={false}

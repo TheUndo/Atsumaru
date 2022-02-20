@@ -23,9 +23,7 @@ services:
             context: ./scraper
             dockerfile: ./Dockerfile.${LOCAL}
         volumes:
-            - ./scraper/:/src
-            - ./scraper/node_modules
-            - ./scraper/package-lock.json
+            - ./scraper/src:/src/src
         env_file:
             - ./.env
         restart: unless-stopped
@@ -37,9 +35,7 @@ services:
             context: ./api
             dockerfile: ./Dockerfile.${LOCAL}
         volumes:
-            - ./api/:/src
-            - ./api/node_modules
-            - ./api/package-lock.json
+            - ./api/src:/src/src
         env_file:
             - ./.env
         restart: unless-stopped

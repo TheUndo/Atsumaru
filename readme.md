@@ -34,7 +34,7 @@ Run in your terminal
    ```sh
    cd atsumaru
     ```
-3. Build and start the backend
+3. Build and start the backend. Omit -d if you want to use another terminal for frontend
    ```sh
    docker-compose up -d
    ```
@@ -49,16 +49,16 @@ Run in your terminal
 After all containers are built open <a href="http://localhost:3000" target="_blanc">http://localhost:3000</a> to view the development app.
 
 ## Technical details
-Role | Technology
------|-----------
-Database | <a href="https://www.mongodb.com/" target="_blanc">MongoDB</a>
-Backend | Node + <a href="https://www.typescriptlang.org/" target="_blanc">TypeScript</a>
-Frontend UI | <a href="https://reactjs.org/" target="_blanc">React</a> + TypeScript
-Frontend bundler | <a href="https://vitejs.dev/" target="_blanc">Vite</a>
-Router/Reverse proxy | <a href="https://nginx.org/en/" target="_blanc">NGINX</a>
-Cache | <a href="https://redis.io/" target="_blanc">Redis</a>
-Search engine | <a href="https://www.meilisearch.com/" target="_blanc">Meilisearch</a>
-Containerization | <a href="https://www.docker.com/get-started" target="_blanc">Docker compose</a>
+| Role                 | Technology                                                                      |
+| -------------------- | ------------------------------------------------------------------------------- |
+| Database             | <a href="https://www.mongodb.com/" target="_blanc">MongoDB</a>                  |
+| Backend              | Node + <a href="https://www.typescriptlang.org/" target="_blanc">TypeScript</a> |
+| Frontend UI          | <a href="https://reactjs.org/" target="_blanc">React</a> + TypeScript           |
+| Frontend bundler     | <a href="https://vitejs.dev/" target="_blanc">Vite</a>                          |
+| Router/Reverse proxy | <a href="https://nginx.org/en/" target="_blanc">NGINX</a>                       |
+| Cache                | <a href="https://redis.io/" target="_blanc">Redis</a>                           |
+| Search engine        | <a href="https://www.meilisearch.com/" target="_blanc">Meilisearch</a>          |
+| Containerization     | <a href="https://www.docker.com/get-started" target="_blanc">Docker compose</a> |
 
 ### Why Docker?
 We use Docker to provide seamless support cross platform, for managing multiple micro services written in different languages and for offering great scaling options. Atsumaru uses over 8 different technologies, it's therefore very hard to install everything with the correct version, and make them behave together the same across Linux, Windows and Mac OS. Docker completely solves this issue.

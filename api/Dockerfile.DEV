@@ -6,4 +6,6 @@ COPY . .
 
 RUN npm i
 
+RUN npm i nodemon -g
+
 CMD npm run start:dev

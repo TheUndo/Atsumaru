@@ -21,6 +21,9 @@ export default function DesktopChapterIndicator({ shift }: { shift: boolean }) {
                 )}
             >
                 <Button
+                    disabled={
+                        currentChapter?.name === chapters[chapters.length]?.name
+                    }
                     onClick={() => jumpChapter?.(-1)}
                     icon={<Icon icon="chevron" orientation="-.5turn" />}
                 />
@@ -28,6 +31,7 @@ export default function DesktopChapterIndicator({ shift }: { shift: boolean }) {
                     {currentChapter?.name ?? "?"} / {chapters?.[0].name ?? "?"}
                 </Button>
                 <Button
+                    disabled={currentChapter?.name === chapters[0]?.name}
                     onClick={() => jumpChapter?.(1)}
                     icon={<Icon icon="chevron" orientation="" />}
                 />

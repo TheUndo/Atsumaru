@@ -12,6 +12,8 @@
         calc((33vw / var(--aspect-ratio)) - var(--gap) * 2 - 10px),
         350px
     );
+    /* --height: 100%;
+    --width: 80%; */
     --font-size: clamp(0.7rem, 2vw, 1.3rem);
     font-size: var(--font-size);
     position: relative;
@@ -21,7 +23,7 @@
     width: 100%;
     overflow: auto;
     min-height: 200px;
-    padding-bottom: calc(2em + 0.6em);
+    /* padding-bottom: calc(2em + 0.6em); */
     -webkit-overflow-scrolling: touch;
     //scroll-behavior: smooth;
     @media (pointer: coarse) {
@@ -36,7 +38,8 @@
 .desktop {
     position: relative;
     --height: 100%;
-    --width: 80%;
+    --width: 100%;
+    --padding-bottom: calc(var(--height) * (1 / var(--aspect-ratio)));
     width: 100%;
     :global(.swiper-pagination) {
         position: absolute;
@@ -49,7 +52,7 @@
         padding-bottom: 30px !important;
         :global(.swiper-scrollbar-drag) {
             background-color: var(--color);
-            opacity: .3;
+            opacity: 0.3;
         }
     }
     .desktopInner {

@@ -1,4 +1,9 @@
-import React, { createContext, useContext, useEffect, useLayoutEffect } from "react";
+import React, {
+    createContext,
+    useContext,
+    useEffect,
+    useLayoutEffect,
+} from "react";
 import { Outlet, useMatch } from "react-router-dom";
 import { AppContext } from "../../App";
 import cm from "../../utils/classMerger";
@@ -15,7 +20,7 @@ export default function Layout(props: Props) {
         ?.desktopNavbar ?? [true];
     const match = useMatch("/read/vendor/:mangaSlug/:chapter/:page");
     useLayoutEffect(() => {
-        setDesktopNavbarShown?.(!!match);
+        if (!!match) setDesktopNavbarShown?.(!!match);
     }, [match, setDesktopNavbarShown]);
     return (
         <>

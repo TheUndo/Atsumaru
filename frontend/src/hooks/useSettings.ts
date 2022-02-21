@@ -27,6 +27,7 @@ export type SettingsType = {
     readerShowDesktopDrawer: "YES" | "NO";
     readerClickNavigationDisabled: "NO" | "YES";
     readerClickNavigation: "PREV-MENU-NEXT" | "PREV-NEXT" | "ONLY-NEXT";
+    desktopSideMenuOpen: "NO" | "YES";
 };
 
 const defaultSettings: SettingsType = {
@@ -53,6 +54,7 @@ const defaultSettings: SettingsType = {
     readerShowDesktopDrawer: "YES",
     readerClickNavigationDisabled: "NO",
     readerClickNavigation: "PREV-MENU-NEXT",
+    desktopSideMenuOpen: "NO",
 };
 
 export default function useSettings() {

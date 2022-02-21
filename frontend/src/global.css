@@ -75,3 +75,9 @@ a {
         border: 3px solid var(--scrollbarBG);
     }
 }
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: rgb(129, 129, 129);
+}

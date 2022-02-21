@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import dom from "react-dom";
 import { RecoilRoot } from "recoil";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -34,10 +34,13 @@ export const AppContext = createContext<{
 
 function App() {
     const settings = useSettings();
-    const desktopNavbar = useState(true);
+    const desktopNavbarState = settings[0].desktopSideMenuOpen === "YES";
+    const setDesktopNavbarState = useCallback((value: boolean) => {
+        settings[1]("desktopSideMenuOpen", value ? "YES" : "NO");
+    }, []);
     const value = {
         settings,
-        desktopNavbar,
+        desktopNavbar: [desktopNavbarState, setDesktopNavbarState] as const,
     };
 
     useEffect(() => {

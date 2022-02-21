@@ -45,6 +45,12 @@ function Item({ item }: { item: NavbarItemType }) {
                         }
                     >
                         {item.legend}
+                        <div
+                            className={cm(
+                                classes.active,
+                                !match && classes.hidden
+                            )}
+                        ></div>
                     </Button>
                 </div>
             </div>
@@ -65,9 +71,12 @@ export function BurgerButton() {
             onClick={() => setDesktopShown?.(!desktopNavbarShown)}
             icon={
                 desktopNavbarShown ? (
-                    <Icon icon="close" style={{
-                        transform: "scale(1.05)",
-                    }} />
+                    <Icon
+                        icon="close"
+                        style={{
+                            transform: "scale(1.05)",
+                        }}
+                    />
                 ) : (
                     <Icon
                         style={{

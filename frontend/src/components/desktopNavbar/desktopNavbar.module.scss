@@ -60,3 +60,18 @@
         }
     }
 }
+
+.active {
+    position: absolute;
+    top: 50%;
+    left: -60px;
+    transform: translateY(-50%);
+    height: 80%;
+    width: 5px;
+    background: var(--accent);
+    transition: height .1s ease-in;
+    border-radius: 99px;
+    &.hidden {
+        height: 0;
+    }
+}

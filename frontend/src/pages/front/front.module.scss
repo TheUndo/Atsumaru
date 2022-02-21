@@ -2,8 +2,12 @@
     position: relative;
     transition: transform 0.1s ease-in;
     transform: scale(var(--modal-scaler, 1));
+    @media screen and (pointer: fine) {
+        transition: transform 0.3s ease-in;
+        transform: scale(min(1, calc(var(--modal-scaler, 1)) + .1));
+    }
     width: 100%;
 }
 :global(body:not(.dragging)) .front {
-    transition-duration: .1s;
+    transition-duration: 0.1s;
 }

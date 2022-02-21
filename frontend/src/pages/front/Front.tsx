@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import Carousel, { CarouselItem } from "../../components/carousel/Carousel";
+import Debug from "../../components/debug/Debug";
 import Header from "../../components/header/Header";
 import Icon from "../../components/icon/Icon";
 import Info from "../../components/info/Info";
@@ -25,6 +26,7 @@ export default function Front() {
                 ref={layout}
                 className={cm(classes.front, slug && classes.hidden)}
             >
+                <Debug />
                 {online ? (
                     loading && !data ? (
                         <Loading />

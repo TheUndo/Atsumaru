@@ -2,6 +2,7 @@ import React, {
     useCallback,
     useContext,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -53,8 +54,21 @@ export default function RenderPages({
         setCurrentPage,
         initialPage,
         setInitialPage,
-        chapterLoaded,
+        loadPages,
     } = useContext(ReaderContext);
+
+    const [, progress] = useMemo(
+        () => parsePageUrlParameter(initialPage ?? "1"),
+        []
+    );
+
+    const chapterLoaded = useMemo(
+        () => {
+            const values = Object.values(loadPages);
+            return values.length && values.every((v) => v.loaded);
+        },
+        [loadPages]
+    );
 
     const content = chapter ? (
         <Pages chapterName={chapter.name} pages={chapter.pages} />
@@ -88,6 +102,7 @@ export default function RenderPages({
             (readingDirection === "RIGHT-TO-LEFT" ? -1 : 1);
         if (readingDirection === "TOP-TO-BOTTOM") {
             // don't add this condition to the dependency list!
+            console.log(chapterLoaded, progress)
             if (!chapterLoaded && progress) setAwaitChapterLoading(true);
         } else if (chapter) {
             ref.current.scrollLeft = value;
@@ -110,24 +125,20 @@ export default function RenderPages({
     }, [ref, readingDirection]);
 
     useEffect(() => {
-        if (chapterLoaded) {
-            setTimeout(() => {
-                setAwaitChapterLoading(false);
-            }, 0);
-        }
-        const [, progress] = parsePageUrlParameter(initialPage ?? "1");
         if (
             readingDirection === "TOP-TO-BOTTOM" &&
             progress &&
             chapterLoaded &&
             ref.current
         ) {
+            setAwaitChapterLoading(false);
             setInitialPage?.(void 0);
             const { height } = ref.current.getBoundingClientRect();
             const { scrollHeight } = ref.current;
+            console.log(progress, "update");
             ref.current.scrollTop = scrollHeight * parseFloat(progress) || 0;
         }
-    }, [ref, chapterLoaded, readingDirection, initialPage]);
+    }, [ref, chapterLoaded, readingDirection, progress]);
 
     const onScroll = useCallback(
         (cb?: () => void) => {
@@ -286,6 +297,14 @@ export default function RenderPages({
                                 <div>
                                     <div>
                                         Loading in pages in order to resume
+                                    </div>
+                                    <div>
+                                        {
+                                            Object.values(loadPages).filter(
+                                                (v) => v.loaded
+                                            ).length
+                                        }{" "}
+                                        / {currentChapter?.pages.length} pages loaded
                                     </div>
                                     <div>
                                         <Button

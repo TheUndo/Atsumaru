@@ -62,13 +62,10 @@ export default function RenderPages({
         []
     );
 
-    const chapterLoaded = useMemo(
-        () => {
-            const values = Object.values(loadPages);
-            return values.length && values.every((v) => v.loaded);
-        },
-        [loadPages]
-    );
+    const chapterLoaded = useMemo(() => {
+        const values = Object.values(loadPages);
+        return values.length && values.every((v) => v.loaded);
+    }, [loadPages]);
 
     const content = chapter ? (
         <Pages chapterName={chapter.name} pages={chapter.pages} />
@@ -102,7 +99,7 @@ export default function RenderPages({
             (readingDirection === "RIGHT-TO-LEFT" ? -1 : 1);
         if (readingDirection === "TOP-TO-BOTTOM") {
             // don't add this condition to the dependency list!
-            console.log(chapterLoaded, progress)
+            console.log(chapterLoaded, progress);
             if (!chapterLoaded && progress) setAwaitChapterLoading(true);
         } else if (chapter) {
             ref.current.scrollLeft = value;
@@ -242,6 +239,9 @@ export default function RenderPages({
                 return classes.topToBottom;
         }
     })(readingDirection);
+
+    const wisdom = useMemo(() => getWisdom(), []);
+
     return (
         <>
             <ReaderContext.Consumer>
@@ -304,7 +304,18 @@ export default function RenderPages({
                                                 (v) => v.loaded
                                             ).length
                                         }{" "}
-                                        / {currentChapter?.pages.length} pages loaded
+                                        / {currentChapter?.pages.length} pages
+                                        loaded
+                                    </div>
+                                    <div
+                                        style={{
+                                            padding: ".5rem",
+                                            boxSizing: "border-box",
+                                            maxWidth: "400px",
+                                        }}
+                                    >
+                                        <strong>Trivia: </strong>
+                                        {wisdom}
                                     </div>
                                     <div>
                                         <Button
@@ -333,4 +344,24 @@ export default function RenderPages({
             </ReaderContext.Consumer>
         </>
     );
+}
+
+function getWisdom() {
+    const arr = [
+        "Did you know the plural form of manga is actually 'manga' without an s?",
+        "You can change page warmth in the settings... that's hot!",
+        "How much wood would a woodchuck chuck if a woodchuck could chuck wood? He would chuck, he would, as much as he could, and chuck as much wood as a woodchuck would if a woodchuck could chuck wood.",
+        "Sweden and Switzerland are two different countries. Never mix them up.",
+        "The sky is blue because blue light from the sun hits molecules more often than other wavelengths causing them to scatter across the sky.",
+        "You can't find a circle's area that is the exact same as a square's... Try it!",
+        "A sandwich always falls butter side down! Is that why cats always land on their feet? Cats = sandwiches?",
+        "Tomato is a fruit... but it's also a vegetable, win-win!",
+        "There's a 0.77% chance you're sitting on the toilet right now. That percentage is going up by the year.",
+        "Roses are red. Violets are violet. That's why they're called violets.",
+        "Feeling stressed? Me too",
+        "You look good today, but don't get your hopes up, I say that to everyone",
+        "The legendary manga Berserk had its debut in 1989 and ended May 6th, 2021 when the author, Kentaro Miura, tragically passed away at age 54. May he rest in peace, he will greatly be missed.",
+    ];
+
+    return arr[~~(Math.random() * arr.length)];
 }

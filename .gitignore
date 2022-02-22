@@ -5,3 +5,4 @@ storage/redis/data/
 ./.env
 .env
 storage/
+./frontend/dev-dist

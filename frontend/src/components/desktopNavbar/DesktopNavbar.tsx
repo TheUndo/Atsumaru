@@ -7,12 +7,17 @@ import Icon from "../icon/Icon";
 import { items, NavbarItemType } from "../navbar/Navbar";
 import classes from "./desktopNavbar.module.scss";
 
-type Props = {};
+function DesktopNavbar() {
+    const { desktopNavbar } = useContext(AppContext);
 
-function DesktopNavbar(props: Props) {
     return (
         <>
-            <div className={classes.navbar}>
+            <div
+                className={cm(
+                    classes.navbar,
+                    !desktopNavbar[0] && classes.hidden
+                )}
+            >
                 <div className={classes.inner}>
                     <div className={classes.items}>
                         {items.map((item, i) => (

@@ -49,6 +49,8 @@ body {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: none;
     width: 100%;
+    --navbar-width: 250px;
+    --navbar-transition: all 0.2s ease-in-out;
 }
 
 a {

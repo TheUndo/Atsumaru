@@ -7,14 +7,13 @@
     display: flex;
     overflow: hidden;
     width: 100%;
-    --navbar-width: 250px;
 }
 
 .navbar {
     flex: none;
     position: relative;
     width: 0;
-    transition: width 0.2s ease-in-out;
+    transition: var(--navbar-transition);
     will-change: width;
 
     height: 100%;

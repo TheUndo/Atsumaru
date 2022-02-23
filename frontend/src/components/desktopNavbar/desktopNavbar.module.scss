@@ -1,15 +1,22 @@
 .navbar {
     width: var(--navbar-width);
-    position: absolute;
+    position: fixed;
     height: 100vh;
     overflow: auto;
     top: 0;
-    right: 0;
+    z-index: 5;
+    left: 0;
     background: var(--bg2);
     box-shadow: 0 0 15px -3px #000;
+    transition: var(--navbar-transition);
+    &.hidden {
+        transform: translateX(-100%);
+        pointer-events: none;
+    }
 }
 
 .inner {
+    width: var(--navbar-width);
     position: relative;
     box-sizing: border-box;
     height: 100%;

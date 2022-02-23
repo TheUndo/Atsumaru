@@ -24,15 +24,14 @@ export default function Layout(props: Props) {
     }, [match, setDesktopNavbarShown]);
     return (
         <>
+            <DesktopNavbar />
             <main className={classes.layout}>
                 <section
                     className={cm(
                         classes.navbar,
                         desktopNavbarShown && classes.shown
                     )}
-                >
-                    <DesktopNavbar />
-                </section>
+                ></section>
                 <section className={classes.freeContent}>
                     {props.children}
                     <Outlet />

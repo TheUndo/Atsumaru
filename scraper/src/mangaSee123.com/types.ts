@@ -13,6 +13,7 @@ export namespace MangaSee {
     }
 
     export type MangaInfo = {
+        anilistID?: number;
         title: string;
         authors: string[];
         genres: string[];

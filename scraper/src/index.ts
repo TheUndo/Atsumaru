@@ -1,9 +1,10 @@
-import mongo from "./db/mongo";
+import performSearch from "./anilist.co/searchByName";
 import { pushMangaFromSlugs } from "./mangaSee123.com/impureDbOps";
 import { scrapeFrontPage, scrapeSearch } from "./mangaSee123.com/mangaSee";
-import { MangaSee } from "./mangaSee123.com/types";
 import log from "./utils/logger";
 import sleep from "./utils/sleep";
+
+//performSearch(["Koujo Denka no Katei Kyoushi"]).then(console.log);
 
 /* front page */
 (async () => {

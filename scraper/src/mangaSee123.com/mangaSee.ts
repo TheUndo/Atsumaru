@@ -10,6 +10,8 @@ import { MangaSee } from "./types";
 import slugify from "slugify";
 import sleep from "../utils/sleep";
 import mongo from "../db/mongo";
+import performSearch from "../anilist.co/searchByName";
+import upsertManga from "../anilist.co/upsertManga";
 
 export async function scrapeSearch() {
     const url = msURL("/_search.php");
@@ -112,6 +114,19 @@ export async function scrapeInfoPage(
         strict: true,
     });
 
+    let anilistID;
+    if (!search?.anilistID) {
+        const anilist = await performSearch([title, ...alternativeNames]);
+
+        if (anilist) {
+            console.log("Upserting anilist");
+            await upsertManga("mangaSeeSlug", internalSlug, anilist);
+            anilistID = anilist.id;
+        }
+    } else {
+        anilistID = search?.anilistID;
+    }
+
     /** depends on slug */
     function normalizeChapter(
         rawChapter: MangaSee.RawMangaSeeChapterStruct
@@ -146,7 +161,7 @@ export async function scrapeInfoPage(
                 );
                 if (existingChapter) {
                     void acc.push(existingChapter);
-                    void log("Skipping chapter scrape");
+                    //void log("Skipping chapter scrape");
                     continue;
                 }
 
@@ -219,6 +234,7 @@ export async function scrapeInfoPage(
         cover,
         slug: internalSlug,
         mangaSeeSlug: slug,
+        anilistID,
     };
 }
 

@@ -15,7 +15,7 @@ function DesktopNavbar() {
             <div
                 className={cm(
                     classes.navbar,
-                    !desktopNavbar[0] && classes.hidden
+                    !desktopNavbar?.[0] && classes.hidden
                 )}
             >
                 <div className={classes.inner}>

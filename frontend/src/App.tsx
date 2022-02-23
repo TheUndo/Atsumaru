@@ -35,9 +35,12 @@ export const AppContext = createContext<{
 function App() {
     const settings = useSettings();
     const desktopNavbarState = settings[0].desktopSideMenuOpen === "YES";
-    const setDesktopNavbarState = useCallback((value: boolean) => {
-        settings[1]("desktopSideMenuOpen", value ? "YES" : "NO");
-    }, []);
+    const setDesktopNavbarState = useCallback(
+        (value: boolean) => {
+            settings[1]("desktopSideMenuOpen", value ? "YES" : "NO");
+        },
+        [settings[1]]
+    );
     const value = {
         settings,
         desktopNavbar: [desktopNavbarState, setDesktopNavbarState] as const,

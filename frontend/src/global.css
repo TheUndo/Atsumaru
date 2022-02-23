@@ -31,22 +31,23 @@ body {
     /* position: fixed; */
     /* overflow: hidden; */
     overscroll-behavior: none;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     min-height: 100vh;
+}
+html {
+    overflow: hidden;
+    height: 100%;
+}
+body {
+    overflow: auto;
 }
 
 #root {
     position: relative;
     color: var(--color);
-    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: none;
-    width: 100vw;
-    max-width: 100vw;
-    overflow: auto;
-    min-height: 100vh;
-    height: 100vh;
     width: 100%;
 }
 

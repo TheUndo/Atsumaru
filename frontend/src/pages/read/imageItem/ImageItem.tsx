@@ -35,7 +35,8 @@ export default function ImageItem({
                             <Button
                                 className={cm("reader-control-button")}
                                 icon={<Icon icon="reload" />}
-                                onClick={() => {
+                                onClick={(e) => {
+                                    e.stopPropagation();
                                     setLoadPages?.((prev) => ({
                                         ...prev,
                                         [page.name]: {
@@ -82,8 +83,9 @@ export default function ImageItem({
                                     }}
                                     className={cm("reader-control-button")}
                                     icon={<Icon icon="reload" />}
-                                    onClick={() => {
+                                    onClick={(e) => {
                                         if (!currentChapter) return;
+                                        e.stopPropagation();
                                         loadPagesSequentially(
                                             4,
                                             currentChapter.pages.filter(

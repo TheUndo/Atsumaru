@@ -44,7 +44,7 @@ export default function DesktopChapterIndicator({
                     />
                     <Button disabled className={classes.middleItem}>
                         Ch. {currentChapter?.name ?? "?"} /{" "}
-                        {chapters?.[0].name ?? "?"}
+                        {chapters?.[0]?.name ?? "?"}
                     </Button>
                     <Button
                         disabled={currentChapter?.name === chapters[0]?.name}

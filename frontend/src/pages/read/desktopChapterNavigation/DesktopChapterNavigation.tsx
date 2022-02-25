@@ -10,8 +10,13 @@ import { ReaderContext } from "../Reader";
 import classes from "./desktopChapterNavigation.module.scss";
 
 export default function DesktopChapterNavigation() {
-    const { currentChapter, currentPage, chapters, jumpChapter } =
-        useContext(ReaderContext);
+    const {
+        currentChapter,
+        currentPage,
+        chapters,
+        jumpChapter,
+        pageContentScrollPosition,
+    } = useContext(ReaderContext);
     const [{ readingDirection, readerKeyboardNavigation }] = useContext(
         AppContext
     ).settings ?? [{}];
@@ -28,8 +33,8 @@ export default function DesktopChapterNavigation() {
         [readingDirection]
     );
 
-    const cPage = useMemo(
-        () => parsePageUrlParameter(currentPage ?? "-1")[0],
+    const [cPage] = useMemo(
+        () => parsePageUrlParameter(currentPage ?? "-1"),
         [currentPage]
     );
     const nextShortcut =
@@ -43,7 +48,16 @@ export default function DesktopChapterNavigation() {
         currentChapter?.pages?.[currentChapter.pages.length - 1]?.name ?? "-2";
     const firstPage = currentChapter?.pages?.[0]?.name ?? "-2";
 
-    const nextHidden = lastPage !== cPage;
+    const pageEl = useMemo(() => document.getElementById("pageContent"), []);
+
+    const nextHidden = useMemo(
+        () =>
+            lastPage !== cPage ||
+            (readingDirection === "TOP-TO-BOTTOM" &&
+                (pageEl?.scrollHeight ?? 0) - (pageEl?.clientHeight ?? 0) >=
+                    (pageContentScrollPosition ?? 0) + 300),
+        [cPage, pageContentScrollPosition, pageEl, lastPage]
+    );
     const previousHidden = firstPage !== cPage;
 
     if (!desktop) return <></>;

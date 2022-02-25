@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { AppContext } from "../../../App";
 import Button from "../../../components/button/Button";
 import Loading from "../../../components/loading/Loading";
-import useMedia from "../../../hooks/useMedia";
 import { MangaInfo } from "../../../types";
 import cm from "../../../utils/classMerger";
 import { clamp } from "../../../utils/utils";
@@ -316,7 +315,12 @@ export default function RenderPages({
     return (
         <>
             <ReaderContext.Consumer>
-                {({ setControlsShown, jumpChapter, controlsShown }) => (
+                {({
+                    setControlsShown,
+                    jumpChapter,
+                    controlsShown,
+                    setPageContentScrollPosition,
+                }) => (
                     <div
                         className={cm(
                             classes.renderPages,
@@ -346,9 +350,13 @@ export default function RenderPages({
                             onScroll={(e) => {
                                 setControlsShown(false);
                                 onScroll?.(() => setControlsShown(true));
+                                setPageContentScrollPosition?.(
+                                    (e.nativeEvent?.target as any)?.scrollTop
+                                );
                             }}
                             onTouchEnd={() => onRelease(jumpChapter)}
                             className={classes.pageContent}
+                            id="pageContent" // ONLY used for getting scroll position in a performant way
                             ref={ref}
                             /* onKeyDown={(e) => e.preventDefault()}
                             onKeyUp={(e) => e.preventDefault()}

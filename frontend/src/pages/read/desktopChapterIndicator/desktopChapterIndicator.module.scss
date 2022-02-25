@@ -30,6 +30,6 @@
     left: 0;
     top: 0;
     transform: translateY(-100%);
-    padding-bottom: calc(var(--paddingBottom) + 60px);
+    padding-bottom: min(10%, calc(var(--paddingBottom) + 60px));
     transition: all .15s ease-in-out;
 }

@@ -52,6 +52,10 @@ export type ReaderCtx = {
     vendor: MangaInfo["vendor"];
     desktopControlsVisible: boolean;
     setDesktopControlsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
+    pageContentScrollPosition?: number;
+    setPageContentScrollPosition?: React.Dispatch<
+        React.SetStateAction<number | undefined>
+    >;
     pageRelativeNavigate?: (offset: number) => void;
     loadPages: {
         [k: string]: PageState;
@@ -90,6 +94,8 @@ export default function Reader() {
     const [controlsShown, setControlsShown] = useState(true);
     const [chapterLoaded, setChapterLoaded] = useState(false);
     const [cursorShown, setCursorShown] = useState(true);
+    const [pageContentScrollPosition, setPageContentScrollPosition] =
+        useState<number>();
     const [desktopControlsVisible, setDesktopControlsVisible] = useState(true);
     const scrollRef = useRef<HTMLDivElement>(null);
     const appCtx = useContext(AppContext);
@@ -212,6 +218,8 @@ export default function Reader() {
         ),
         loadPages,
         setLoadPages,
+        pageContentScrollPosition,
+        setPageContentScrollPosition,
     };
 
     useEffect(() => {

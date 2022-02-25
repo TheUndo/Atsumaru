@@ -40,7 +40,9 @@ export default function Carousel(props: Props) {
                 <Header level={1}>{item.header}</Header>
                 <div className={cm(classes.content)}>
                     {mobile ? (
-                        item.items.map((manga) => <Item manga={manga} />)
+                        item.items.map((manga) => (
+                            <Item key={manga.slug} manga={manga} />
+                        ))
                     ) : (
                         <Desktop items={item.items} />
                     )}
@@ -77,7 +79,7 @@ function Desktop({ items }: { items: MangaInfo[] }) {
                 onSlideChange={() => console.log("slide change")}
             >
                 {items.map((manga) => (
-                    <SwiperSlide>
+                    <SwiperSlide key={manga.slug}>
                         <div className={classes.desktopInner}>
                             <Item manga={manga} />
                             {/* <div

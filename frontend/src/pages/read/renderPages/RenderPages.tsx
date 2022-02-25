@@ -263,6 +263,7 @@ export default function RenderPages({
                 readerClickNavigationDisabled === "YES"
             )
                 return;
+            e.stopPropagation();
             const { left, width } = ref.current?.getBoundingClientRect();
             const relX = e.pageX - left;
 

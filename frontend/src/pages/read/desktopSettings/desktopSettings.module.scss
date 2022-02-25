@@ -5,6 +5,7 @@
     z-index: 5;
     width: var(--width);
     transition: width 0.25s ease-out 0.1s;
+    box-shadow: 0 0 15px -2px #000;
 
     .desktopSettingsDrawer {
         width: var(--width);

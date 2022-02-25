@@ -12,7 +12,7 @@ import Slider from "../../slider/Slider";
 function StripWidth({ active }: { active: boolean }) {
     const [settings, setSetting] = useContext(AppContext)?.settings!;
     const [rawValue, setValue] = useState(settings.stripWidth);
-    const [value] = useDebounce(rawValue, 20);
+    const [value] = useDebounce(rawValue, 1);
     const ref = useRef<HTMLInputElement>(null);
     const changed = useCallback(
         (value: string) => value === settings.stripWidth,

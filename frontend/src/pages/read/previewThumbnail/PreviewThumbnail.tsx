@@ -3,7 +3,8 @@ import useRipple from "use-ripple-hook";
 import cm from "../../../utils/classMerger";
 import { parsePageUrlParameter } from "../helpers";
 import { PageState, ReaderContext } from "../Reader";
-import classes from "../pagePreviewThumbnails/pagePreviewThumbnails.module.scss";
+import classes from "./previewThumbnail.module.scss";
+import DesktopChapterIndicator from "../desktopChapterIndicator/DesktopChapterIndicator";
 
 export default function PageThumbnail({ state }: { state: PageState }) {
     const { jumpToFixedPage, currentPage } = useContext(ReaderContext);

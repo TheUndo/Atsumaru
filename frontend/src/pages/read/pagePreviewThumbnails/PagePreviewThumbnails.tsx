@@ -26,6 +26,7 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
             ? false
             : shown;
 
+    const items = Object.values(loadPages);
     return (
         <>
             <div
@@ -33,7 +34,6 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
                 onMouseMove={handleMove}
                 onMouseLeave={handleLeave}
             >
-                <DesktopChapterIndicator shift={resolvedShown} />
                 <div
                     className={cm(
                         classes.preview,
@@ -47,7 +47,11 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
                                 classes.previewFlipped
                         )}
                     >
-                        {Object.values(loadPages).map((page) => {
+                        <DesktopChapterIndicator
+                            items={items.length}
+                            shift={true}
+                        />
+                        {items.map((page, i) => {
                             return (
                                 <PageThumbnail key={page.name} state={page} />
                             );

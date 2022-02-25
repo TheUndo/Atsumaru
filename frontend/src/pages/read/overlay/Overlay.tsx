@@ -6,8 +6,6 @@ import cm from "../../../utils/classMerger";
 import { ReaderContext } from "../Reader";
 import classes from "../renderPages/renderPages.module.scss";
 
-type Props = {};
-
 export default function Overlay() {
     const [settings, setSetting] = useContext(AppContext)?.settings ?? [];
     const reversed = settings?.readingDirection === "RIGHT-TO-LEFT";
@@ -32,13 +30,15 @@ export default function Overlay() {
     return (
         <>
             <div
+                onScroll={console.log}
                 className={cm(
                     classes.pageContentOverlay,
                     animate && classes.overlayAnimate
                 )}
                 style={{
                     pointerEvents:
-                        settings?.readerClickNavigationDisabled === "YES"
+                        settings?.readerClickNavigationDisabled === "YES" ||
+                        settings?.readingDirection === "TOP-TO-BOTTOM"
                             ? "none"
                             : "all",
                 }}

@@ -12,6 +12,7 @@ import useApi from "../../hooks/useApi";
 import { Chapter, MangaInfo } from "../../types";
 import cm from "../../utils/classMerger";
 import E404 from "../e404/E404";
+import DesktopChapterNavigation from "./desktopChapterNavigation/DesktopChapterNavigation";
 import DesktopSettings from "./desktopSettings/DesktopSettings";
 import DesktopSettingsBurger from "./desktopSettingsBurger/DesktopSettingsBurger";
 import FloatingControls from "./floatingControls/FloatingControls";
@@ -302,6 +303,7 @@ export default function Reader() {
                                 hideControls={value.setControlsShown}
                                 manga={apiData?.data}
                             />
+                            <DesktopChapterNavigation />
                         </div>
                         <aside className={classes.aside}>
                             <DesktopSettings

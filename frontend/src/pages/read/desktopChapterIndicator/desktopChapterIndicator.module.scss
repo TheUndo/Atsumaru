@@ -1,18 +1,35 @@
 .desktopChapterIndicator {
     position: absolute;
-    bottom: 0.5rem;
+    top: 0;
+    transform: translateY(-100%);
     transition: all 0.25s ease-in-out;
     will-change: bottom;
-    left: 0.5rem;
+    left: 0rem;
     display: flex;
     align-items: center;
     background: var(--button-bg);
     border-radius: 0.3em;
     &.desktopChapterIndicatorShifted {
-        bottom: calc(100% - 20px);
+
     }
     &.desktopChapterHidden {
         opacity: 0;
         pointer-events: none;
     }
+    .middleItem {
+        width: 120px;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.pusher {
+    padding-bottom: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateY(-100%);
+    padding-bottom: calc(var(--paddingBottom) + 60px);
+    transition: all .15s ease-in-out;
 }

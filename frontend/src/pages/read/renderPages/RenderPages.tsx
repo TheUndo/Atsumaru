@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { AppContext } from "../../../App";
 import Button from "../../../components/button/Button";
 import Loading from "../../../components/loading/Loading";
+import useMedia from "../../../hooks/useMedia";
 import { MangaInfo } from "../../../types";
 import cm from "../../../utils/classMerger";
 import { clamp } from "../../../utils/utils";
@@ -37,7 +38,16 @@ export default function RenderPages({
     const [indicatorColor, setIndicatorColor] = useState("var(--bg)");
     const [awaitChapterLoading, setAwaitChapterLoading] = useState(false);
     const [
-        { readingDirection, stripWidth, stripWidthControl, imageFitMethod },
+        {
+            readingDirection,
+            stripWidth,
+            stripWidthControl,
+            imageFitMethod,
+            readerShowDesktopDrawer,
+            readerClickNavigation,
+            readerClickNavigationDisabled,
+        },
+        setSetting,
     ] = useContext(AppContext)?.settings ?? [{}];
     const [isScrolling, setIsScrolling] = useState(false);
 
@@ -55,6 +65,7 @@ export default function RenderPages({
         initialPage,
         setInitialPage,
         loadPages,
+        pageRelativeNavigate,
     } = useContext(ReaderContext);
 
     const [, progress] = useMemo(
@@ -99,8 +110,13 @@ export default function RenderPages({
             (readingDirection === "RIGHT-TO-LEFT" ? -1 : 1);
         if (readingDirection === "TOP-TO-BOTTOM") {
             // don't add this condition to the dependency list!
-            console.log(chapterLoaded, progress);
             if (!chapterLoaded && progress) setAwaitChapterLoading(true);
+            else if (chapterLoaded) {
+                const page = ref.current.querySelector(
+                    `.scroll-to-${initialPage}`
+                );
+                void page?.scrollIntoView(true);
+            }
         } else if (chapter) {
             ref.current.scrollLeft = value;
             setInitialPage?.(void 0); // ensures correct page position on chapter change
@@ -130,9 +146,7 @@ export default function RenderPages({
         ) {
             setAwaitChapterLoading(false);
             setInitialPage?.(void 0);
-            const { height } = ref.current.getBoundingClientRect();
             const { scrollHeight } = ref.current;
-            console.log(progress, "update");
             ref.current.scrollTop = scrollHeight * parseFloat(progress) || 0;
         }
     }, [ref, chapterLoaded, readingDirection, progress]);
@@ -239,6 +253,63 @@ export default function RenderPages({
                 return classes.topToBottom;
         }
     })(readingDirection);
+    const desktop = window.matchMedia("(pointer: fine)").matches;
+
+    // handle click navigation for TOP-TO-BOTTOM (otherwise handled by Overlay)
+    const handleClick = useCallback(
+        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+            if (
+                !ref.current ||
+                !desktop ||
+                readerClickNavigationDisabled === "YES"
+            )
+                return;
+            const { left, width } = ref.current?.getBoundingClientRect();
+            const relX = e.pageX - left;
+
+            if (readerClickNavigation === "PREV-MENU-NEXT") {
+                const [leftClick, middleClick, rightClick] = [
+                    relX >= 0 && relX < (width * 1) / 3,
+                    relX >= (width * 1) / 3 && relX < (width * 2) / 3,
+                    relX >= (width * 2) / 3 && relX < (width * 3) / 3,
+                ] as const;
+                if (leftClick) {
+                    pageRelativeNavigate?.(-1);
+                } else if (middleClick) {
+                    setSetting?.(
+                        "readerShowDesktopDrawer",
+                        readerShowDesktopDrawer === "NO" ? "YES" : "NO"
+                    );
+                } else if (rightClick) {
+                    pageRelativeNavigate?.(1);
+                }
+            } else if (readerClickNavigation === "PREV-NEXT") {
+                const [leftClick, rightClick] = [
+                    relX >= 0 && relX < width / 2,
+                    relX >= width / 2 && relX < width,
+                ] as const;
+                if (leftClick) {
+                    pageRelativeNavigate?.(-1);
+                } else if (rightClick) {
+                    pageRelativeNavigate?.(1);
+                }
+            } else if (readerClickNavigation === "ONLY-NEXT") {
+                const rightClick = relX >= 0 && relX < width;
+                if (rightClick) {
+                    pageRelativeNavigate?.(1);
+                }
+            }
+        },
+        [
+            ref,
+            setSetting,
+            readerShowDesktopDrawer,
+            pageRelativeNavigate,
+            desktop,
+            readerClickNavigationDisabled,
+            readerClickNavigation,
+        ]
+    );
 
     const wisdom = useMemo(() => getWisdom(), []);
 
@@ -268,6 +339,7 @@ export default function RenderPages({
                                 }`,
                             } as any
                         }
+                        onClick={handleClick}
                     >
                         <div
                             onClick={() => setControlsShown(!controlsShown)}

@@ -38,6 +38,7 @@ export default function PageItem({
             <div
                 className={cm(
                     classes.page,
+                    `scroll-to-${page.name}`,
                     "page",
                     readingDirection === "TOP-TO-BOTTOM" && classes.topToBottom
                 )}

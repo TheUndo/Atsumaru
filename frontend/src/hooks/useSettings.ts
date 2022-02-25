@@ -21,7 +21,7 @@ export type SettingsType = {
         wasd: "YES" | "NO";
         arrowKeys: "YES" | "NO";
         nextPage: "YES" | "NO";
-        previousPage: "YES" | "NO";
+        previousPage: "YES" | "NO"; // wrongly named page, please fix
         spacebar: "NEXT-PAGE" | "NEXT-CHAPTER" | "DISABLED";
     };
     readerShowDesktopDrawer: "YES" | "NO";

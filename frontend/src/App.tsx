@@ -10,6 +10,7 @@ import useSettings, { SettingsType } from "./hooks/useSettings";
 import { downloadFile } from "./offline/downloadFile";
 import { BurgerButton } from "./components/desktopNavbar/DesktopNavbar";
 import Layout, { GenericPage } from "./components/layout/Layout";
+import Signup from "./components/signup/Signup";
 /* import { registerSW } from "virtual:pwa-register"; */
 
 if ("serviceWorker" in navigator) {
@@ -31,6 +32,8 @@ export const AppContext = createContext<{
     settings?: readonly [SettingsType, (keys: string, value: any) => void];
     desktopNavbar?: readonly [boolean, (value: boolean) => void];
 }>({});
+
+export const AuthContext = createContext<{}>({});
 
 function App() {
     const settings = useSettings();
@@ -73,6 +76,7 @@ function App() {
                     <RecoilRoot>
                         <BrowserRouter>
                             <BurgerButton />
+                            <Signup />
                             <Layout>
                                 <Routes>
                                     <Route

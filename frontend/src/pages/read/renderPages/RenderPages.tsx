@@ -359,9 +359,10 @@ export default function RenderPages({
                             className={classes.pageContent}
                             id="pageContent" // ONLY used for getting scroll position in a performant way
                             ref={ref}
-                            /* onKeyDown={(e) => e.preventDefault()}
+                            onFocus={(e) => e.target.blur()}
+                            onKeyDown={(e) => e.preventDefault()}
                             onKeyUp={(e) => e.preventDefault()}
-                            onKeyPress={(e) => e.preventDefault()} */
+                            onKeyPress={(e) => e.preventDefault()}
                         >
                             {content}
 

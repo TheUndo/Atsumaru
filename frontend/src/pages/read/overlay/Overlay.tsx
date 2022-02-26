@@ -36,11 +36,11 @@ export default function Overlay() {
                     animate && classes.overlayAnimate
                 )}
                 style={{
-                    pointerEvents:
+                    /* pointerEvents:
                         settings?.readerClickNavigationDisabled === "YES" ||
                         settings?.readingDirection === "TOP-TO-BOTTOM"
                             ? "none"
-                            : "all",
+                            : "all", */
                 }}
             >
                 {readerClickNavigation !== "ONLY-NEXT" && (

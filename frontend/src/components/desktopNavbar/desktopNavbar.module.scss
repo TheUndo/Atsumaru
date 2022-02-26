@@ -13,6 +13,9 @@
         transform: translateX(-100%);
         pointer-events: none;
     }
+    @media only screen and (max-width: 1000px) {
+        display: none;
+    }
 }
 
 .inner {
@@ -76,7 +79,7 @@
     height: 80%;
     width: 5px;
     background: var(--accent);
-    transition: height .1s ease-in;
+    transition: height 0.1s ease-in;
     border-radius: 99px;
     &.hidden {
         height: 0;

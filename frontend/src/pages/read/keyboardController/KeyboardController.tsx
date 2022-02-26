@@ -17,6 +17,12 @@ export default function KeyboardController() {
             )
                 return;
 
+            if (["ArrowRight", "ArrowLeft"].includes(e.key)) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }
+
             switch (e.key) {
                 case "d":
                     if (nav?.wasd === "NO") break;

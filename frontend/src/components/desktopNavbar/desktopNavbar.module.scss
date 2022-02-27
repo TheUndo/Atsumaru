@@ -13,6 +13,9 @@
     transform: translateX(-100%);
     pointer-events: none;
   }
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 
 .inner {

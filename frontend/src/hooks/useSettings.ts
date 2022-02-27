@@ -8,7 +8,7 @@ export type SettingsType = {
   imageFitMethod: "TO-SCREEN" | "TO-WIDTH" | "TO-HEIGHT";
   stripWidthControl: "AUTO" | "MANUAL";
   stripWidth: string;
-  readerBackgroundColor: string;
+  readerBackgroundColor: "#000000" | "#111" | "#ffffff" | "custom";
   readerCustomBackgroundColor: string;
   readerButtonsAppearance: "SOLID" | "HOLLOW" | "TRANSPARENT";
   displayCurrentPageIndicator: "ON-FOCUS" | "ALWAYS" | "NEVER";
@@ -65,13 +65,13 @@ export default function useSettings() {
       const snapshot = Date.now();
       void updateDeep(settings, value, keys); // With reference!
       void update(snapshot);
-      void setSettings((prevState) => ({
+      void setSettings(prevState => ({
         ...prevState,
         ...settings,
       }));
       void cacheSettings(settings);
     },
-    [update, settings, setSettings]
+    [update, settings, setSettings],
   );
 
   return [settings, setSetting] as const;

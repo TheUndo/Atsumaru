@@ -14,6 +14,12 @@ export default function KeyboardController() {
       if (document.activeElement !== document.body || nav?.disabled === "YES")
         return;
 
+      if (["ArrowRight", "ArrowLeft"].includes(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }
+
       switch (e.key) {
         case "d":
           if (nav?.wasd === "NO") break;
@@ -46,9 +52,9 @@ export default function KeyboardController() {
       nav?.wasd === "YES" &&
       setSetting?.(
         "readerShowDesktopDrawer",
-        settings?.readerShowDesktopDrawer === "NO" ? "YES" : "NO"
+        settings?.readerShowDesktopDrawer === "NO" ? "YES" : "NO",
       ),
-    [settings, nav]
+    [settings, nav],
   );
   useKeyboardShortcut(["S"], toggleSettingsDrawer, { overrideSystem: false });
 

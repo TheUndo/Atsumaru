@@ -17,25 +17,30 @@ export default function DesktopChapterNavigation() {
     jumpChapter,
     pageContentScrollPosition,
   } = useContext(ReaderContext);
-  const [{ readingDirection, readerKeyboardNavigation }] = useContext(
-    AppContext
-  ).settings ?? [{}];
+  const [
+    {
+      readingDirection,
+      readerKeyboardNavigation,
+      imageFitMethod,
+      readerBackgroundColor,
+    },
+  ] = useContext(AppContext).settings ?? [{}];
   const desktop = useMedia(["(pointer: fine)"], [true], true);
 
   const currentChapterIndex = chapters.findIndex(
-    (chapter) => chapter.name === currentChapter?.name
+    chapter => chapter.name === currentChapter?.name,
   );
   const nextChapter = chapters[currentChapterIndex - 1];
   const previousChapter = chapters[currentChapterIndex + 1];
 
   const reverse = useMemo(
     () => readingDirection === "RIGHT-TO-LEFT",
-    [readingDirection]
+    [readingDirection],
   );
 
   const [cPage] = useMemo(
     () => parsePageUrlParameter(currentPage ?? "-1"),
-    [currentPage]
+    [currentPage],
   );
   const nextShortcut =
     readerKeyboardNavigation?.nextPage === "YES" &&
@@ -56,11 +61,18 @@ export default function DesktopChapterNavigation() {
       (readingDirection === "TOP-TO-BOTTOM" &&
         (pageEl?.scrollHeight ?? 0) - (pageEl?.clientHeight ?? 0) >=
           (pageContentScrollPosition ?? 0) + 300),
-    [cPage, pageContentScrollPosition, pageEl, lastPage]
+    [cPage, pageContentScrollPosition, pageEl, lastPage],
   );
   const previousHidden = firstPage !== cPage;
 
   if (!desktop) return <></>;
+
+  const transparencyDisabled = useMemo(
+    () =>
+      imageFitMethod === "TO-WIDTH" ||
+      !["#000000", "#111"].includes(readerBackgroundColor!),
+    [imageFitMethod, readerBackgroundColor],
+  );
 
   return (
     <>
@@ -69,7 +81,7 @@ export default function DesktopChapterNavigation() {
           onClick={() => jumpChapter(-1)}
           button={
             <Button
-              transparent
+              transparent={!transparencyDisabled}
               className={classes.button}
               icon={
                 <Icon
@@ -77,14 +89,13 @@ export default function DesktopChapterNavigation() {
                   orientation={!reverse ? "-.25turn" : ".25turn"}
                 />
               }
-              iconLoc={!reverse ? "left" : "right"}
-            >
+              iconLoc={!reverse ? "left" : "right"}>
               Chapter {previousChapter.name} {previousShortcut && "(P)"}
             </Button>
           }
           className={cm(
             !reverse ? classes.left : classes.right,
-            previousHidden && classes.hidden
+            previousHidden && classes.hidden,
           )}
         />
       )}
@@ -93,7 +104,7 @@ export default function DesktopChapterNavigation() {
           onClick={() => jumpChapter(1)}
           button={
             <Button
-              transparent
+              transparent={!transparencyDisabled}
               className={classes.button}
               icon={
                 <Icon
@@ -101,14 +112,13 @@ export default function DesktopChapterNavigation() {
                   orientation={reverse ? "-.25turn" : ".25turn"}
                 />
               }
-              iconLoc={reverse ? "left" : "right"}
-            >
+              iconLoc={reverse ? "left" : "right"}>
               Chapter {nextChapter.name} {nextShortcut && "(N)"}
             </Button>
           }
           className={cm(
             reverse ? classes.left : classes.right,
-            nextHidden && classes.hidden
+            nextHidden && classes.hidden,
           )}
         />
       )}

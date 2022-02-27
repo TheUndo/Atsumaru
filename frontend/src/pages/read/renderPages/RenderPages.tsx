@@ -55,7 +55,7 @@ export default function RenderPages({
   >();
   const threshold = 80;
   const chapter = manga?.chapters?.find(
-    (chapter) => chapter.name === chapterName
+    chapter => chapter.name === chapterName,
   );
 
   const {
@@ -69,12 +69,12 @@ export default function RenderPages({
 
   const [, progress] = useMemo(
     () => parsePageUrlParameter(initialPage ?? "1"),
-    []
+    [],
   );
 
   const chapterLoaded = useMemo(() => {
     const values = Object.values(loadPages);
-    return values.length && values.every((v) => v.loaded);
+    return values.length && values.every(v => v.loaded);
   }, [loadPages]);
 
   const content = chapter ? (
@@ -87,14 +87,14 @@ export default function RenderPages({
     if (!ref.current) return;
     ref.current.addEventListener(
       "touchmove",
-      (e) => {
+      e => {
         if (isScrolling) {
           e.stopPropagation();
         }
       },
       {
         passive: false,
-      }
+      },
     );
   }, [ref, isScrolling]);
 
@@ -163,7 +163,7 @@ export default function RenderPages({
       const [currentPage, progress] = ((
         progress: number,
         duration: number,
-        size: number
+        size: number,
       ): [number, number | undefined] => {
         if (!currentChapter) return [1, void 0];
         const { length } = currentChapter.pages;
@@ -171,14 +171,14 @@ export default function RenderPages({
           clamp(
             1,
             Math.round((progress / duration) * length),
-            Math.max(1, length)
+            Math.max(1, length),
           ),
           clamp(
             0,
             isNaN((progress - size) / duration)
               ? 0
               : Math.round(((progress - size) / duration) * 1e3) / 1e3,
-            1
+            1,
           ) || undefined,
         ];
       })(scrolling, scrollSize, size);
@@ -188,12 +188,12 @@ export default function RenderPages({
       void setShowIndicator(
         scrolling - size > 0
           ? scrolling - scrollSize
-          : Math.abs(scrolling - size)
+          : Math.abs(scrolling - size),
       );
       setIndicatorColor(
         scrolling - threshold > scrollSize || scrolling - size + threshold < 0
           ? "var(--accent)"
-          : "var(--bg)"
+          : "var(--bg)",
       );
 
       if (scrolling >= scrollSize || scrolling - size <= 0) {
@@ -203,7 +203,7 @@ export default function RenderPages({
         setOverScrollingDirection(scrolling - size < 0 ? "prev" : "next");
       else setOverScrollingDirection(void "neither");
     },
-    [ref, currentChapter, threshold, readingDirection, getScrolling]
+    [ref, currentChapter, threshold, readingDirection, getScrolling],
   );
 
   useEffect(() => {
@@ -228,9 +228,9 @@ export default function RenderPages({
         /* cb(scrolling + threshold < 0 ? -1 : 1); */
       }
     },
-    [ref, getScrolling, threshold]
+    [ref, getScrolling, threshold],
   );
-  const readingDirectionClass = ((dir) => {
+  const readingDirectionClass = (dir => {
     switch (dir) {
       case "LEFT-TO-RIGHT":
         return classes.leftToRight;
@@ -262,7 +262,7 @@ export default function RenderPages({
         } else if (middleClick) {
           setSetting?.(
             "readerShowDesktopDrawer",
-            readerShowDesktopDrawer === "NO" ? "YES" : "NO"
+            readerShowDesktopDrawer === "NO" ? "YES" : "NO",
           );
         } else if (rightClick) {
           pageRelativeNavigate?.(1);
@@ -292,7 +292,7 @@ export default function RenderPages({
       desktop,
       readerClickNavigationDisabled,
       readerClickNavigation,
-    ]
+    ],
   );
 
   const wisdom = useMemo(() => getWisdom(), []);
@@ -318,7 +318,7 @@ export default function RenderPages({
               stripWidthControl === "AUTO"
                 ? classes.stripWidthAuto
                 : classes.stripWidthManual,
-              imageFitMethod === "TO-HEIGHT" && classes.pagesFitToHeight
+              imageFitMethod === "TO-HEIGHT" && classes.pagesFitToHeight,
             )}
             style={
               {
@@ -327,40 +327,38 @@ export default function RenderPages({
                 }`,
               } as any
             }
-            onClick={handleClick}
-          >
+            onClick={handleClick}>
             <div
               onClick={() => setControlsShown(!controlsShown)}
-              onScroll={(e) => {
+              onScroll={e => {
                 setControlsShown(false);
                 onScroll?.(() => setControlsShown(true));
                 setPageContentScrollPosition?.(
-                  (e.nativeEvent?.target as any)?.scrollTop
+                  (e.nativeEvent?.target as any)?.scrollTop,
                 );
               }}
               onTouchEnd={() => onRelease(jumpChapter)}
               className={classes.pageContent}
               id="pageContent" // ONLY used for getting scroll position in a performant way
               ref={ref}
-              /* onKeyDown={(e) => e.preventDefault()}
-                            onKeyUp={(e) => e.preventDefault()}
-                            onKeyPress={(e) => e.preventDefault()} */
-            >
+              onFocus={e => e.target.blur()}
+              onKeyDown={e => e.preventDefault()}
+              onKeyUp={e => e.preventDefault()}
+              onKeyPress={e => e.preventDefault()}>
               {content}
 
               <div
                 className={cm(
                   classes.renderPagesAwaitLoad,
-                  awaitChapterLoading && classes.renderPagesAwaitLoadShown
-                )}
-              >
+                  awaitChapterLoading && classes.renderPagesAwaitLoadShown,
+                )}>
                 <div>
                   <Loading />
                 </div>
                 <div>
                   <div>Loading in pages in order to resume</div>
                   <div>
-                    {Object.values(loadPages).filter((v) => v.loaded).length} /{" "}
+                    {Object.values(loadPages).filter(v => v.loaded).length} /{" "}
                     {currentChapter?.pages.length} pages loaded
                   </div>
                   <div
@@ -368,8 +366,7 @@ export default function RenderPages({
                       padding: ".5rem",
                       boxSizing: "border-box",
                       maxWidth: "400px",
-                    }}
-                  >
+                    }}>
                     <strong>Trivia: </strong>
                     {wisdom}
                   </div>

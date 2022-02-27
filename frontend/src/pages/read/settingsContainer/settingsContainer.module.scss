@@ -1,61 +1,61 @@
 .settings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 6;
+  box-sizing: border-box;
+  overflow: auto;
+  .background {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
     height: 100%;
+    width: 100%;
+    clip-path: circle(0% at calc(100% - 20px) 20px);
+    animation-fill-mode: forwards;
+    transition: clip-path 0.3s ease-out, opacity 0.25s ease-in;
+    opacity: 0;
+    .backgroundInner {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      background: var(--bg);
+    }
+  }
+  pointer-events: none;
+  &.settingsShown {
+    pointer-events: all;
+  }
+  &.settingsShown .background {
+    clip-path: circle(71%);
+    opacity: 1;
+    transition: clip-path 0.45s cubic-bezier(0.32, 0.84, 0.37, 0.98),
+      opacity 0.2s ease-in;
+  }
+  .settingsInner {
     z-index: 6;
     box-sizing: border-box;
+    position: relative;
+    height: 100%;
+    width: 100%;
     overflow: auto;
-    .background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        clip-path: circle(0% at calc(100% - 20px) 20px);
-        animation-fill-mode: forwards;
-        transition: clip-path 0.3s ease-out, opacity 0.25s ease-in;
-        opacity: 0;
-        .backgroundInner {
-            position: relative;
-            height: 100%;
-            width: 100%;
-            background: var(--bg);
-        }
+    padding: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.15s ease-in;
+  }
+  &.settingsShown .settingsInner {
+    transition: opacity 0.15s ease-in 0.2s;
+    opacity: 1;
+  }
+  .settingsContent {
+    padding: 0;
+    h1 {
+      text-align: center;
+      margin: 0.5rem 0;
+      padding-top: env(safe-area-inset-top, 0);
+      padding-top: max(calc(env(safe-area-inset-top, 1rem)), 0);
     }
-    pointer-events: none;
-    &.settingsShown {
-        pointer-events: all;
-    }
-    &.settingsShown .background {
-        clip-path: circle(71%);
-        opacity: 1;
-        transition: clip-path 0.45s cubic-bezier(0.32, 0.84, 0.37, 0.98),
-            opacity 0.2s ease-in;
-    }
-    .settingsInner {
-        z-index: 6;
-        box-sizing: border-box;
-        position: relative;
-        height: 100%;
-        width: 100%;
-        overflow: auto;
-        padding: 0.5rem;
-        opacity: 0;
-        transition: opacity 0.15s ease-in;
-    }
-    &.settingsShown .settingsInner {
-        transition: opacity 0.15s ease-in 0.2s;
-        opacity: 1;
-    }
-    .settingsContent {
-        padding: 0;
-        h1 {
-            text-align: center;
-            margin: 0.5rem 0;
-            padding-top: env(safe-area-inset-top, 0);
-            padding-top: max(calc(env(safe-area-inset-top, 1rem)), 0);
-        }
-    }
+  }
 }

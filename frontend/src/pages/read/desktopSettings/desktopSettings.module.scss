@@ -1,49 +1,48 @@
-
 .desktopSettings {
-    position: relative;
-    height: 100%;
-    z-index: 5;
-    width: var(--width);
-    transition: width 0.25s ease-out 0.1s;
-    box-shadow: 0 0 15px -2px #000;
+  position: relative;
+  height: 100%;
+  z-index: 5;
+  width: var(--width);
+  transition: width 0.25s ease-out 0.1s;
+  box-shadow: 0 0 15px -2px #000;
 
+  .desktopSettingsDrawer {
+    width: var(--width);
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  .desktopSettingsInner {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: var(--width);
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    transition: transform 0.2s ease-in-out;
+    background: var(--bg);
+    box-sizing: border-box;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.25rem;
+    flex-direction: column;
+    .desktopSettingsHeader {
+      position: relative;
+      h2 {
+        font-size: 1.4rem;
+      }
+    }
+  }
+  &.desktopSettingsHidden {
     .desktopSettingsDrawer {
-        width: var(--width);
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        overflow: hidden;
+      pointer-events: none;
     }
+    width: 0;
     .desktopSettingsInner {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: var(--width);
-        height: 100%;
-        width: 100%;
-        overflow-y: auto;
-        transition: transform 0.2s ease-in-out;
-        background: var(--bg);
-        box-sizing: border-box;
-        padding: 0.5rem;
-        display: flex;
-        gap: 0.25rem;
-        flex-direction: column;
-        .desktopSettingsHeader {
-            position: relative;
-            h2 {
-                font-size: 1.4rem;
-            }
-        }
+      transform: translateX(100%);
     }
-    &.desktopSettingsHidden {
-        .desktopSettingsDrawer {
-            pointer-events: none;
-        }
-        width: 0;
-        .desktopSettingsInner {
-            transform: translateX(100%);
-        }
-    }
+  }
 }

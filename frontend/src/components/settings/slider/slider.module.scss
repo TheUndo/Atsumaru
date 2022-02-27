@@ -1,63 +1,63 @@
 .sliderCont {
-    position: relative;
-    display: flex;
-    column-gap: 0.5rem;
-    align-items: center;
-    width: 100%;
-    height: 25px;
+  position: relative;
+  display: flex;
+  column-gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  height: 25px;
 }
 .label {
-    position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    &.inputCont {
-        flex: 1;
-    }
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  &.inputCont {
+    flex: 1;
+  }
 }
 .slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 0.4rem;
+  background: rgba(236, 236, 236, 0.4);
+  outline: none;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  border-radius: 0.2em;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: var(--accent);
+    cursor: pointer;
+    border-radius: 0.4em;
+    filter: drop-shadow(0 0 2px rgb(29, 29, 29));
+  }
+  &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 100%;
-    height: 0.4rem;
-    background: rgba(236, 236, 236, 0.4);
-    outline: none;
-    -webkit-transition: 0.2s;
-    transition: opacity 0.2s;
-    border-radius: 0.2em;
-
-    &:hover {
-        opacity: 1;
-    }
-
-    &::-moz-range-thumb {
-        width: 25px;
-        height: 25px;
-        background: var(--accent);
-        cursor: pointer;
-        border-radius: 0.4em;
-        filter: drop-shadow(0 0 2px rgb(29, 29, 29));
-    }
-    &::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 25px;
-        height: 25px;
-        background: var(--accent);
-        cursor: pointer;
-        border-radius: 0.4em;
-        filter: drop-shadow(0 0 3px #000);
-    }
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: var(--accent);
+    cursor: pointer;
+    border-radius: 0.4em;
+    filter: drop-shadow(0 0 3px #000);
+  }
 }
 .sliderCont.inactive {
-    opacity: .7;
-    .slider {
-        &::-moz-range-thumb {
-            background: #444;
-            filter: drop-shadow(0 0 6px #111);
-        }
-        &::-webkit-slider-thumb {
-            background: #444;
-            filter: drop-shadow(0 0 6px #111);
-        }
+  opacity: 0.7;
+  .slider {
+    &::-moz-range-thumb {
+      background: #444;
+      filter: drop-shadow(0 0 6px #111);
     }
+    &::-webkit-slider-thumb {
+      background: #444;
+      filter: drop-shadow(0 0 6px #111);
+    }
+  }
 }

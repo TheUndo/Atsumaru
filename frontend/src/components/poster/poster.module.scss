@@ -1,91 +1,91 @@
 .poster {
-    height: var(--height);
-    width: var(--width, calc(var(--height) * var(--aspect-ratio)));
-    position: relative;
+  height: var(--height);
+  width: var(--width, calc(var(--height) * var(--aspect-ratio)));
+  position: relative;
 
-    border: none;
-    background: transparent;
-    padding: 0;
-    padding-bottom: var(--padding-bottom, 0);
-    margin: 0;
-    cursor: pointer;
-    @media (pointer: coarse) {
-        scroll-snap-align: start;
+  border: none;
+  background: transparent;
+  padding: 0;
+  padding-bottom: var(--padding-bottom, 0);
+  margin: 0;
+  cursor: pointer;
+  @media (pointer: coarse) {
+    scroll-snap-align: start;
+  }
+  .posterImage {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: transform 0.1s ease-in-out;
+    border-radius: calc(var(--height) * 0.03);
+    pointer-events: none;
+    .loader {
+      animation-duration: 1s;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(
+        90deg,
+        hsla(0, 0%, 100%, 0) 0,
+        #fff 50%,
+        hsla(0, 0%, 100%, 0)
+      );
+      background-blend-mode: lighten;
+      animation-name: loading;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0.2;
+      animation-iteration-count: infinite;
     }
-    .posterImage {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        transition: transform 0.1s ease-in-out;
-        border-radius: calc(var(--height) * 0.03);
-        pointer-events: none;
-        .loader {
-            animation-duration: 1s;
-            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            background: linear-gradient(
-                90deg,
-                hsla(0, 0%, 100%, 0) 0,
-                #fff 50%,
-                hsla(0, 0%, 100%, 0)
-            );
-            background-blend-mode: lighten;
-            animation-name: loading;
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            left: 0;
-            opacity: 0.2;
-            animation-iteration-count: infinite;
-        }
-    }
-    .coverup {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 101%;
-        height: 101%;
-        transform: translate(-50%, -50%);
-        background: red;
-    }
-    /* &:active {
+  }
+  .coverup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 101%;
+    height: 101%;
+    transform: translate(-50%, -50%);
+    background: red;
+  }
+  /* &:active {
         opacity: 0.6;
         .posterImage {
             transform: scale(0.94);
         }
     } */
-    &:hover {
-        opacity: 0.8;
-    }
+  &:hover {
+    opacity: 0.8;
+  }
 }
 @keyframes loading {
-    0% {
-        left: -100%;
-    }
-    to {
-        left: 100%;
-    }
+  0% {
+    left: -100%;
+  }
+  to {
+    left: 100%;
+  }
 }
 
 .label {
-    position: absolute;
-    bottom: 0;
-    transform: translateY(100%);
-    left: 0;
-    text-overflow: ellipsis;
-    height: 2em;
-    width: 100%;
-    color: var(--color);
-    text-align: left;
-    padding: 0.3em;
-    /* word-break: break-all; */
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    font-size: var(--font-size);
+  position: absolute;
+  bottom: 0;
+  transform: translateY(100%);
+  left: 0;
+  text-overflow: ellipsis;
+  height: 2em;
+  width: 100%;
+  color: var(--color);
+  text-align: left;
+  padding: 0.3em;
+  /* word-break: break-all; */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: var(--font-size);
 }

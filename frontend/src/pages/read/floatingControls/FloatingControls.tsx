@@ -4,17 +4,15 @@ import classes from "./floatingControls.module.scss";
 type Props = {};
 
 export default function FloatingControls({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <>
-            <div
-                className={classes.floatingControls}
-            >
-                <div className={classes.floatingControlsInner}>{children}</div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className={classes.floatingControls}>
+        <div className={classes.floatingControlsInner}>{children}</div>
+      </div>
+    </>
+  );
 }

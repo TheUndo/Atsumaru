@@ -6,53 +6,47 @@ import { ReaderContext } from "../Reader";
 import classes from "./desktopChapterIndicator.module.scss";
 
 export default function DesktopChapterIndicator({
-    shift,
-    items,
+  shift,
+  items,
 }: {
-    shift: boolean;
-    items: number;
+  shift: boolean;
+  items: number;
 }) {
-    const { jumpChapter, desktopControlsVisible, currentChapter, chapters } =
-        useContext(ReaderContext);
+  const { jumpChapter, desktopControlsVisible, currentChapter, chapters } =
+    useContext(ReaderContext);
 
-    return (
-        <>
-            <div
-                className={classes.pusher}
-                style={
-                    {
-                        "--paddingBottom": `calc(100% / ${items})`,
-                    } as any
-                }
-            >
-                <div
-                    className={cm(
-                        classes.desktopChapterIndicator,
-                        shift && classes.desktopChapterIndicatorShifted,
-                        !shift &&
-                            !desktopControlsVisible &&
-                            classes.desktopChapterHidden
-                    )}
-                >
-                    <Button
-                        disabled={
-                            currentChapter?.name ===
-                            chapters[chapters.length]?.name
-                        }
-                        onClick={() => jumpChapter?.(-1)}
-                        icon={<Icon icon="chevron" orientation="-.5turn" />}
-                    />
-                    <Button disabled className={classes.middleItem}>
-                        Ch. {currentChapter?.name ?? "?"} /{" "}
-                        {chapters?.[0]?.name ?? "?"}
-                    </Button>
-                    <Button
-                        disabled={currentChapter?.name === chapters[0]?.name}
-                        onClick={() => jumpChapter?.(1)}
-                        icon={<Icon icon="chevron" orientation="" />}
-                    />
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div
+        className={classes.pusher}
+        style={
+          {
+            "--paddingBottom": `calc(100% / ${items})`,
+          } as any
+        }
+      >
+        <div
+          className={cm(
+            classes.desktopChapterIndicator,
+            shift && classes.desktopChapterIndicatorShifted,
+            !shift && !desktopControlsVisible && classes.desktopChapterHidden
+          )}
+        >
+          <Button
+            disabled={currentChapter?.name === chapters[chapters.length]?.name}
+            onClick={() => jumpChapter?.(-1)}
+            icon={<Icon icon="chevron" orientation="-.5turn" />}
+          />
+          <Button disabled className={classes.middleItem}>
+            Ch. {currentChapter?.name ?? "?"} / {chapters?.[0]?.name ?? "?"}
+          </Button>
+          <Button
+            disabled={currentChapter?.name === chapters[0]?.name}
+            onClick={() => jumpChapter?.(1)}
+            icon={<Icon icon="chevron" orientation="" />}
+          />
+        </div>
+      </div>
+    </>
+  );
 }

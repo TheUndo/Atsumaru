@@ -1,12 +1,12 @@
 .icon {
-    position: relative;
-    display: inline-block;
-    svg {
-        display: block;
-        height: 100%;
-        * {
-            fill: currentColor;
-        }
+  position: relative;
+  display: inline-block;
+  svg {
+    display: block;
+    height: 100%;
+    * {
+      fill: currentColor;
     }
-    transition: transform 0.1s linear;
+  }
+  transition: transform 0.1s linear;
 }

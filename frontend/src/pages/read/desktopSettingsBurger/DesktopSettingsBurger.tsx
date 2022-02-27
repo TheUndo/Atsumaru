@@ -7,19 +7,17 @@ import classes from "./desktopSettingsBurger.module.scss";
 type Props = {};
 
 export default function DesktopSettingsBurger() {
-    const [, setSetting] = useContext(AppContext).settings ?? [];
+  const [, setSetting] = useContext(AppContext).settings ?? [];
 
-    return (
-        <>
-            <div className={classes.desktopSettingsBurger}>
-                <Button
-                    onClick={() =>
-                        setSetting?.("readerShowDesktopDrawer", "YES")
-                    }
-                    circle
-                    icon={<Icon icon="settings" />}
-                />
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className={classes.desktopSettingsBurger}>
+        <Button
+          onClick={() => setSetting?.("readerShowDesktopDrawer", "YES")}
+          circle
+          icon={<Icon icon="settings" />}
+        />
+      </div>
+    </>
+  );
 }

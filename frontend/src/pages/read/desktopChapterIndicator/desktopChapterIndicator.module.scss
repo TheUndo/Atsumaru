@@ -1,35 +1,34 @@
 .desktopChapterIndicator {
-    position: absolute;
-    top: 0;
-    transform: translateY(-100%);
-    transition: all 0.25s ease-in-out;
-    will-change: bottom;
-    left: 0rem;
+  position: absolute;
+  top: 0;
+  transform: translateY(-100%);
+  transition: all 0.25s ease-in-out;
+  will-change: bottom;
+  left: 0rem;
+  display: flex;
+  align-items: center;
+  background: var(--button-bg);
+  border-radius: 0.3em;
+  &.desktopChapterIndicatorShifted {
+  }
+  &.desktopChapterHidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .middleItem {
+    width: 120px;
     display: flex;
-    align-items: center;
-    background: var(--button-bg);
-    border-radius: 0.3em;
-    &.desktopChapterIndicatorShifted {
-
-    }
-    &.desktopChapterHidden {
-        opacity: 0;
-        pointer-events: none;
-    }
-    .middleItem {
-        width: 120px;
-        display: flex;
-        justify-content: center;
-    }
+    justify-content: center;
+  }
 }
 
 .pusher {
-    padding-bottom: 100%;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transform: translateY(-100%);
-    padding-bottom: min(10%, calc(var(--paddingBottom) + 60px));
-    transition: all .15s ease-in-out;
+  padding-bottom: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(-100%);
+  padding-bottom: min(10%, calc(var(--paddingBottom) + 60px));
+  transition: all 0.15s ease-in-out;
 }

@@ -17,153 +17,146 @@ import ReadingDirection from "./items/readerItems/ReadingDirection";
 import classes from "./settings.module.scss";
 
 export default function Settings() {
-    const [settings, setSetting] = useContext(AppContext)?.settings ?? [];
+  const [settings, setSetting] = useContext(AppContext)?.settings ?? [];
 
-    if (!settings || !setSetting)
-        return (
-            <>
-                <LoadingPage>
-                    <Loading />
-                </LoadingPage>
-            </>
-        );
-
+  if (!settings || !setSetting)
     return (
-        <>
-            <div className={classes.settings}>
-                <div className={classes.inner}>
-                    <ReadingDirection />
-                    <PageFillMethod />
-                    <ClickNavigation />
-                    <KeyboardControls />
-                    <ReaderBackgroundColor />
-                    <ReaderUIAppearance />
-                    <PageProgressIndicator />
-                    <PageProgressIndicatorPosition />
-                    <PageColorModifier />
-                </div>
-            </div>
-        </>
+      <>
+        <LoadingPage>
+          <Loading />
+        </LoadingPage>
+      </>
     );
+
+  return (
+    <>
+      <div className={classes.settings}>
+        <div className={classes.inner}>
+          <ReadingDirection />
+          <PageFillMethod />
+          <ClickNavigation />
+          <KeyboardControls />
+          <ReaderBackgroundColor />
+          <ReaderUIAppearance />
+          <PageProgressIndicator />
+          <PageProgressIndicatorPosition />
+          <PageColorModifier />
+        </div>
+      </div>
+    </>
+  );
 }
 
 export function Setting({
-    children,
-    label,
-    mobile,
-    desktop,
-    dropdown,
+  children,
+  label,
+  mobile,
+  desktop,
+  dropdown,
 }: {
-    children: React.ReactNode;
-    label: React.ReactNode;
-    mobile?: boolean;
-    desktop?: boolean;
-    dropdown?: boolean;
+  children: React.ReactNode;
+  label: React.ReactNode;
+  mobile?: boolean;
+  desktop?: boolean;
+  dropdown?: boolean;
 }) {
-    return (
-        <>
-            <div
-                className={cm(
-                    classes.setting,
-                    mobile && classes.mobile,
-                    desktop && classes.desktop
-                )}
-            >
-                <div className={classes.settingsInner}>
-                    {dropdown ? (
-                        <DropDown label={label}>{children}</DropDown>
-                    ) : (
-                        <>
-                            <div className={classes.settingLabel}>{label}</div>
-                            <div className={classes.settingContent}>
-                                {children}
-                            </div>
-                        </>
-                    )}
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div
+        className={cm(
+          classes.setting,
+          mobile && classes.mobile,
+          desktop && classes.desktop
+        )}
+      >
+        <div className={classes.settingsInner}>
+          {dropdown ? (
+            <DropDown label={label}>{children}</DropDown>
+          ) : (
+            <>
+              <div className={classes.settingLabel}>{label}</div>
+              <div className={classes.settingContent}>{children}</div>
+            </>
+          )}
+        </div>
+      </div>
+    </>
+  );
 }
 
 function DropDown({
-    label,
-    children,
+  label,
+  children,
 }: {
-    label: React.ReactNode;
-    children: React.ReactNode;
+  label: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    const [hidden, setHidden] = useState(true);
-    const [ref, bounds] = useMeasure();
+  const [hidden, setHidden] = useState(true);
+  const [ref, bounds] = useMeasure();
 
-    return (
-        <>
-            <Button
-                onClick={() => setHidden(!hidden)}
-                fullWidth
-                icon={
-                    <Icon
-                        icon="chevron"
-                        orientation={`${hidden ? "" : "-"}.25turn`}
-                    />
-                }
-                iconLoc="right"
-            >
-                {label}
-            </Button>
-            <div
-                style={{
-                    height: hidden ? "0" : bounds.height + "px",
-                }}
-                className={cm(classes.dropdownContent, hidden && classes.dropdownContentHidden)}
-            >
-                <div ref={ref}>
-                    <div
-                        className={cm(
-                            classes.dropdown,
-                            hidden && classes.hidden
-                        )}
-                    >
-                        {children}
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <Button
+        onClick={() => setHidden(!hidden)}
+        fullWidth
+        icon={
+          <Icon icon="chevron" orientation={`${hidden ? "" : "-"}.25turn`} />
+        }
+        iconLoc="right"
+      >
+        {label}
+      </Button>
+      <div
+        style={{
+          height: hidden ? "0" : bounds.height + "px",
+        }}
+        className={cm(
+          classes.dropdownContent,
+          hidden && classes.dropdownContentHidden
+        )}
+      >
+        <div ref={ref}>
+          <div className={cm(classes.dropdown, hidden && classes.hidden)}>
+            {children}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export function RadioSetting<T extends string | number>({
-    items,
-    onChange,
-    currentValue,
-    vertical,
+  items,
+  onChange,
+  currentValue,
+  vertical,
 }: {
-    currentValue: T;
-    onChange: (value: T) => void;
-    items: {
-        value: T;
-        content: (active: boolean) => React.ReactNode;
-    }[];
-    vertical?: boolean;
+  currentValue: T;
+  onChange: (value: T) => void;
+  items: {
+    value: T;
+    content: (active: boolean) => React.ReactNode;
+  }[];
+  vertical?: boolean;
 }) {
-    return (
-        <>
-            <div
-                className={cm(
-                    classes.radioSetting,
-                    vertical && classes.radioSettingVertical
-                )}
-            >
-                {items.map((item) => (
-                    <div
-                        onClick={() => onChange(item.value)}
-                        className={classes.ratioSettingItem}
-                        key={item.value}
-                    >
-                        {item.content(item.value === currentValue)}
-                    </div>
-                ))}
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div
+        className={cm(
+          classes.radioSetting,
+          vertical && classes.radioSettingVertical
+        )}
+      >
+        {items.map((item) => (
+          <div
+            onClick={() => onChange(item.value)}
+            className={classes.ratioSettingItem}
+            key={item.value}
+          >
+            {item.content(item.value === currentValue)}
+          </div>
+        ))}
+      </div>
+    </>
+  );
 }

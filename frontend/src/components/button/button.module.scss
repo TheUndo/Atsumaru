@@ -1,95 +1,95 @@
 .label {
+  display: inline-block;
+  .tag {
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+  .labeled {
+    flex: none;
     display: inline-block;
-    .tag {
-        font-size: 0.9rem;
-        font-weight: bold;
-    }
-    .labeled {
-        flex: none;
-        display: inline-block;
-    }
+  }
 }
 
 .button {
-    --padding: 0.7em;
-    min-width: 41px;
-    padding: var(--padding);
-    background: var(--button-bg);
-    &.hasLegend {
-        --padding: 1em .7em;
-    }
-    color: #fff;
-    border: none;
-    margin: 0;
-    font-size: 1rem;
-    border-radius: 0.25em;
-    &.circle {
-        border-radius: 50%;
-    }
-    display: inline-block;
-    text-decoration: none;
-    box-sizing: border-box;
-    cursor: pointer;
-    overflow: hidden;
-    transition: filter 0.3s ease-out, background .25s ease-in;
-    &[disabled] {
-        opacity: 0.7;
-        pointer-events: none;
-    }
-    .legend {
-        position: absolute;
-        bottom: 0;
-        transform: translateX(-50%) translateY(100%);
-        font-size: 0.7em;
-        width: 200%;
-        text-align: center;
-        left: 50%;
-    }
+  --padding: 0.7em;
+  min-width: 41px;
+  padding: var(--padding);
+  background: var(--button-bg);
+  &.hasLegend {
+    --padding: 1em 0.7em;
+  }
+  color: #fff;
+  border: none;
+  margin: 0;
+  font-size: 1rem;
+  border-radius: 0.25em;
+  &.circle {
+    border-radius: 50%;
+  }
+  display: inline-block;
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
+  transition: filter 0.3s ease-out, background 0.25s ease-in;
+  &[disabled] {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .legend {
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%) translateY(100%);
+    font-size: 0.7em;
+    width: 200%;
+    text-align: center;
+    left: 50%;
+  }
+  &:hover {
+    filter: drop-shadow(0 1px 2px #111);
+    background: var(--bgShaded);
+  }
+  &:active {
+    filter: drop-shadow(0 2px 5px #111);
+  }
+  &.fullWidth,
+  & .text {
+    width: 100%;
+    position: relative;
+  }
+  &.transparent {
+    background: transparent;
     &:hover {
-        filter: drop-shadow(0 1px 2px #111);
-        background: var(--bgShaded);
+      filter: drop-shadow(0 1px 2px #111);
+      background: var(--bgShaded);
     }
-    &:active {
-        filter: drop-shadow(0 2px 5px #111);
-    }
-    &.fullWidth,
-    & .text {
-        width: 100%;
-        position: relative;
-    }
-    &.transparent {
-        background: transparent;
-        &:hover {
-            filter: drop-shadow(0 1px 2px #111);
-            background: var(--bgShaded);
-        }
-    }
+  }
 }
 .inner {
-    position: relative;
-    display: flex;
-    gap: calc(var(--padding) * 0.8);
+  position: relative;
+  display: flex;
+  gap: calc(var(--padding) * 0.8);
+  justify-content: center;
+  &.alignCenter .text {
     justify-content: center;
-    &.alignCenter .text {
-        justify-content: center;
-    }
-    .text {
-        display: flex;
-        align-items: center;
-    }
+  }
+  .text {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .iconCont {
-    position: relative;
-    width: 1em;
-    min-height: 1.2em;
-    display: flex;
-    justify-content: center;
-    :global(.icon) {
-        position: absolute;
-        height: 100%;
-    }
+  position: relative;
+  width: 1em;
+  min-height: 1.2em;
+  display: flex;
+  justify-content: center;
+  :global(.icon) {
+    position: absolute;
+    height: 100%;
+  }
 }
 .hasLegend .iconCont {
-    transform: translateY(-30%);
+  transform: translateY(-30%);
 }

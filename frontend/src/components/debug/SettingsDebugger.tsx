@@ -6,13 +6,13 @@ import Header from "../header/Header";
 type Props = {};
 
 export default function SettingsDebugger(props: Props) {
-    const [settings] = useContext(AppContext).settings ?? [{}];
-    return (
-        <>
-            <div>
-                <Header level={3}>Settings</Header>
-                <pre>{JSON.stringify(settings, null, 4)}</pre>
-            </div>
-        </>
-    );
+  const [settings] = useContext(AppContext).settings ?? [{}];
+  return (
+    <>
+      <div>
+        <Header level={3}>Settings</Header>
+        <pre>{JSON.stringify(settings, null, 4)}</pre>
+      </div>
+    </>
+  );
 }

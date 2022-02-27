@@ -1,54 +1,54 @@
 .floatingControls {
-    position: absolute;
-    top: 0;
-    left: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  // fallback, don't remove
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-top: env(safe-area-inset-top, 0.5rem);
+  padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+  padding-top: max(env(safe-area-inset-top, 0.5rem), 0.5rem);
+  padding-bottom: max(env(safe-area-inset-bottom, 0.5rem), 0.5rem);
+  .floatingControlsInner {
+    position: relative;
     height: 100%;
     width: 100%;
-    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
-    // fallback, don't remove
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-top: env(safe-area-inset-top, 0.5rem);
-    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
-    padding-top: max(env(safe-area-inset-top, 0.5rem), 0.5rem);
-    padding-bottom: max(env(safe-area-inset-bottom, 0.5rem), 0.5rem);
-    .floatingControlsInner {
-        position: relative;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        justify-content: space-between;
-        .floatingControlCollection {
-            position: relative;
-            z-index: 5;
-            display: flex;
-            column-gap: 0.5rem;
-            transition: opacity 0.1s ease-in;
-            @media screen and (min-width: 1000px) {
-                display: none;
-            }
-        }
-        .floatingControl {
-            position: relative;
-            z-index: 5;
-        }
+    justify-content: space-between;
+    .floatingControlCollection {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      column-gap: 0.5rem;
+      transition: opacity 0.1s ease-in;
+      @media screen and (min-width: 1000px) {
+        display: none;
+      }
     }
+    .floatingControl {
+      position: relative;
+      z-index: 5;
+    }
+  }
 }
 
 .floatingControlsHidden {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .floatEnd {
-    justify-content: flex-end;
+  justify-content: flex-end;
 }
 .floatApart {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 .floatTogether {
-    justify-content: center;
+  justify-content: center;
 }

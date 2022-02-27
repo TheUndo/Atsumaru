@@ -6,52 +6,52 @@ import PageItem from "../pageItem/PageItem";
 import { ReaderContext } from "../Reader";
 
 export default function Pages({
-    pages,
-    chapterName,
+  pages,
+  chapterName,
 }: {
-    pages: Page[];
-    chapterName: string;
+  pages: Page[];
+  chapterName: string;
 }) {
-    const { setLoadPages, loadPages } = useContext(ReaderContext);
-    const online = useOnline();
+  const { setLoadPages, loadPages } = useContext(ReaderContext);
+  const online = useOnline();
 
-    useEffect(() => {
-        loadPagesSequentially(4, pages, (page, src) => {
-            if (src)
-                setLoadPages?.((prev) => ({
-                    ...prev,
-                    [page.name]: {
-                        ...prev[page.name],
-                        src,
-                        loaded: true,
-                        loading: false,
-                        failed: false,
-                    },
-                }));
-            else
-                setLoadPages?.((prev) => ({
-                    ...prev,
-                    [page.name]: {
-                        ...prev[page.name],
-                        loaded: true,
-                        loading: false,
-                        failed: true,
-                    },
-                }));
-        });
-    }, [pages, online]);
+  useEffect(() => {
+    loadPagesSequentially(4, pages, (page, src) => {
+      if (src)
+        setLoadPages?.((prev) => ({
+          ...prev,
+          [page.name]: {
+            ...prev[page.name],
+            src,
+            loaded: true,
+            loading: false,
+            failed: false,
+          },
+        }));
+      else
+        setLoadPages?.((prev) => ({
+          ...prev,
+          [page.name]: {
+            ...prev[page.name],
+            loaded: true,
+            loading: false,
+            failed: true,
+          },
+        }));
+    });
+  }, [pages, online]);
 
-    return (
-        <>
-            {pages.map((page, i) => (
-                <PageItem
-                    page={page}
-                    pages={pages}
-                    idx={i}
-                    key={page.name + chapterName}
-                    state={loadPages[page.name]}
-                />
-            ))}
-        </>
-    );
+  return (
+    <>
+      {pages.map((page, i) => (
+        <PageItem
+          page={page}
+          pages={pages}
+          idx={i}
+          key={page.name + chapterName}
+          state={loadPages[page.name]}
+        />
+      ))}
+    </>
+  );
 }

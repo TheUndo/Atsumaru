@@ -1,90 +1,90 @@
 .content {
-    position: relative;
+  position: relative;
 
-    padding: 0.5rem;
-    padding-top: 3rem;
+  padding: 0.5rem;
+  padding-top: 3rem;
 }
 
 .posterCont {
-    position: relative;
-    padding-bottom: 0.5rem;
-    --height: clamp(150px, calc(39vw / var(--aspect-ratio)), 250px);
+  position: relative;
+  padding-bottom: 0.5rem;
+  --height: clamp(150px, calc(39vw / var(--aspect-ratio)), 250px);
 }
 
 .topSection {
-    position: relative;
-    display: flex;
-    gap: 0.5rem;
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
 }
 .title {
-    flex: 1;
-    padding: 1rem 0;
-    color: var(--color2);
-    font-size: clamp(1.1rem, 1vw, 2rem);
+  flex: 1;
+  padding: 1rem 0;
+  color: var(--color2);
+  font-size: clamp(1.1rem, 1vw, 2rem);
 }
 .controls {
-    position: static;
-    display: flex;
-    column-gap: 0.5em;
-    padding-bottom: 1rem;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    :global(.button) {
-        min-width: 75px;
-    }
+  position: static;
+  display: flex;
+  column-gap: 0.5em;
+  padding-bottom: 1rem;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  :global(.button) {
+    min-width: 75px;
+  }
 }
 .chapters {
-    display: flex;
-    flex-direction: column;
-    row-gap: .5rem;
-    position: relative;
-    z-index: 4;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  position: relative;
+  z-index: 4;
 }
 .chapterEllipsis {
-    justify-content: center;
-    padding: .5rem 0;
-    display: flex;
-    align-items: center;
-    font-size: 1.3rem;
-    transform: translateY(-4px);
-    position: relative;
-    z-index: 2;
+  justify-content: center;
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  transform: translateY(-4px);
+  position: relative;
+  z-index: 2;
 }
 .genres {
-    display: flex;
-    gap: 0.5rem;
-    padding: 0.5rem 0;
-    overflow: auto;
-    > * {
-        flex: none;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  overflow: auto;
+  > * {
+    flex: none;
+  }
+  :global(.button) {
+    --padding: 0.5rem;
+    background: var(--accent);
+    svg {
+      opacity: 0.4;
     }
-    :global(.button) {
-        --padding: 0.5rem;
-        background: var(--accent);
-        svg {
-            opacity: 0.4;
-        }
-    }
+  }
 }
 
 .table {
-    position: relative;
-    .row {
-        display: flex;
-        flex-direction: column;
+  position: relative;
+  .row {
+    display: flex;
+    flex-direction: column;
 
-        padding: 0 0 0 1rem;
-        font-size: 0.8rem;
-        .head {
-            color: var(--color);
-            &::after {
-                content: ": ";
-            }
-        }
-        .value {
-            color: var(--color2);
-            font-size: 1.1em;
-            padding-bottom: 0.8em;
-        }
+    padding: 0 0 0 1rem;
+    font-size: 0.8rem;
+    .head {
+      color: var(--color);
+      &::after {
+        content: ": ";
+      }
     }
+    .value {
+      color: var(--color2);
+      font-size: 1.1em;
+      padding-bottom: 0.8em;
+    }
+  }
 }

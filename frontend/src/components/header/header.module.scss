@@ -1,17 +1,17 @@
 .header {
-    font-weight: 300;
-    margin: 0;
+  font-weight: 300;
+  margin: 0;
+  position: relative;
+  font-size: clamp(1.5em, 2vw, 2em);
+  :global(.icon) {
     position: relative;
-    font-size: clamp(1.5em, 2vw, 2em);
-    :global(.icon) {
-        position: relative;
-        height: .8em;
-    }
-    svg {
-        display: block;
-        height: 100%;
-        fill: currentColor;
-        color: currentColor;
-        position: relative;
-    }
+    height: 0.8em;
+  }
+  svg {
+    display: block;
+    height: 100%;
+    fill: currentColor;
+    color: currentColor;
+    position: relative;
+  }
 }

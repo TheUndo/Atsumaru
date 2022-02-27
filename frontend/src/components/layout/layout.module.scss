@@ -1,63 +1,61 @@
 .layout {
-    position: relative;
-    height: 100%;
-    transform: scale(var(--scaler-reset, 1));
-    padding-top: env(safe-area-inset-top, 0);
-    box-sizing: border-box;
-    display: flex;
-    overflow: hidden;
-    width: 100%;
+  position: relative;
+  height: 100%;
+  transform: scale(var(--scaler-reset, 1));
+  padding-top: env(safe-area-inset-top, 0);
+  box-sizing: border-box;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
 }
 
 .navbar {
-    flex: none;
-    position: relative;
-    width: 0;
-    transition: var(--navbar-transition);
-    will-change: width;
+  flex: none;
+  position: relative;
+  width: 0;
+  transition: var(--navbar-transition);
+  will-change: width;
 
-    height: 100%;
-    &.shown {
-        transition: width 0.17s ease-out;
-        width: var(--navbar-width);
-    }
-    @media only screen and (max-width: 1000px) {
-        display: none;
-    }
+  height: 100%;
+  &.shown {
+    transition: width 0.17s ease-out;
+    width: var(--navbar-width);
+  }
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 
 .sidebar {
-    position: relative;
+  position: relative;
 }
 .freeContent {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 .content {
-    --constrain: 1200px;
-    max-width: calc(min(100%, var(--constrain)));
-    width: 100%;
-    margin: 0 auto;
-    padding: 0.5rem;
-    box-sizing: border-box;
-    flex: 1;
-    overflow: auto;
-    min-height: 300px;
-    /* animation-name: fade-in;
+  --constrain: 1200px;
+  max-width: calc(min(100%, var(--constrain)));
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  flex: 1;
+  overflow: auto;
+  min-height: 300px;
+  /* animation-name: fade-in;
     animation-duration: 0.2s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in-out;
     opacity: 0; */
 }
 
-
-
 @keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -1,85 +1,85 @@
 .settings {
-    position: relative;
-    padding: 1rem 0;
+  position: relative;
+  padding: 1rem 0;
 }
 
 .settingsInner {
-    position: relative;
+  position: relative;
 }
 
 .setting {
-    position: relative;
-    .settingLabel {
-        padding: 0.5rem 0;
+  position: relative;
+  .settingLabel {
+    padding: 0.5rem 0;
+  }
+  margin-bottom: 1rem;
+  &.mobile {
+    @media screen and (min-width: 1000px) {
+      display: none;
     }
-    margin-bottom: 1rem;
-    &.mobile {
-        @media screen and (min-width: 1000px) {
-            display: none;
-        }
+  }
+  &.desktop {
+    @media screen and (max-width: 1000px) {
+      display: none;
     }
-    &.desktop {
-        @media screen and (max-width: 1000px) {
-            display: none;
-        }
-    }
+  }
 }
 
 .radioSetting {
-    position: relative;
-    display: flex;
-    gap: 0.5rem;
-    &.radioSettingVertical {
-        flex-direction: column;
-    }
-    > * {
-        flex: 1;
-    }
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+  &.radioSettingVertical {
+    flex-direction: column;
+  }
+  > * {
+    flex: 1;
+  }
 }
 
 .colorPicker {
+  position: relative;
+  width: 100%;
+  padding: 0.5rem 0;
+  input {
     position: relative;
+    border: 2px solid #fff;
+    border-radius: 0.3em;
+    height: 50px;
     width: 100%;
-    padding: 0.5rem 0;
-    input {
-        position: relative;
-        border: 2px solid #fff;
-        border-radius: 0.3em;
-        height: 50px;
-        width: 100%;
-        padding: none;
-        -webkit-appearance: none;
-        &::-webkit-color-swatch-wrapper {
-            padding: none;
-        }
-        &::-webkit-color-swatch,
-        &::-moz-color-swatch {
-            border: none;
-            padding: none;
-        }
+    padding: none;
+    -webkit-appearance: none;
+    &::-webkit-color-swatch-wrapper {
+      padding: none;
     }
+    &::-webkit-color-swatch,
+    &::-moz-color-swatch {
+      border: none;
+      padding: none;
+    }
+  }
 }
 
 .dropdownContent {
-    position: relative;
+  position: relative;
+  transition: all 0.4s ease-out;
+  will-change: height;
+  &.dropdownContentHidden {
     transition: all 0.4s ease-out;
-    will-change: height;
-    &.dropdownContentHidden {
-        transition: all 0.4s ease-out;
-    }
+  }
 }
 
 .dropdown {
-    position: relative;
-    box-sizing: border-box;
-    padding: 0.5rem;
-    border-radius: 0.3em;
-    will-change: transform;
-    transition: all 0.2s ease-out .2s;
-    &.hidden {
-        transform: scale(0.8);
-        transition: all 0.2s ease-out;
-        opacity: 0;
-        pointer-events: none;
-    }
+  position: relative;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border-radius: 0.3em;
+  will-change: transform;
+  transition: all 0.2s ease-out 0.2s;
+  &.hidden {
+    transform: scale(0.8);
+    transition: all 0.2s ease-out;
+    opacity: 0;
+    pointer-events: none;
+  }
 }

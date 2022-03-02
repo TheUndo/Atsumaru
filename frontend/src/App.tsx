@@ -16,7 +16,7 @@ import Signup from "./components/signup/Signup";
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/sw.js");
 
-  navigator.serviceWorker.ready.then((sw) => {
+  navigator.serviceWorker.ready.then(sw => {
     navigator.serviceWorker.controller?.postMessage({
       type: "CACHE_IMAGE",
       src: "https://scans-ongoing-2.planeptune.us/manga/Yuusha-Shoutai-Kamoku-Yuusha-Wa/0001-001.png",
@@ -28,10 +28,13 @@ if ("serviceWorker" in navigator) {
     "https://scans-ongoing-2.planeptune.us/manga/Yuusha-Shoutai-Kamoku-Yuusha-Wa/0001-001.png"
 ); */
 
-export const AppContext = createContext<{
+export type AppContext = {
   settings?: readonly [SettingsType, (keys: string, value: any) => void];
   desktopNavbar?: readonly [boolean, (value: boolean) => void];
-}>({});
+  signIn?: [boolean, (value: boolean) => void];
+};
+
+export const AppContext = createContext<AppContext>({});
 
 export const AuthContext = createContext<{}>({});
 
@@ -42,16 +45,18 @@ function App() {
     (value: boolean) => {
       settings[1]("desktopSideMenuOpen", value ? "YES" : "NO");
     },
-    [settings[1]]
+    [settings[1]],
   );
+  const signIn = useState(false);
   const value = {
     settings,
     desktopNavbar: [desktopNavbarState, setDesktopNavbarState] as const,
+    signIn,
   };
 
   useEffect(() => {
     document.body.addEventListener("scroll", async () => {
-      await new Promise((resolve) => window.requestAnimationFrame(resolve));
+      await new Promise(resolve => window.requestAnimationFrame(resolve));
       const { scrollTop, scrollLeft, scrollHeight, clientHeight } =
         document.body;
       const atTop = scrollTop === 0;
@@ -79,16 +84,14 @@ function App() {
                 <Routes>
                   <Route
                     path="/read/:vendor/:readSlug/:chapter/:page"
-                    element={<Reader />}
-                  ></Route>
+                    element={<Reader />}></Route>
                   <Route
                     path="/"
                     element={
                       <GenericPage>
                         <Front />
                       </GenericPage>
-                    }
-                  >
+                    }>
                     <Route path="/manga/:vendor/:mangaSlug" element={<></>}>
                       <Route path="chapters" element={<></>} />
                     </Route>

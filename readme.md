@@ -30,18 +30,27 @@ Run in your terminal
    ```sh
    git clone https://github.com/TheUndo/atsumaru.git
     ```
-2. 
-   ```sh
-   cd atsumaru
+2. ```sh
+   cd Atsumaru
     ```
-3. Build and start the backend. Omit `-d` if you want to use another terminal for frontend
+3. Rename `.env.example` to `.env`
+
+   *Unix/Bash:*
+   ```sh
+   $ mv .env.example .env
+   ```
+   *Windows:*
+   ```sh
+   rename .env.example .env
+   ```
+4. Build and start the backend. Omit the `-d` flag if you want to use another terminal for the frontend
    ```sh
    docker-compose up -d
    ```
-4. ```sh
+5. ```sh
    cd frontend
    ```
-5. Start frontend
+6. Start frontend
    ```sh
    npm i && npm run dev
    ```
@@ -49,16 +58,16 @@ Run in your terminal
 After all containers are built open <a href="http://localhost:3000" target="_blanc">http://localhost:3000</a> to view the development app.
 
 ## Technical details
-| Role                 | Technology                                                                      |
-| -------------------- | ------------------------------------------------------------------------------- |
-| Database             | <a href="https://www.mongodb.com/" target="_blanc">MongoDB</a>                  |
-| Backend              | [Node.js](https://nodejs.dev/) + <a href="https://www.typescriptlang.org/" target="_blanc">TypeScript</a> |
-| Frontend UI          | <a href="https://reactjs.org/" target="_blanc">React</a> + <a href="https://www.typescriptlang.org/" target="_blanc">TypeScript</a>           |
-| Frontend bundler     | <a href="https://vitejs.dev/" target="_blanc">Vite</a>                          |
-| Router/Reverse proxy | <a href="https://nginx.org/en/" target="_blanc">NGINX</a>                       |
-| Cache                | <a href="https://redis.io/" target="_blanc">Redis</a>                           |
-| Search engine        | <a href="https://www.meilisearch.com/" target="_blanc">Meilisearch</a>          |
-| Containerization     | <a href="https://docs.docker.com/compose/" target="_blanc">Docker compose</a> |
+| Role                 | Technology                                                                                                                              |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Database             | <a href="https://www.mongodb.com/" target="_blanc">MongoDB</a>                                                                          |
+| Backend              | [Node.js](https://nodejs.dev/) + <a href="https://www.typescriptlang.org/" target="_blanc">TypeScript</a>                               |
+| Frontend UI          | <a href="https://reactjs.org/" target="_blanc">React</a> + <a href="https://www.typescriptlang.org/" target="_blanc">TypeScript</a>     |
+| Frontend bundler     | <a href="https://vitejs.dev/" target="_blanc">Vite</a> (<a href="https://rollupjs.org/guide/en/" target="_blanc">rollup</a> internally) |
+| Router/Reverse proxy | <a href="https://nginx.org/en/" target="_blanc">NGINX</a>                                                                               |
+| Cache                | <a href="https://redis.io/" target="_blanc">Redis</a>                                                                                   |
+| Search engine        | <a href="https://www.meilisearch.com/" target="_blanc">Meilisearch</a>                                                                  |
+| Containerization     | <a href="https://docs.docker.com/compose/" target="_blanc">Docker compose</a>                                                           |
 
 ### Why Docker?
 We use Docker to provide seamless support cross platform, for managing multiple micro services written in different languages and for offering great scaling options. Atsumaru uses over 8 different technologies, it's therefore very hard to install everything with the correct version, and make them behave together the same across Linux, Windows and Mac OS. Docker completely solves this issue.

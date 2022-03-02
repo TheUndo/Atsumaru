@@ -9,16 +9,16 @@ import classes from "./desktopNavbar.module.scss";
 
 function DesktopNavbar() {
   const { desktopNavbar } = useContext(AppContext);
+  const ctx = useContext(AppContext);
 
   return (
     <>
       <div
-        className={cm(classes.navbar, !desktopNavbar?.[0] && classes.hidden)}
-      >
+        className={cm(classes.navbar, !desktopNavbar?.[0] && classes.hidden)}>
         <div className={classes.inner}>
           <div className={classes.items}>
             {items.map((item, i) => (
-              <Item key={i + item.legend} item={item} />
+              <Item key={i + item(ctx).legend} item={item(ctx)} />
             ))}
           </div>
         </div>
@@ -27,14 +27,15 @@ function DesktopNavbar() {
   );
 }
 
-function Item({ item }: { item: NavbarItemType }) {
-  const match = useMatch(item.to);
+function Item({ item }: { item: ReturnType<NavbarItemType> }) {
+  const match = item.to ? useMatch(item.to) : false;
 
   return (
     <>
       <div className={classes.item}>
         <div className={classes.itemInner}>
           <Button
+            onClick={item.onClick}
             icon={(match && item.activeIcon) || item.icon}
             fullWidth
             to={item.to}
@@ -44,8 +45,7 @@ function Item({ item }: { item: NavbarItemType }) {
                     color: "var(--accent)",
                   }
                 : {}
-            }
-          >
+            }>
             {item.legend}
             <div className={cm(classes.active, !match && classes.hidden)}></div>
           </Button>

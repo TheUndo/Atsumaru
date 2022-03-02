@@ -1,0 +1,62 @@
+.popup {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  z-index: 99;
+  .inner {
+    .exitButton {
+      position: absolute;
+      top: calc(22px / 2);
+      right: calc(22px / 2);
+    }
+    .header {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    min-width: 300px;
+    position: relative;
+    padding: 22px;
+    box-shadow: 0 40px 60px rgb(7, 7, 7);
+    box-sizing: border-box;
+    background: var(--bg);
+    border-radius: 22px;
+    transition: transform 0.3s cubic-bezier(0.47, 0.27, 0.37, 1.57),
+      opacity 0.3s ease-in;
+
+    &.hidden {
+      transition: transform 0.15s ease-in, opacity 0.1s ease-in;
+      transform: scale(0.7);
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}
+.popupCont {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  &.popupHidden {
+    pointer-events: none;
+  }
+}
+
+.cover {
+  z-index: 98;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in;
+  &.coverHidden {
+    background: transparent;
+    pointer-events: none;
+  }
+}

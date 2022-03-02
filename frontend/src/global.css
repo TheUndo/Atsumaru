@@ -7,7 +7,7 @@
   --color: #ccc;
   --color2: #fff;
 
-  --accent: rgb(112, 105, 181);
+  --accent: #7069b5;
 
   --aspect-ratio: calc(352 / 500);
 
@@ -56,6 +56,9 @@ body {
 a {
   text-decoration: none;
   color: var(--accent);
+}
+a:hover {
+  opacity: 0.8;
 }
 
 @media (pointer: fine) {

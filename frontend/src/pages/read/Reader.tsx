@@ -304,7 +304,6 @@ export default function Reader() {
                 <PagePreviewThumbnails pages={value?.currentChapter?.pages} />
               )}
               <RenderPages
-                /* forwardRef={scrollRef} */
                 hideControls={value.setControlsShown}
                 manga={apiData?.data}
               />

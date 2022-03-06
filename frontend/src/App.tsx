@@ -29,10 +29,13 @@ if ("serviceWorker" in navigator) {
     "https://scans-ongoing-2.planeptune.us/manga/Yuusha-Shoutai-Kamoku-Yuusha-Wa/0001-001.png"
 ); */
 
-export const AppContext = createContext<{
+export type AppContext = {
   settings?: readonly [SettingsType, (keys: string, value: any) => void];
   desktopNavbar?: readonly [boolean, (value: boolean) => void];
-}>({});
+  signIn?: [boolean, (value: boolean) => void];
+};
+
+export const AppContext = createContext<AppContext>({});
 
 export const AuthContext = createContext<{}>({});
 
@@ -45,9 +48,11 @@ function App() {
     },
     [settings[1]],
   );
+  const signIn = useState(false);
   const value = {
     settings,
     desktopNavbar: [desktopNavbarState, setDesktopNavbarState] as const,
+    signIn,
   };
 
   useEffect(() => {

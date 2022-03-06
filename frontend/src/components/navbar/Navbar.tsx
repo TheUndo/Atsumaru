@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useMatch } from "react-router-dom";
+import { AppContext } from "../../App";
 import cm from "../../utils/classMerger";
 import Button from "../button/Button";
 import Icon from "../icon/Icon";
@@ -8,47 +9,51 @@ import classes from "./navbar.module.scss";
 type Props = {
   children?: React.ReactNode | React.ReactNode[];
 };
-export type NavbarItemType = {
-  to: string;
+export type NavbarItemType = (ctx?: AppContext) => {
+  to?: string;
+  onClick?: () => void;
   legend: string;
   icon: JSX.Element;
   activeIcon?: JSX.Element;
 };
 
 export const items: NavbarItemType[] = [
-  {
+  () => ({
     to: "/",
     legend: "Home",
     icon: <Icon icon="home" />,
     activeIcon: <Icon icon="homeSolid" />,
-  },
-  {
+  }),
+  () => ({
     to: "/search",
     legend: "Search",
     icon: <Icon icon="search" />,
-  },
-  {
+  }),
+  () => ({
     to: "/library",
     legend: "Your library",
     icon: <Icon icon="yourLibrary" />,
-  },
-  {
-    to: "/profile",
-    legend: "Profile",
+  }),
+  (ctx?: AppContext) => ({
+    /* to: "/profile", */
+    onClick: () => {
+      ctx?.signIn?.[1](true);
+    },
+    legend: "Sign in",
     icon: <Icon icon="user" />,
     activeIcon: <Icon icon="userSolid" />,
-  },
+  }),
 ];
 
 export default function Navbar(props: Props) {
   const match = useMatch("/read/:vendor/:mangaSlug/:chapter/:page");
-
+  const ctx = useContext(AppContext);
   return (
     <>
       <div className={cm(classes.navbar, !!match && classes.hidden)}>
         <div className={classes.inner}>
-          {items.map((item) => (
-            <NavbarItem item={item} key={item.legend} />
+          {items.map(item => (
+            <NavbarItem item={item(ctx)} key={item(ctx).legend} />
           ))}
         </div>
       </div>
@@ -56,8 +61,8 @@ export default function Navbar(props: Props) {
   );
 }
 
-function NavbarItem({ item }: { item: NavbarItemType }) {
-  const match = useMatch(item.to);
+function NavbarItem({ item }: { item: ReturnType<NavbarItemType> }) {
+  const match = item.to ? useMatch(item.to) : false;
 
   return (
     <>
@@ -65,8 +70,7 @@ function NavbarItem({ item }: { item: NavbarItemType }) {
         <Button
           icon={(!!match && item.activeIcon) || item.icon}
           legend={item.legend}
-          to={item.to}
-        ></Button>
+          to={item.to}></Button>
       </div>
     </>
   );

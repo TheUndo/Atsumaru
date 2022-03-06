@@ -1,2 +1,19 @@
 .signup {
+  box-sizing: border-box;
+  max-width: 400px;
+  padding-top: 1.5rem;
+  width: 999px;
+  @media only screen and (max-width: 420px) {
+    max-width: 100%;
+  }
+}
+
+.image {
+  position: relative;
+  display: block;
+  margin: 2rem;
+}
+
+.oAuthButton {
+  display: none;
 }

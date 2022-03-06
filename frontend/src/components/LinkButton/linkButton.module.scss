@@ -1,0 +1,13 @@
+.link {
+  &.default {
+
+  }
+  &.white {
+    color: #fff;
+    border-bottom: 1px solid rgb(185, 185, 185);
+    &:hover {
+      color: #ccc;
+      border-color: transparent;
+    }
+  }
+}

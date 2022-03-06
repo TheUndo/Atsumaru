@@ -5,6 +5,7 @@ services:
         build: ./router
         ports:
             - ${ROUTER_PORT}:80
+            - 443:443
         volumes:
             - ./router/templates:/etc/nginx/templates/
             - ./router/cdn:/www/files/assets

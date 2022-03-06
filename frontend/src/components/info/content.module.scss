@@ -2,6 +2,9 @@
   position: relative;
 
   padding: 0.5rem;
+  @media screen and (min-width: 800px) {
+    padding: 1.5rem;
+  }
   padding-top: 3rem;
 }
 

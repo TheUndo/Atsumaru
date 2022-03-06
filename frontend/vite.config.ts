@@ -20,11 +20,9 @@ export default defineConfig({
         "icon-256x256.png",
       ],
       manifest: {
-        id: "/",
         theme_color: "#726ab5",
         background_color: "#0e0e0e",
         display: "standalone",
-        start_url: "/",
         name: "Atsumaru - Manga Reader",
         short_name: "Atsumaru",
         description:

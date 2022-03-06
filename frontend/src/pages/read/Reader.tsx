@@ -108,14 +108,14 @@ export default function Reader() {
   ] = appCtx?.settings ?? [{}];
   // is undefined after mount to enable correct page scrolling on chapter change.
   const [initialPage, setInitialPage] = useState<undefined | string>(
-    page ?? "1"
+    page ?? "1",
   );
   const [currentPage, setCurrentPage] = useState<string>(initialPage ?? "1");
   const apiData = useApi<MangaInfo>(`/manga/${vendor}/${readSlug}`);
 
   const navigate = useNavigate();
   const currentChapterIndex = apiData.data?.chapters.findIndex(
-    (c) => c.name === chapter
+    c => c.name === chapter,
   );
   const nextChapter = apiData.data?.chapters[currentChapterIndex - 1];
   const currentChapter = apiData.data?.chapters[currentChapterIndex];
@@ -127,16 +127,16 @@ export default function Reader() {
     setLoadPages(
       currentChapter
         ? Object.fromEntries(
-            currentChapter.pages.map((page) => [
+            currentChapter.pages.map(page => [
               page.name,
               {
                 loaded: false,
                 loading: true,
                 name: page.name,
               },
-            ])
+            ]),
           )
-        : {}
+        : {},
     );
   }, [JSON.stringify(currentChapter?.pages)]);
 
@@ -154,10 +154,10 @@ export default function Reader() {
       return void history.replaceState(
         {},
         "",
-        `/read/${vendor}/${apiData.data.slug}/${currentChapter.name}/${page}`
+        `/read/${vendor}/${apiData.data.slug}/${currentChapter.name}/${page}`,
       );
     },
-    [currentChapter, vendor, apiData]
+    [currentChapter, vendor, apiData],
   );
   const value: ReaderCtx = {
     settingsShown,
@@ -174,7 +174,7 @@ export default function Reader() {
         void setInitialPage("1");
         void setCurrentPage("1");
         return void navigate(
-          `/read/${vendor}/${apiData.data.slug}/${jump.name}/1`
+          `/read/${vendor}/${apiData.data.slug}/${jump.name}/1`,
         );
       },
       [
@@ -183,7 +183,7 @@ export default function Reader() {
         currentChapterIndex,
         setInitialPage,
         setCurrentPage,
-      ]
+      ],
     ),
     jumpToFixedPage,
     nextChapter,
@@ -206,14 +206,14 @@ export default function Reader() {
         if (!name) return;
 
         const index = currentChapter?.pages.findIndex(
-          (page) => page.name === name
+          page => page.name === name,
         );
         if (index === -1 || index === undefined) return;
         const page = currentChapter?.pages?.[index + offset];
         if (!page) return;
         jumpToFixedPage(page.name);
       },
-      [jumpToFixedPage, currentChapter]
+      [jumpToFixedPage, currentChapter],
     ),
     loadPages,
     setLoadPages,
@@ -223,8 +223,13 @@ export default function Reader() {
 
   useEffect(() => {
     document.body.classList[desktopControlsVisible ? "remove" : "add"](
-      "hide-desktop-controls"
+      "hide-desktop-controls",
     );
+  }, [desktopControlsVisible]);
+
+  useEffect(() => {
+    document.body.classList.add("standalone");
+    return () => document.body.classList.remove("standalone");
   }, [desktopControlsVisible]);
 
   useEffect(() => {
@@ -254,7 +259,7 @@ export default function Reader() {
       window.history.replaceState(
         {},
         "",
-        `/read/${vendor}/${apiData.data.slug}/${currentChapter.name}/${currentPage}`
+        `/read/${vendor}/${apiData.data.slug}/${currentChapter.name}/${currentPage}`,
       );
     }, 350);
 
@@ -283,9 +288,8 @@ export default function Reader() {
               : readerButtonsAppearance === "TRANSPARENT"
               ? classes.readerWithTransparentControls
               : "",
-            !cursorShown && classes.hideCursor
-          )}
-        >
+            !cursorShown && classes.hideCursor,
+          )}>
           <FloatingControls>
             <MainFloatingControls
               type={apiData.data?.type ?? "unknown"}
@@ -296,8 +300,7 @@ export default function Reader() {
             className={classes.inner}
             style={{
               background,
-            }}
-          >
+            }}>
             <DesktopSettingsBurger />
             <div className={classes.content}>
               {value?.currentChapter && (

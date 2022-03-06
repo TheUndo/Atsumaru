@@ -230,7 +230,7 @@ export default function Reader() {
   useEffect(() => {
     document.body.classList.add("standalone");
     return () => document.body.classList.remove("standalone");
-  }, [desktopControlsVisible]);
+  }, []);
 
   useEffect(() => {
     const event = () => {

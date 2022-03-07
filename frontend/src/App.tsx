@@ -12,6 +12,7 @@ import { BurgerButton } from "./components/desktopNavbar/DesktopNavbar";
 import Layout, { GenericPage } from "./components/layout/Layout";
 import Signup from "./components/signup/Signup";
 import Button from "./components/button/Button";
+import useApi from "./hooks/useApi";
 /* import { registerSW } from "virtual:pwa-register"; */
 
 if ("serviceWorker" in navigator) {
@@ -33,14 +34,29 @@ export type AppContext = {
   settings?: readonly [SettingsType, (keys: string, value: any) => void];
   desktopNavbar?: readonly [boolean, (value: boolean) => void];
   signIn?: [boolean, (value: boolean) => void];
+  loggedIn?: [false | User, React.Dispatch<React.SetStateAction<false | User>>];
+};
+export type UserContext = {
+  user?: [
+    User | undefined,
+    React.Dispatch<React.SetStateAction<User | undefined>>,
+  ];
+};
+
+export type User = {
+  name: string;
+  id: number;
+  avatar?: {
+    large: string;
+    medium: string;
+  };
 };
 
 export const AppContext = createContext<AppContext>({});
 
-export const AuthContext = createContext<{}>({});
-
 function App() {
   const settings = useSettings();
+  const loggedIn = useState<User | false>(false);
   const desktopNavbarState = settings[0].desktopSideMenuOpen === "YES";
   const setDesktopNavbarState = useCallback(
     (value: boolean) => {
@@ -53,7 +69,10 @@ function App() {
     settings,
     desktopNavbar: [desktopNavbarState, setDesktopNavbarState] as const,
     signIn,
+    loggedIn,
   };
+
+  const me = useApi<User>("/auth/myself");
 
   useEffect(() => {
     document.body.addEventListener("scroll", async () => {
@@ -72,6 +91,10 @@ function App() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (me.data) loggedIn[1](me.data);
+  }, [me]);
 
   return (
     <>

@@ -17,12 +17,15 @@ import { apiBase } from "../../hooks/useApi";
 
 type Props = {};
 
+const env = (import.meta as any).env;
+
 export default function Signup(props: Props) {
   //const [username, setUsername] = useState("");
   //const [email, setEmail] = useState("");
   //const validUsername = /^[a-zA-Z0-9-_]{2,32}$/.test(username);
 
   const app = useContext(AppContext);
+  const [user, setUser] = app.loggedIn ?? [];
   const [shown, setShown] = app.signIn ?? [];
 
   //const validEmail = emailRegex.test(email);
@@ -34,6 +37,23 @@ export default function Signup(props: Props) {
   const onSuccess = (response: any) => {
     setFail(false);
     setAuthorizing(false);
+    if (!response?.code) return onFailure(null);
+    else {
+      setAuthorizing(true);
+      signIn(response.code)
+        .then(user => {
+          if (!user?.data?.Viewer) throw "500 error, invalid server response";
+          setAuthorizing(false);
+          setUser?.(user.data.Viewer);
+          setShown?.(false);
+        })
+        .catch(error => {
+          console.error("[TROUBLESHOOT] Auth error", error + "");
+          setAuthorizing(false);
+          setUser?.(false);
+          setFail(true);
+        });
+    }
   };
   const onFailure = (response: any) => {
     setFail(true);
@@ -78,15 +98,14 @@ export default function Signup(props: Props) {
                 )}
                 <OAuth2Login
                   className={classes.oAuthButton}
-                  authorizationUrl={`https://anilist.co/api/v2/oauth/authorize?client_id=${"7655"}&redirect_uri=${"http://localhost:3000/ouath/anilist"}&response_type=code`}
+                  authorizationUrl={`https://anilist.co/api/v2/oauth/authorize?client_id=${env.VITE_ANILIST_CLIENT_ID}&redirect_uri=${env.VITE_ANILIST_REDIRECT_URI}&response_type=code`}
                   responseType="code"
-                  clientId="9822046hvr4lnhi7g07grihpefahy5jb"
+                  clientId={env.VITE_ANILIST_CLIENT_ID}
                   redirectUri="http://localhost:3000/ouath/anilist"
                   onSuccess={onSuccess}
                   onFailure={onFailure}></OAuth2Login>
               </Button>
-              {authorizing &&
-                "Follow the instructions in the window that popped up."}
+              {authorizing && "Waiting for authorization"}
               <p>
                 <LinkButton
                   onClick={e => {
@@ -121,6 +140,9 @@ async function signIn(code: string) {
   try {
     const req = await fetch(`${apiBase}/auth/anilist`, {
       method: "POST",
+      credentials: "include",
+      mode: "cors",
+      redirect: "follow",
       body: JSON.stringify({
         code,
       }),
@@ -130,7 +152,11 @@ async function signIn(code: string) {
       },
     });
     const res = await req.json();
-  } catch (e) {}
+
+    return res;
+  } catch (e) {
+    return e;
+  }
 }
 
 /*

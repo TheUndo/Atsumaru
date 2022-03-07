@@ -5,7 +5,6 @@ import Modal from "../modal/Modal";
 import Chapters from "./Chapters";
 import useApi from "../../hooks/useApi";
 import { MangaInfo } from "../../types";
-import resolveVendorSlug from "../../utils/resolveVendorSlug";
 
 export default function Info({
   layout,

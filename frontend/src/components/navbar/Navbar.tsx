@@ -34,15 +34,24 @@ export const items: NavbarItemType[] = [
     legend: "Your library",
     icon: <Icon icon="yourLibrary" />,
   }),
-  (ctx?: AppContext) => ({
-    /* to: "/profile", */
-    onClick: () => {
-      ctx?.signIn?.[1](true);
-    },
-    legend: "Sign in",
-    icon: <Icon icon="user" />,
-    activeIcon: <Icon icon="userSolid" />,
-  }),
+  (ctx?: AppContext) =>
+    ctx?.loggedIn?.[0]
+      ? {
+          /* to: "/profile", */
+          onClick: () => {},
+          legend: ctx.loggedIn[0].name,
+          icon: <Icon icon="user" />,
+          activeIcon: <Icon icon="userSolid" />,
+        }
+      : {
+          /* to: "/profile", */
+          onClick: () => {
+            ctx?.signIn?.[1](true);
+          },
+          legend: "Sign in",
+          icon: <Icon icon="user" />,
+          activeIcon: <Icon icon="userSolid" />,
+        },
 ];
 
 export default function Navbar(props: Props) {

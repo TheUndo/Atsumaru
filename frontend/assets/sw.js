@@ -14,7 +14,8 @@ importScripts(
 );
 // Note: Ignore the error that Glitch raises about workbox being undefined.
 workbox.setConfig({
-  //debug: true,
+  debug: false,
+  globIgnores: ['api/**.*'],
 });
 // To avoid async issues, we load strategies before we call it in the event listener
 workbox.loadModule("workbox-core");
@@ -29,7 +30,6 @@ const CacheableResponsePlugin =
   workbox.cacheableResponse.CacheableResponsePlugin;
 const ExpirationPlugin = workbox.expiration.ExpirationPlugin;
 
-console.log(workbox);
 // Cache page navigations (html) with a Network First strategy
 registerRoute(
   // Check to see if the request is a navigation to a new page

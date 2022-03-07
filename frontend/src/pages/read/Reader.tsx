@@ -241,10 +241,7 @@ export default function Reader() {
   }, []);
 
   useEffect(() => {
-    if (!desktopControlsVisible)
-      (window as any).__readerHideCursor = setTimeout(() => {
-        setCursorShown(false);
-      }, 200);
+    if (!desktopControlsVisible) setCursorShown(false);
     else {
       clearTimeout((window as any).__readerHideCursor);
       setCursorShown(true);

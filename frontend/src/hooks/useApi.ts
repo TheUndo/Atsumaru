@@ -20,7 +20,10 @@ export default function useApi<T>(path: string, maxAge?: number) {
 
     (async () => {
       try {
-        const req = await fetch(getUrl(path));
+        const req = await fetch(getUrl(path), {
+          credentials: "include",
+          mode: "cors",
+        });
         const res = await req.json();
 
         setData(res, maxAge);

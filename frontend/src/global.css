@@ -45,6 +45,11 @@ body {
   body:not(.standalone) {
     height: calc(100% - env(safe-area-inset-bottom));
   }
+  
+}
+
+body.standalone {
+  height: 100%;
 }
 
 #root {

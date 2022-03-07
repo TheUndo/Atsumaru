@@ -54,8 +54,7 @@ Run in your terminal
    ```sh
    npm i && npm run dev
    ```
-
-After all containers are built open <a href="http://localhost:3000" target="_blanc">http://localhost:3000</a> to view the development app.
+   Open <a href="http://localhost:3000" target="_blanc">http://localhost:3000</a> to view the development build.
 
 ## Technical details
 | Role                 | Technology                                                                                                                              |

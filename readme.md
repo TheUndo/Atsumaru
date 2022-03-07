@@ -47,10 +47,10 @@ Run in your terminal
    ```sh
    docker-compose up -d
    ```
-5. ```sh
+5. Start frontend
+   ```sh
    cd frontend
    ```
-6. Start frontend
    ```sh
    npm i && npm run dev
    ```

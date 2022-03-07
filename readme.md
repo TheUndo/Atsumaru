@@ -47,7 +47,7 @@ Run in your terminal
    ```sh
    docker-compose up -d
    ```
-5. Start frontend
+5. Start the frontend
    ```sh
    cd frontend
    ```

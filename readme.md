@@ -33,15 +33,15 @@ Run in your terminal
 2. ```sh
    cd Atsumaru
     ```
-3. Rename `.env.example` to `.env`
+3. Copy `.env.example` as `.env`
 
-   *Unix/Bash:*
+   *bash/zsh:*
    ```sh
-   $ mv .env.example .env
+   $ cp .env.example .env
    ```
-   *Windows:*
+   *Windows cmd/powershell:*
    ```sh
-   rename .env.example .env
+   copy .env.example .env
    ```
 4. Build and start the backend. Omit the `-d` flag if you want to use another terminal for the frontend
    ```sh

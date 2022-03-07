@@ -30,7 +30,7 @@ Run in your terminal
    ```sh
    git clone https://github.com/TheUndo/atsumaru.git
     ```
-2. ```sh
+    ```sh
    cd Atsumaru
     ```
 3. Copy `.env.example` as `.env`

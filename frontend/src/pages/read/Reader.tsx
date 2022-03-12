@@ -8,10 +8,12 @@ import React, {
 } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../App";
+import { MangaEndPointResponse } from "../../components/info/Info";
 import useApi from "../../hooks/useApi";
 import { Chapter, MangaInfo } from "../../types";
 import cm from "../../utils/classMerger";
 import E404 from "../e404/E404";
+import ProgressSyncing from "../progressSyncing/ProgressSyncing";
 import DesktopChapterNavigation from "./desktopChapterNavigation/DesktopChapterNavigation";
 import DesktopSettings from "./desktopSettings/DesktopSettings";
 import DesktopSettingsBurger from "./desktopSettingsBurger/DesktopSettingsBurger";
@@ -33,6 +35,7 @@ export type PageState = {
 };
 
 export type ReaderCtx = {
+  manga?: MangaInfo;
   settingsShown: boolean;
   setSettingsShown: (value: boolean) => void;
   controlsShown: boolean;
@@ -111,15 +114,15 @@ export default function Reader() {
     page ?? "1",
   );
   const [currentPage, setCurrentPage] = useState<string>(initialPage ?? "1");
-  const apiData = useApi<MangaInfo>(`/manga/${vendor}/${readSlug}`);
-
+  const apiData = useApi<MangaEndPointResponse>(`/manga/${vendor}/${readSlug}`);
+  const mangaData = apiData.data?.manga;
   const navigate = useNavigate();
-  const currentChapterIndex = apiData.data?.chapters.findIndex(
+  const currentChapterIndex = mangaData?.chapters.findIndex(
     c => c.name === chapter,
   );
-  const nextChapter = apiData.data?.chapters[currentChapterIndex - 1];
-  const currentChapter = apiData.data?.chapters[currentChapterIndex];
-  const previousChapter = apiData.data?.chapters[currentChapterIndex + 1];
+  const nextChapter = mangaData?.chapters[currentChapterIndex - 1];
+  const currentChapter = mangaData?.chapters[currentChapterIndex];
+  const previousChapter = mangaData?.chapters[currentChapterIndex + 1];
 
   const [loadPages, setLoadPages] = useState<{ [k: string]: PageState }>({});
 
@@ -154,36 +157,31 @@ export default function Reader() {
       return void history.replaceState(
         {},
         "",
-        `/read/${vendor}/${apiData.data.slug}/${currentChapter.name}/${page}`,
+        `/read/${vendor}/${mangaData.slug}/${currentChapter.name}/${page}`,
       );
     },
     [currentChapter, vendor, apiData],
   );
   const value: ReaderCtx = {
+    manga: mangaData,
     settingsShown,
     setSettingsShown: (value: boolean) => void setSettingsShown(value),
     controlsShown,
     setControlsShown: (value: boolean) => void setControlsShown(value),
     jumpChapter: useCallback(
       (offset: number) => {
-        if (!apiData.data) return;
+        if (!mangaData) return;
 
-        const jump = apiData.data.chapters[currentChapterIndex - offset];
+        const jump = mangaData.chapters[currentChapterIndex - offset];
         if (!jump) return;
         setDesktopControlsVisible(false);
         void setInitialPage("1");
         void setCurrentPage("1");
         return void navigate(
-          `/read/${vendor}/${apiData.data.slug}/${jump.name}/1`,
+          `/read/${vendor}/${mangaData.slug}/${jump.name}/1`,
         );
       },
-      [
-        chapter,
-        apiData.data,
-        currentChapterIndex,
-        setInitialPage,
-        setCurrentPage,
-      ],
+      [chapter, mangaData, currentChapterIndex, setInitialPage, setCurrentPage],
     ),
     jumpToFixedPage,
     nextChapter,
@@ -191,7 +189,7 @@ export default function Reader() {
     previousChapter,
     initialPage,
     setInitialPage,
-    chapters: apiData?.data?.chapters ?? [],
+    chapters: mangaData?.chapters ?? [],
     currentPage,
     setCurrentPage,
     chapterLoaded,
@@ -249,14 +247,14 @@ export default function Reader() {
   }, [desktopControlsVisible]);
 
   useEffect(() => {
-    if (!apiData.data || !currentChapter) return;
+    if (!mangaData || !currentChapter) return;
     // needs debounce for browser performance reasons
     void clearTimeout(__readerURLUpdater);
     __readerURLUpdater = setTimeout(() => {
       window.history.replaceState(
         {},
         "",
-        `/read/${vendor}/${apiData.data.slug}/${currentChapter.name}/${currentPage}`,
+        `/read/${vendor}/${mangaData.slug}/${currentChapter.name}/${currentPage}`,
       );
     }, 350);
 
@@ -268,13 +266,14 @@ export default function Reader() {
       ? readerCustomBackgroundColor
       : readerBackgroundColor ?? "#000";
 
-  if (apiData.loading === false && !apiData.data) {
+  if (apiData.loading === false && !mangaData) {
     return <E404 />;
   }
 
   return (
     <>
       <ReaderContext.Provider value={value}>
+        <ProgressSyncing />
         <KeyboardController />
         <div
           ref={scrollRef}
@@ -289,7 +288,7 @@ export default function Reader() {
           )}>
           <FloatingControls>
             <MainFloatingControls
-              type={apiData.data?.type ?? "unknown"}
+              type={mangaData?.type ?? "unknown"}
               slug={readSlug!}
             />
           </FloatingControls>
@@ -305,12 +304,12 @@ export default function Reader() {
               )}
               <RenderPages
                 hideControls={value.setControlsShown}
-                manga={apiData?.data}
+                manga={mangaData}
               />
               <DesktopChapterNavigation />
             </div>
             <aside className={classes.aside}>
-              <DesktopSettings vendor={vendor} manga={apiData.data ?? null} />
+              <DesktopSettings vendor={vendor} manga={mangaData ?? null} />
             </aside>
           </div>
           <SettingsContainer />

@@ -4,7 +4,12 @@ import Content from "./Content";
 import Modal from "../modal/Modal";
 import Chapters from "./Chapters";
 import useApi from "../../hooks/useApi";
-import { MangaInfo } from "../../types";
+import { MangaInfo, ProgressInfo } from "../../types";
+
+export type MangaEndPointResponse = {
+  manga: MangaInfo;
+  progress?: ProgressInfo;
+};
 
 export default function Info({
   layout,
@@ -44,7 +49,7 @@ function ShowModal({
   vendor: MangaInfo["vendor"];
 }) {
   const [shown, setShown] = useState(false);
-  const apiData = useApi<MangaInfo>(`/manga/${vendor}/${slug}`);
+  const apiData = useApi<MangaEndPointResponse>(`/manga/${vendor}/${slug}`);
   const navigate = useNavigate();
   /* useEffect(() => {
         if (!resolveVendorSlug) navigate("/?error=INVALID_VENDOR");
@@ -59,8 +64,7 @@ function ShowModal({
           setShown(false);
           navigate("/");
         }}
-        id="info-modal"
-      >
+        id="info-modal">
         <Content slug={slug} apiData={apiData} />
       </Modal>
     </>
@@ -85,8 +89,7 @@ const ChapterModal = React.memo(
       <Modal
         scaleElements={[document.getElementById("info-modal")]}
         shown={!!match}
-        onClose={() => navigate(`/manga/${vendor}/${slug}`)}
-      >
+        onClose={() => navigate(`/manga/${vendor}/${slug}`)}>
         {slug && (
           <Chapters
             vendor={vendor}
@@ -96,5 +99,5 @@ const ChapterModal = React.memo(
         )}
       </Modal>
     );
-  }
+  },
 );

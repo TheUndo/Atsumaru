@@ -2,16 +2,21 @@ import cors from "cors";
 import express from "express";
 import { getLatestUpdates } from "./actions/mangaSee";
 import manga from "./routes/manga";
-import { path } from "./utils";
+import { createBase } from "./utils";
 import dotenv from "dotenv";
 import anilistAuth from "./routes/auth/anilist";
 import cookieParser from "cookie-parser";
 import auth from "./middleware/auth";
 import myself from "./routes/auth/myself";
+import syncProgress from "./routes/user/syncProgrsss";
+import { Request } from "./types";
+import mangaSeeFront from "./routes/layouts/front/mangaSee";
 
 dotenv.config();
 
 const app = express();
+
+const base = createBase("v1");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -38,29 +43,22 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get(path("/auth/myself"), auth, myself);
+app.get(base("/auth/myself"), auth, myself);
+app.post(base("/user/sync-progress"), auth, syncProgress);
 
-app.get(path("/layout/:source/front"), async (_, res) => {
-  try {
-    const [latest] = await Promise.all([getLatestUpdates(32)]);
-
-    return void res.send({
-      layout: [
-        {
-          header: "Latest updates",
-          key: "latest-updates",
-          items: latest,
-        },
-      ],
-    });
-  } catch (e) {
-    return void res.status(500).send("error");
+app.get(base("/layout/:source/front"), auth, (req: Request, res) => {
+  switch (req.params.source) {
+    case "s1":
+      return mangaSeeFront(req, res);
+    default:
+      res.status(404).send("unknown source");
+      break;
   }
 });
 
 /* GET manga details */
-app.get(path("/manga/:source/:slug"), manga);
-app.post(path("/auth/anilist"), anilistAuth);
+app.get(base("/manga/:source/:slug"), auth, manga);
+app.post(base("/auth/anilist"), anilistAuth);
 
 app.all("*", (req, res) => {
   res.status(404).send("404");

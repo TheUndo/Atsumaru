@@ -64,6 +64,29 @@
       background: var(--bgShaded);
     }
   }
+  &.hoverReveal {
+    --offset: calc(1em / 2 + calc(var(--padding) * 0.8) / 2);
+    .iconCont {
+      opacity: 0;
+      transition: all 0.13s ease-in-out;
+      transform: translate(var(--offset)) scale(.6);
+      will-change: transform;
+    }
+    .text {
+      transition: transform 0.13s ease-in-out;
+      transform: translateX(var(--offset));
+      will-change: transform;
+    }
+    &:hover {
+      .iconCont {
+        opacity: 1;
+        transform: none;
+      }
+      .text {
+        transform: none;
+      }
+    }
+  }
 }
 .inner {
   position: relative;

@@ -63,7 +63,7 @@
   }
   :global(.button) {
     --padding: 0.5rem;
-    background: var(--accent);
+    background: var(--blue);
     svg {
       opacity: 0.4;
     }
@@ -88,6 +88,75 @@
       color: var(--color2);
       font-size: 1.1em;
       padding-bottom: 0.8em;
+    }
+  }
+}
+
+.progressIndicator {
+  position: relative;
+  padding: 1rem 0;
+  display: flex;
+  gap: 0.5rem;
+  .progressCont {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    .label {
+      position: absolute;
+      padding: 0.3em 0;
+      right: 0;
+      bottom: 0;
+      transform: translateY(100%);
+      color: var(--color2);
+      font-size: .8rem;
+    }
+    .progressToolTip {
+      position: absolute;
+      top: -.5em;
+      font-size: .8rem;
+      right: 0;
+      transform: translateX(50%) translateY(-100%);
+      padding: .3em;
+      background: #333;
+      border-radius: .3em;
+      color: #fff;
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(100%);
+        --arrow-size: 4px;
+        border-left: var(--arrow-size) solid transparent;
+        border-top: var(--arrow-size) solid #333;
+        border-right: var(--arrow-size) solid transparent;
+        border-bottom: var(--arrow-size) solid transparent;
+      }
+    }
+    .progressStrip {
+      box-shadow: 0 5px 10px -3px #000;
+      position: relative;
+      height: 18px;
+      width: 100%;
+      border-radius: 0.3em;
+      background: var(--button-bg);
+      overflow-y: visible;
+      --size: 5px;
+      .progressBar {
+        background-image: repeating-linear-gradient(
+          -45deg,
+          var(--accent),
+          var(--accent) var(--size),
+          var(--accent-complement) var(--size),
+          var(--accent-complement) calc(var(--size) * 2)
+        );
+        height: 100%;
+        position: relative;
+        min-width: 3%;
+        display: inline-block;
+        width: auto;
+      }
     }
   }
 }

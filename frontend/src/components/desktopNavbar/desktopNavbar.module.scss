@@ -60,8 +60,10 @@
 
 .item {
   :global(.button) {
+    display: block;
     background-color: transparent;
     transition: none;
+    padding: .8em;
     &:hover {
       background-color: var(--button-bg);
     }

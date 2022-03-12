@@ -1,11 +1,10 @@
 import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
-import Carousel, { CarouselItem } from "../../components/carousel/Carousel";
+import Carousel, { GenericItem } from "../../components/carousel/Carousel";
 import Debug from "../../components/debug/Debug";
 import Header from "../../components/header/Header";
 import Icon from "../../components/icon/Icon";
 import Info from "../../components/info/Info";
-import Layout from "../../components/layout/Layout";
 import Loading from "../../components/loading/Loading";
 import useApi from "../../hooks/useApi";
 import useOnline from "../../hooks/useOnline";
@@ -15,7 +14,7 @@ import classes from "./front.module.scss";
 export default function Front() {
   const online = useOnline();
   const { data, loading, error } = useApi<{
-    layout: CarouselItem[];
+    layout: GenericItem[];
   }>("/layout/s1/front", 1000 * 60 * 60 * 30);
   const { slug } = useParams();
   const layout = useRef<HTMLDivElement>(null);

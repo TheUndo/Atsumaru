@@ -7,7 +7,9 @@
   --color: #ccc;
   --color2: #fff;
 
-  --accent: #7069b5;
+  --accent-old: #7069b5;
+  --accent: #8e7ce6;
+  --accent-complement: rgb(102, 102, 179);
 
   --aspect-ratio: calc(352 / 500);
 
@@ -16,6 +18,8 @@
 
   --scrollbarBG: var(--bg);
   --thumbBG: #747474;
+
+  --blue: rgb(78, 103, 170);
 }
 
 html,

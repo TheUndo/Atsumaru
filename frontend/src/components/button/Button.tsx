@@ -16,6 +16,7 @@ type Props = {
   alignCenter?: boolean;
   circle?: boolean;
   transparent?: boolean;
+  hoverReveal?: boolean;
 } & Partial<React.ComponentProps<"button">> &
   Partial<React.ComponentProps<typeof Link>>;
 
@@ -34,6 +35,7 @@ const Button = (masterProps: Props) => {
     fullWidth,
     circle,
     transparent,
+    hoverReveal,
     ...props
   } = masterProps;
   const loc = iconLoc || "left";
@@ -46,10 +48,9 @@ const Button = (masterProps: Props) => {
         className={cm(
           classes.inner,
           legend && classes.hasLegend,
-          alignCenter && classes.alignCenter
+          alignCenter && classes.alignCenter,
         )}
-        ref={ripple}
-      >
+        ref={ripple}>
         {icon && loc === "left" && iconContent}
         {children && <div className={classes.text}>{children}</div>}
         {icon && loc === "right" && iconContent}
@@ -65,7 +66,8 @@ const Button = (masterProps: Props) => {
     circle && classes.circle,
     !!legend && classes.hasLegend,
     className,
-    transparent && classes.transparent
+    transparent && classes.transparent,
+    hoverReveal && classes.hoverReveal,
   );
 
   const button = (() => {
@@ -78,8 +80,7 @@ const Button = (masterProps: Props) => {
             style={css ?? {}}
             className={classNames}
             to={to}
-            {...(props as Omit<React.ComponentProps<typeof Link>, "to">)}
-          >
+            {...(props as Omit<React.ComponentProps<typeof Link>, "to">)}>
             {child}
           </Link>
         </>
@@ -92,8 +93,7 @@ const Button = (masterProps: Props) => {
             onMouseDown={event}
             style={css ?? {}}
             className={classNames}
-            {...(props as React.ComponentProps<"button">)}
-          >
+            {...(props as React.ComponentProps<"button">)}>
             {child}
           </button>
         </>

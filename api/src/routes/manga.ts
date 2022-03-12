@@ -1,27 +1,42 @@
 import * as express from "express";
 import mongo from "../db/mongo";
+import { ReadProgress, Request } from "../types";
+import { mongoCollectionByVendor } from "../utils";
 
-export default async function manga(req: express.Request, res: express.Response) {
+const vendor = "MANGASEE";
 
-    const db = await mongo();
+export default async function manga(req: Request, res: express.Response) {
+  const db = await mongo();
 
-    const { slug} = req.params;
+  const { slug } = req.params;
 
-    if (!slug)
-        return void res.status(404).send("not found");
+  if (!slug) return void res.status(404).send("invalid slug");
+  try {
+    const [manga, progress] = await Promise.all(
+      [
+        db.collection(mongoCollectionByVendor(vendor)).findOne({
+          slug,
+        }),
+        req.user &&
+          db.collection("readProgress").findOne<ReadProgress>({
+            mangaSlug: slug,
+            "user._id": req.user._id,
+          }),
+      ].filter(v => v instanceof Promise),
+    );
 
-    const manga = await db
-        .collection("mangaSee")
-        .findOne({
-            slug
-        });
-
-    if (!manga)
-        return void res.status(404).send("manga not found in db");
+    if (!manga) return void res.status(404).send("manga not found in db");
 
     return void res.send({
+      manga: {
         ...manga,
-        vendor: "MANGASEE"
+        vendor,
+      },
+      progress,
+      vendor,
     });
-
-} 
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("internal server error see logs");
+  }
+}

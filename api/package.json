@@ -13,6 +13,7 @@
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.12",
+    "@types/joi": "^17.2.3",
     "@types/mongodb": "^4.0.7",
     "nodemon": "^2.0.15"
   },
@@ -23,6 +24,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
+    "joi": "^17.6.0",
     "mongodb": "^4.3.1",
     "ts-node": "^10.4.0"
   }

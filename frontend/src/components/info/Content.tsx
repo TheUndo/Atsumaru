@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Chapter, MangaInfo } from "../../types";
+import useMedia from "../../hooks/useMedia";
+import { parseChapterName } from "../../pages/progressSyncing/ProgressSyncing";
+import { resolvePageUrlParameter } from "../../pages/read/helpers";
+import { Chapter, MangaInfo, ProgressInfo } from "../../types";
 import cm from "../../utils/classMerger";
+import getLatestProgress from "../../utils/getLatestProgress";
+import percentage from "../../utils/percentage";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
 import Button from "../button/Button";
 import Header from "../header/Header";
@@ -10,6 +15,7 @@ import Loading from "../loading/Loading";
 import Poster from "../poster/Poster";
 import { ChapterItem } from "./Chapters";
 import classes from "./content.module.scss";
+import { MangaEndPointResponse } from "./Info";
 
 export default function Content({
   apiData,
@@ -17,51 +23,63 @@ export default function Content({
 }: {
   slug?: string;
   apiData: {
-    data: MangaInfo;
+    data: MangaEndPointResponse;
     error: string | undefined;
     loading: boolean;
   };
 }) {
   const [bookmarked, setBookmarked] = useState(false);
   const { data, error, loading } = apiData;
-  const firstChapter = data?.chapters?.[data?.chapters?.length - 1];
+  const firstChapter =
+    data?.manga?.chapters?.[data?.manga?.chapters?.length - 1];
+
+  const latestProgress = data?.progress && getLatestProgress(data.progress);
+  const mobile = useMedia(["(max-width: 1000px)"], [true], false);
 
   return (
     <>
       <div className={classes.content}>
         <div className={classes.topSection}>
           <div className={classes.posterCont}>
-            <Poster manga={data} />
+            <Poster manga={data?.manga} />
           </div>
 
           <div className={classes.table}>
             {!error &&
               [
-                ["Alternative names", data?.alternativeNames?.join(", ")],
                 [
-                  `Author${data?.authors?.length > 1 ? "s" : ""}`,
-                  data?.authors?.join(", "),
+                  "Alternative names",
+                  data?.manga?.alternativeNames?.join(", "),
                 ],
                 [
-                  `Status${data?.statuses?.length > 1 ? "es" : ""}`,
+                  `Author${data?.manga?.authors?.length > 1 ? "s" : ""}`,
+                  data?.manga?.authors?.join(", "),
+                ],
+                [
+                  `Status${data?.manga?.statuses?.length > 1 ? "es" : ""}`,
                   <>
-                    {data?.statuses?.[0]}
-                    {data?.statuses?.[1] && (
+                    {data?.manga?.statuses?.[0]}
+                    {data?.manga?.statuses?.[1] && (
                       <>
                         ,<br />
                       </>
                     )}
-                    {data?.statuses?.[1]}
+                    {data?.manga?.statuses?.[1]}
                   </>,
                 ],
-                [`Released`, data?.release],
-                [`Type`, <Link to={`/type/${data?.type}}`}>{data?.type}</Link>],
+                [`Released`, data?.manga?.release],
+                [
+                  `Type`,
+                  <Link to={`/type/${data?.manga?.type}}`}>
+                    {data?.manga?.type}
+                  </Link>,
+                ],
                 [
                   `Official translation`,
-                  data?.officiallyTranslated === "unknown" &&
-                  data?.officiallyTranslated
+                  data?.manga?.officiallyTranslated === "unknown" &&
+                  data?.manga?.officiallyTranslated
                     ? "No"
-                    : data?.officiallyTranslated,
+                    : data?.manga?.officiallyTranslated,
                 ],
               ].map(
                 ([title, content], i) =>
@@ -70,7 +88,7 @@ export default function Content({
                       <div className={classes.head}>{title}</div>
                       <div className={classes.value}>{content}</div>
                     </div>
-                  )
+                  ),
               )}
           </div>
         </div>
@@ -79,11 +97,25 @@ export default function Content({
             <Loading key="loading" />
           ) : (
             <Header key="header" level={1}>
-              {error ? "404 - Manga not found" : data.title}
+              {error ? "404 - Manga not found" : data?.manga.title}
             </Header>
           )}
         </div>
+        {latestProgress && data.manga && (
+          <Progress
+            manga={data.manga}
+            mobile={mobile}
+            latest={latestProgress}
+          />
+        )}
         <div className={cm(classes.controls, "info-page-control")}>
+          {latestProgress && data.manga && mobile && (
+            <ResumeButton
+              slug={data.manga.slug}
+              vendor={data.manga.vendor}
+              latest={latestProgress}
+            />
+          )}
           <Button
             disabled={!!error}
             legend={
@@ -94,60 +126,144 @@ export default function Content({
                   (firstChapter?.name ?? "")
             }
             icon={<Icon icon="playSolid" />}
-            to={`/read/${resolveVendorSlug(apiData?.data?.vendor)}/${slug}/${
-              firstChapter?.name
-            }/1`}
-          ></Button>
+            to={`/read/${resolveVendorSlug(
+              apiData?.data?.manga?.vendor,
+            )}/${slug}/${firstChapter?.name}/1`}></Button>
           <Button
             disabled={!!error}
             legend={bookmarked ? "Bookmarked" : "Bookmark"}
             icon={
               <Icon icon={bookmarked ? "bookmarkSolid" : "bookmarkHollow"} />
             }
-            onClick={() => setBookmarked(!bookmarked)}
-          ></Button>
+            onClick={() => setBookmarked(!bookmarked)}></Button>
           <Button
             disabled={!!error}
             legend="Chapters"
-            to={`/manga/${resolveVendorSlug(apiData?.data?.vendor)}/${
-              data?.slug
+            to={`/manga/${resolveVendorSlug(apiData?.data?.manga?.vendor)}/${
+              data?.manga?.slug
             }/chapters`}
-            icon={<Icon icon="bulletList" />}
-          ></Button>
+            icon={<Icon icon="bulletList" />}></Button>
           <Button
             disabled={!!error}
             legend="Share"
-            icon={<Icon icon="share" />}
-          ></Button>
+            icon={<Icon icon="share" />}></Button>
           <Button
             disabled={!!error}
             legend="AniList"
             to="/"
-            icon={<Icon icon="external" />}
-          ></Button>
+            icon={<Icon icon="external" />}></Button>
           <Button
             disabled={!!error}
             legend="Report"
-            icon={<Icon icon="report" />}
-          ></Button>
+            icon={<Icon icon="report" />}></Button>
         </div>
         <div className={cm(classes.genres, "info-page-control")}>
-          {data?.genres?.map((genre) => (
+          {data?.manga?.genres?.map(genre => (
             <Genre key={genre} genre={genre} />
           ))}
         </div>
         <div className={classes.description}>
-          <p>{data?.description}</p>
+          <p>{data?.manga?.description}</p>
         </div>
-        {data?.chapters?.length && (
+        {data?.manga?.chapters?.length && (
           <SlicedChapters
-            vendor={data.vendor}
-            slug={data?.slug}
-            chapters={data.chapters}
+            vendor={data?.manga.vendor}
+            slug={data?.manga?.slug}
+            chapters={data?.manga.chapters}
           />
         )}
       </div>
     </>
+  );
+}
+
+type ProgressNode = {
+  chapter: string;
+  meta: {
+    page: string;
+    progress?: number | undefined;
+    date: string;
+  };
+};
+
+function Progress({
+  manga,
+  latest,
+  mobile,
+}: {
+  manga: MangaInfo;
+  latest: ProgressNode;
+  mobile: boolean;
+}) {
+  const percentage = useMemo(
+    () => calculateProgressPercentage(latest, manga),
+    [latest, manga],
+  );
+
+  return (
+    <div className={classes.progressIndicator}>
+      <div>
+        {!mobile && (
+          <ResumeButton
+            slug={manga.slug}
+            vendor={manga.vendor}
+            latest={latest}
+          />
+        )}
+      </div>
+      <div className={classes.progressCont}>
+        <div className={classes.progressStrip}>
+          <div className={classes.label}>100%</div>
+          <div
+            className={classes.progressBar}
+            style={{
+              width: percentage,
+              borderRadius: percentage !== "100%" ? `0.3em 0 0 0.3em` : ".3em",
+            }}>
+            <div className={classes.progressToolTip}>{percentage}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function calculateProgressPercentage(latest: ProgressNode, manga: MangaInfo) {
+  const parsed = parseChapterName(latest.chapter);
+  const idx = manga.chapters.findIndex(chapter => {
+    return chapter.name === parsed;
+  });
+
+  return idx < 0
+    ? "0%"
+    : idx === 0
+    ? "100%"
+    : percentage(idx / manga.chapters.length, 3) + "%";
+}
+
+function ResumeButton({
+  latest,
+  vendor,
+  slug,
+}: {
+  latest: ProgressNode;
+  vendor: MangaInfo["vendor"];
+  slug: string;
+}) {
+  return (
+    <Button
+      to={`/read/${resolveVendorSlug(vendor)}/${slug}/${
+        latest.chapter
+      }/${resolvePageUrlParameter(
+        parseInt(latest.meta.page) || 1,
+        latest.meta.progress,
+      )}`}
+      style={{ background: "var(--accent)" }}
+      iconLoc="right"
+      hoverReveal
+      icon={<Icon icon="playSolid" />}>
+      Resume from last
+    </Button>
   );
 }
 
@@ -167,7 +283,7 @@ function SlicedChapters({
         {chapters.length > 10 ? (
           <>
             <div className={classes.chapters}>
-              {chapters.slice(0, 5).map((chapter) => (
+              {chapters.slice(0, 5).map(chapter => (
                 <ChapterItem
                   vendor={vendor}
                   slug={slug}
@@ -178,7 +294,7 @@ function SlicedChapters({
             </div>
             <div className={classes.chapterEllipsis}>...</div>
             <div className={classes.chapters}>
-              {chapters.slice(-5).map((chapter) => (
+              {chapters.slice(-5).map(chapter => (
                 <ChapterItem
                   vendor={vendor}
                   slug={slug}
@@ -191,7 +307,7 @@ function SlicedChapters({
         ) : (
           <>
             <div className={classes.chapters}>
-              {chapters.map((chapter) => (
+              {chapters.map(chapter => (
                 <ChapterItem
                   vendor={vendor}
                   slug={slug}
@@ -205,8 +321,7 @@ function SlicedChapters({
         <Button
           icon={<Icon icon="bulletList" />}
           fullWidth
-          to={`/manga/${vendor}/${slug}/chapters`}
-        >
+          to={`/manga/${vendor}/${slug}/chapters`}>
           View all chapters
         </Button>
       </div>
@@ -217,7 +332,7 @@ function Genre({ genre }: { genre: string }) {
   return (
     <>
       <div className={classes.genre}>
-        <Button icon={<Icon icon="tag" />} to={`/genre/${genre}`}>
+        <Button icon={<Icon scale={0.8} icon="tag" />} to={`/genre/${genre}`}>
           {genre}
         </Button>
       </div>

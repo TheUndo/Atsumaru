@@ -12,5 +12,6 @@
  - [ ] Make reload buttons work on sliders
  - [ ] Create "grid" page for displaying posters in a grid, also used after clicking "view all" in sliders
  - [ ] User settings
- - [ ] Improve image prefecthing
+ - [ ] Improve image prefetching
  - [ ] Migrate to react-query
+ - [ ] Show chapter navigation when preview thumbnails are set to never show

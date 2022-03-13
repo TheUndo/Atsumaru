@@ -1,0 +1,15 @@
+# Todo
+ - [x] Anilist integration
+ - [ ] Refactor manga info modal
+ - [ ] Intensity slider for color modifiers in reader settings
+ - [ ] Chapter and page navigation on the top of reader settings drawer
+ - [ ] Anilist progress syncing
+ - [ ] "Hot/trending", "Manga", and "bookmarked" sliders for front page
+ - [ ] Refactor scraper to better allow for scraping multiple sources
+ - [ ] Resolve issues with MangaSee misnumbering chapters with prologues (see berserk as example)
+ - [ ] Change the style of chapter items in chapter modal to be slimmer, have progress indication and less boxy
+ - [ ] Add some kind of tooltip system
+ - [ ] Make reload buttons work on sliders
+ - [ ] Create "grid" page for displaying posters in a grid, also used after clicking "view all" in sliders
+ - [ ] User settings
+ - [ ] Improve image prefecthing

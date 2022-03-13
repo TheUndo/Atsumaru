@@ -12,7 +12,7 @@ import { Page } from "../../../types";
 import cm from "../../../utils/classMerger";
 import DesktopChapterIndicator from "../desktopChapterIndicator/DesktopChapterIndicator";
 import PageThumbnail from "../previewThumbnail/PreviewThumbnail";
-import { ReaderContext } from "../Reader";
+import { PageState, ReaderContext } from "../Reader";
 import classes from "./pagePreviewThumbnails.module.scss";
 
 export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
@@ -21,9 +21,9 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
   const { loadPages, currentPage } = useContext(ReaderContext);
 
   const maxPagesInARow: number = 13;
-  const currentPageNumber = parseInt(currentPage?.split("-")?.[0]!);
+  const currentPageNumber: number = parseInt(currentPage?.split("-")?.[0]!);
 
-  const getRowNumber = () =>
+  const getRowNumber = (): number =>
     !(currentPageNumber % maxPagesInARow)
       ? ~~(currentPageNumber / maxPagesInARow) - 1
       : ~~(currentPageNumber / maxPagesInARow);
@@ -35,11 +35,11 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
     setCurrentRowNumber(rowNumber);
   }, [currentPageNumber]);
 
-  const firstPageInRow = maxPagesInARow * currentRowNumber + 1;
-  const lastPageInRow = maxPagesInARow * (currentRowNumber + 1);
+  const firstPageInRow: number = maxPagesInARow * currentRowNumber + 1;
+  const lastPageInRow: number = maxPagesInARow * (currentRowNumber + 1);
 
-  const items = Object.values(loadPages);
-  const pageThumbnailsToShow = useMemo(
+  const items: PageState[] = Object.values(loadPages);
+  const pageThumbnailsToShow: PageState[] = useMemo(
     () => items.slice(firstPageInRow - 1, lastPageInRow),
     [items, firstPageInRow, lastPageInRow],
   );
@@ -50,9 +50,9 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
   const handleLeave = useCallback(() => {
     setShown(false);
   }, []);
-  const handleLeftPageButtonClick = () =>
+  const handleLeftPageButtonClick = (): void =>
     setCurrentRowNumber(currentRowNumber - 1);
-  const handleRightPageButtonClick = () =>
+  const handleRightPageButtonClick = (): void =>
     setCurrentRowNumber(currentRowNumber + 1);
 
   const resolvedShown =

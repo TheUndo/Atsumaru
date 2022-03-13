@@ -13,3 +13,4 @@
  - [ ] Create "grid" page for displaying posters in a grid, also used after clicking "view all" in sliders
  - [ ] User settings
  - [ ] Improve image prefecthing
+ - [ ] Migrate to react-query

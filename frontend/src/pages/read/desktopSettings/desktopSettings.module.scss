@@ -3,7 +3,7 @@
   height: 100%;
   z-index: 5;
   width: var(--width);
-  transition: width 0.25s ease-out 0.1s;
+  transition: width 0.5s cubic-bezier(.52,.06,.16,.99) 0.05s;
   box-shadow: 0 0 15px -2px #000;
 
   .desktopSettingsDrawer {
@@ -41,6 +41,7 @@
       pointer-events: none;
     }
     width: 0;
+    transition: width 0.3s  ease-out;
     .desktopSettingsInner {
       transform: translateX(100%);
     }

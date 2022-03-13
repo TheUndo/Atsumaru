@@ -111,8 +111,13 @@ export default function Content({
         <div className={cm(classes.controls, "info-page-control")}>
           {latestProgress && data.manga && mobile && (
             <ResumeButton
-              slug={data.manga.slug}
-              vendor={data.manga.vendor}
+              style={{
+                minWidth: "180px",
+                alignItems: "center",
+                display: "flex",
+              }}
+              alignCenter
+              manga={data.manga}
               latest={latestProgress}
             />
           )}
@@ -202,18 +207,17 @@ function Progress({
 
   return (
     <div className={classes.progressIndicator}>
-      <div>
-        {!mobile && (
-          <ResumeButton
-            slug={manga.slug}
-            vendor={manga.vendor}
-            latest={latest}
-          />
-        )}
-      </div>
+      {!mobile && (
+        <div>
+          <ResumeButton hoverReveal manga={manga} latest={latest} />
+        </div>
+      )}
+
       <div className={classes.progressCont}>
         <div className={classes.progressStrip}>
-          <div className={classes.label}>100%</div>
+          <div className={classes.label}>
+            {percentage !== "100%" ? "100%" : "You're all caught up"}
+          </div>
           <div
             className={classes.progressBar}
             style={{
@@ -238,30 +242,32 @@ function calculateProgressPercentage(latest: ProgressNode, manga: MangaInfo) {
     ? "0%"
     : idx === 0
     ? "100%"
-    : percentage(idx / manga.chapters.length, 3) + "%";
+    : percentage(1 - idx / manga.chapters.length, 3) + "%";
 }
 
 function ResumeButton({
   latest,
-  vendor,
-  slug,
+  manga,
+  style,
+  ...compProps
 }: {
   latest: ProgressNode;
-  vendor: MangaInfo["vendor"];
-  slug: string;
-}) {
+  manga: MangaInfo;
+} & React.ComponentProps<typeof Button>) {
   return (
     <Button
-      to={`/read/${resolveVendorSlug(vendor)}/${slug}/${
-        latest.chapter
+      to={`/read/${resolveVendorSlug(manga.vendor)}/${manga.slug}/${
+        manga.chapters.find(
+          chapter => chapter.name === parseChapterName(latest.chapter),
+        )?.name
       }/${resolvePageUrlParameter(
         parseInt(latest.meta.page) || 1,
         latest.meta.progress,
       )}`}
-      style={{ background: "var(--accent)" }}
+      style={{ background: "var(--accent)", ...(style ?? {}) }}
       iconLoc="right"
-      hoverReveal
-      icon={<Icon icon="playSolid" />}>
+      icon={<Icon icon="playSolid" />}
+      {...compProps}>
       Resume from last
     </Button>
   );

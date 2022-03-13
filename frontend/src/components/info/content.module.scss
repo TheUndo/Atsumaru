@@ -95,6 +95,9 @@
 .progressIndicator {
   position: relative;
   padding: 1rem 0;
+  @media screen and (max-width: 800px) {
+    padding: 2rem 2rem 2rem 2rem;
+  }
   display: flex;
   gap: 0.5rem;
   .progressCont {

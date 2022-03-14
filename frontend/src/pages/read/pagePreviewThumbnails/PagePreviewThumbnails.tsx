@@ -10,6 +10,7 @@ import Button from "../../../components/button/Button";
 import Icon from "../../../components/icon/Icon";
 import { Page } from "../../../types";
 import cm from "../../../utils/classMerger";
+import { clamp } from "../../../utils/utils";
 import DesktopChapterIndicator from "../desktopChapterIndicator/DesktopChapterIndicator";
 import PageThumbnail from "../previewThumbnail/PreviewThumbnail";
 import { PageState, ReaderContext } from "../Reader";
@@ -20,19 +21,32 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
   const [shown, setShown] = useState(false);
   const { loadPages, currentPage } = useContext(ReaderContext);
 
-  const maxPagesInARow: number = 13;
+  const calculateMaxPages = useCallback(() => {
+    return clamp(8, ~~(window.innerWidth / 110), 16);
+  }, []);
+
+  const [maxPagesInARow, setMaxPagesInARow] = useState(calculateMaxPages());
   const currentPageNumber: number = parseInt(currentPage?.split("-")?.[0]!);
+
+  useEffect(() => {
+    const event = () => {
+      setMaxPagesInARow(calculateMaxPages());
+    };
+    window.addEventListener("resize", event);
+    return () => window.removeEventListener("resize", event);
+  }, []);
 
   const getRowNumber = (): number =>
     !(currentPageNumber % maxPagesInARow)
       ? ~~(currentPageNumber / maxPagesInARow) - 1
       : ~~(currentPageNumber / maxPagesInARow);
 
-  const [currentRowNumber, setCurrentRowNumber] = useState<number>(0);
+  const [currentRowNumber, setCurrentRowNumber] = useState<number>(
+    getRowNumber(),
+  );
 
   useEffect(() => {
-    const rowNumber = getRowNumber();
-    setCurrentRowNumber(rowNumber);
+    setCurrentRowNumber(getRowNumber());
   }, [currentPageNumber]);
 
   const firstPageInRow: number = maxPagesInARow * currentRowNumber + 1;
@@ -79,23 +93,61 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
               settings?.readingDirection === "RIGHT-TO-LEFT" &&
                 classes.previewFlipped,
             )}>
-            <DesktopChapterIndicator items={items.length} shift={true} />
-            <Button
-              disabled={!currentRowNumber}
-              onClick={handleLeftPageButtonClick}
-              icon={<Icon icon="chevron" orientation="-.5turn" />}
+            <DesktopChapterIndicator
+              shownItems={pageThumbnailsToShow.length}
+              shift={true}
             />
-            {pageThumbnailsToShow.map((page, i) => {
-              return <PageThumbnail key={page.name} state={page} />;
+
+            {pageThumbnailsToShow.map((page, i, arr) => {
+              return (
+                <PageThumbnail key={page.name} state={page}>
+                  {i === 0 && (
+                    <NavigationButton
+                      loc="Left"
+                      button={
+                        <Button
+                          disabled={!currentRowNumber}
+                          onClick={handleLeftPageButtonClick}
+                          icon={<Icon icon="chevron" orientation="-.5turn" />}
+                        />
+                      }
+                    />
+                  )}
+                  {i === arr.length - 1 && (
+                    <NavigationButton
+                      loc="Right"
+                      button={
+                        <Button
+                          onClick={handleRightPageButtonClick}
+                          disabled={
+                            (currentRowNumber + 1) * maxPagesInARow >=
+                            items.length
+                          }
+                          icon={<Icon icon="chevron" />}
+                        />
+                      }
+                    />
+                  )}
+                </PageThumbnail>
+              );
             })}
-            <Button
-              onClick={handleRightPageButtonClick}
-              disabled={(currentRowNumber + 1) * maxPagesInARow >= items.length}
-              icon={<Icon icon="chevron" orientation="" />}
-            />
           </div>
         </div>
       </div>
     </>
+  );
+}
+
+function NavigationButton({
+  button,
+  loc,
+}: {
+  button: ReturnType<typeof Button>;
+  loc: "Left" | "Right";
+}) {
+  return (
+    <div className={cm(classes.navButton, classes[`navButton${loc}`])}>
+      {button}
+    </div>
   );
 }

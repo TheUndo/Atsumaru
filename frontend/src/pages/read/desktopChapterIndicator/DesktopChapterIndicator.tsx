@@ -7,10 +7,10 @@ import classes from "./desktopChapterIndicator.module.scss";
 
 export default function DesktopChapterIndicator({
   shift,
-  items,
+  shownItems,
 }: {
   shift: boolean;
-  items: number;
+  shownItems: number;
 }) {
   const { jumpChapter, desktopControlsVisible, currentChapter, chapters } =
     useContext(ReaderContext);
@@ -21,17 +21,15 @@ export default function DesktopChapterIndicator({
         className={classes.pusher}
         style={
           {
-            "--paddingBottom": `calc(100% / ${items})`,
+            "--paddingBottom": `calc(100% / ${shownItems})`,
           } as any
-        }
-      >
+        }>
         <div
           className={cm(
             classes.desktopChapterIndicator,
             shift && classes.desktopChapterIndicatorShifted,
-            !shift && !desktopControlsVisible && classes.desktopChapterHidden
-          )}
-        >
+            !shift && !desktopControlsVisible && classes.desktopChapterHidden,
+          )}>
           <Button
             disabled={currentChapter?.name === chapters[chapters.length]?.name}
             onClick={() => jumpChapter?.(-1)}

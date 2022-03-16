@@ -76,6 +76,20 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
       ? false
       : shown;
 
+  const firstReadingDirection = settings?.readingDirection
+    .split("-")?.[0]
+    .toLowerCase()!;
+  const navigationButtonsLocation = ["left", "top"].includes(
+    firstReadingDirection,
+  )
+    ? ["left", "right"]
+    : ["right", "left"];
+  const navButtonIconsOrientation = ["left", "top"].includes(
+    firstReadingDirection,
+  )
+    ? ["-.5turn", undefined]
+    : [undefined, "-.5turn"];
+
   return (
     <>
       <div
@@ -103,19 +117,24 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
                 <PageThumbnail key={page.name} state={page}>
                   {i === 0 && (
                     <NavigationButton
-                      loc="Left"
+                      loc={navigationButtonsLocation[0] as "left" | "right"}
                       button={
                         <Button
                           disabled={!currentRowNumber}
                           onClick={handleLeftPageButtonClick}
-                          icon={<Icon icon="chevron" orientation="-.5turn" />}
+                          icon={
+                            <Icon
+                              icon="chevron"
+                              orientation={navButtonIconsOrientation[0]}
+                            />
+                          }
                         />
                       }
                     />
                   )}
                   {i === arr.length - 1 && (
                     <NavigationButton
-                      loc="Right"
+                      loc={navigationButtonsLocation[1] as "left" | "right"}
                       button={
                         <Button
                           onClick={handleRightPageButtonClick}
@@ -123,7 +142,12 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
                             (currentRowNumber + 1) * maxPagesInARow >=
                             items.length
                           }
-                          icon={<Icon icon="chevron" />}
+                          icon={
+                            <Icon
+                              icon="chevron"
+                              orientation={navButtonIconsOrientation[1]}
+                            />
+                          }
                         />
                       }
                     />
@@ -143,10 +167,10 @@ function NavigationButton({
   loc,
 }: {
   button: ReturnType<typeof Button>;
-  loc: "Left" | "Right";
+  loc: "left" | "right";
 }) {
   return (
-    <div className={cm(classes.navButton, classes[`navButton${loc}`])}>
+    <div className={cm(classes.navButton, classes[`navButton-${loc}`])}>
       {button}
     </div>
   );

@@ -26,13 +26,13 @@ export default function PageThumbnail({
           classes.pageThumbnail,
           isHover && classes.isHover,
           currentResolvedPage === state.name && classes.pageThumbnailActive,
-        )}
-        onClick={() => jumpToFixedPage(state.name)}>
+        )}>
         {children}
         <div
           onMouseDown={event}
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
+          onClick={() => jumpToFixedPage(state.name)}
           className={classes.pageThumbnailContent}
           style={{
             backgroundImage: state?.loaded ? `url("${state.src}")` : "none",

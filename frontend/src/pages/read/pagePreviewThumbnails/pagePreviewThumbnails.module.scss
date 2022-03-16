@@ -42,11 +42,11 @@
     bottom: 0;
     flex: 1;
     padding-bottom: calc(var(--ratio) * 100% + 6px);
-    &.navButtonRight {
+    &.navButton-right {
       right: 0;
       transform: translateX(calc(100% + 0.25rem));
     }
-    &.navButtonLeft {
+    &.navButton-left {
       left: 0;
       transform: translateX(calc(-100% - 0.25rem));
     }
@@ -57,7 +57,7 @@
       top: 50%;
       transform: translateY(-50%);
     }
-    &.navButtonLeft > *:first-child {
+    &.navButton-left > *:first-child {
       right: 0;
     }
   }

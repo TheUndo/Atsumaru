@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useOnline from "../../../hooks/useOnline";
 import { Page } from "../../../types";
 import { loadPagesSequentially, parsePageUrlParameter } from "../helpers";
@@ -12,9 +12,16 @@ export default function Pages({
   pages: Page[];
   chapterName: string;
 }) {
-  const { setLoadPages, loadPages, currentPage, initialPage } =
-    useContext(ReaderContext);
+  const {
+    setLoadPages,
+    loadPages,
+    currentPage,
+    initialPage,
+    nextChapter,
+    currentChapter,
+  } = useContext(ReaderContext);
   const online = useOnline();
+  const [preloading, setPreloading] = useState<string>();
   const [page] = parsePageUrlParameter((initialPage || currentPage) ?? "1");
   const pageIndex = pages.findIndex(
     pageIteration => pageIteration.name === page,
@@ -52,6 +59,20 @@ export default function Pages({
       );
     }
   }, [pages, initialPage, page, online]);
+
+  useEffect(() => {
+    const done = Object.values(loadPages).every(page => page.loaded);
+
+    if (
+      done &&
+      nextChapter?.pages.length &&
+      preloading !== currentChapter?.name
+    ) {
+      console.warn("[WARNING] preloading next chapter", nextChapter);
+      setPreloading(currentChapter?.name);
+      loadPagesSequentially(4, nextChapter.pages, 0, (page) => void console.log("Preloaded page", page.name));
+    }
+  }, [loadPages, nextChapter, preloading]);
 
   return (
     <>

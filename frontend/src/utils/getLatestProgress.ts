@@ -11,3 +11,11 @@ export default function getLatestProgress(progress: ProgressInfo) {
     meta,
   };
 }
+export function getSpecificProgress(progress: ProgressInfo, idx: number) {
+  const [chapter, meta] = Object.entries(progress.chapterProgress)?.[idx] ?? [];
+
+  return {
+    chapter,
+    meta,
+  };
+}

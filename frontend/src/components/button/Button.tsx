@@ -17,6 +17,7 @@ type Props = {
   circle?: boolean;
   transparent?: boolean;
   hoverReveal?: boolean;
+  noHoverEffect?: boolean;
 } & Partial<React.ComponentProps<"button">> &
   Partial<React.ComponentProps<typeof Link>>;
 
@@ -36,6 +37,7 @@ const Button = (masterProps: Props) => {
     circle,
     transparent,
     hoverReveal,
+    noHoverEffect,
     ...props
   } = masterProps;
   const loc = iconLoc || "left";
@@ -68,6 +70,7 @@ const Button = (masterProps: Props) => {
     className,
     transparent && classes.transparent,
     hoverReveal && classes.hoverReveal,
+    noHoverEffect && classes.noHoverEffect,
   );
 
   const button = (() => {

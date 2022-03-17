@@ -172,6 +172,7 @@ export default function Content({
         </div>
         {data?.manga?.chapters?.length && (
           <SlicedChapters
+            progress={data?.progress}
             vendor={data?.manga.vendor}
             slug={data?.manga?.slug}
             chapters={data?.manga.chapters}
@@ -277,10 +278,12 @@ function SlicedChapters({
   slug,
   chapters,
   vendor,
+  progress,
 }: {
   slug: string;
   chapters: Chapter[];
   vendor: MangaInfo["vendor"];
+  progress: ProgressInfo | undefined;
 }) {
   return (
     <>
@@ -295,6 +298,7 @@ function SlicedChapters({
                   slug={slug}
                   chapter={chapter}
                   key={chapter.name}
+                  progress={progress}
                 />
               ))}
             </div>
@@ -302,6 +306,7 @@ function SlicedChapters({
             <div className={classes.chapters}>
               {chapters.slice(-5).map(chapter => (
                 <ChapterItem
+                  progress={progress}
                   vendor={vendor}
                   slug={slug}
                   chapter={chapter}
@@ -315,6 +320,7 @@ function SlicedChapters({
             <div className={classes.chapters}>
               {chapters.map(chapter => (
                 <ChapterItem
+                  progress={progress}
                   vendor={vendor}
                   slug={slug}
                   chapter={chapter}

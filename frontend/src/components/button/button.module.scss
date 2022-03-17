@@ -45,7 +45,7 @@
     text-align: center;
     left: 50%;
   }
-  &:hover {
+  &:not(.noHoverEffect):hover {
     filter: drop-shadow(0 1px 2px #111);
     background: var(--bgShaded);
   }
@@ -59,7 +59,7 @@
   }
   &.transparent {
     background: transparent;
-    &:hover {
+    &:not(.noHoverEffect):hover {
       filter: drop-shadow(0 1px 2px #111);
       background: var(--bgShaded);
     }
@@ -69,7 +69,7 @@
     .iconCont {
       opacity: 0;
       transition: all 0.13s ease-in-out;
-      transform: translate(var(--offset)) scale(.6);
+      transform: translate(var(--offset)) scale(0.6);
       will-change: transform;
     }
     .text {

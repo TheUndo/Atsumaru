@@ -17,11 +17,6 @@ export default function Info({
   layout: React.RefObject<HTMLDivElement>;
 }) {
   const { mangaSlug, vendor } = useParams();
-  //const [slugs, setSlugs] = useState<string[]>(mangaSlug ? [mangaSlug] : []);
-  /* useEffect(() => {
-        if (!mangaSlug) return;
-        setSlugs((prev) => [...new Set([...prev, mangaSlug])]);
-    }, [mangaSlug]); */
 
   return (
     <>
@@ -48,12 +43,9 @@ function ShowModal({
   layout: React.RefObject<HTMLDivElement>;
   vendor: MangaInfo["vendor"];
 }) {
-  const [shown, setShown] = useState(false);
+  //const [shown, setShown] = useState(false);
   const apiData = useApi<MangaEndPointResponse>(`/manga/${vendor}/${slug}`);
   const navigate = useNavigate();
-  /* useEffect(() => {
-        if (!resolveVendorSlug) navigate("/?error=INVALID_VENDOR");
-    }, [vendor]); */
 
   return (
     <>
@@ -61,7 +53,7 @@ function ShowModal({
         shown={!!slug}
         scaleElements={[layout.current]}
         onClose={() => {
-          setShown(false);
+          //setShown(false);
           navigate("/");
         }}
         id="info-modal">
@@ -83,7 +75,7 @@ const ChapterModal = React.memo(
   }) => {
     const navigate = useNavigate();
     const match = useMatch(`/manga/${vendor}/:mangaSlug/chapters`);
-    const apiData = useApi<MangaInfo>(`/manga/${vendor}/${slug}`);
+    const apiData = useApi<MangaEndPointResponse>(`/manga/${vendor}/${slug}`);
 
     return (
       <Modal
@@ -94,7 +86,8 @@ const ChapterModal = React.memo(
           <Chapters
             vendor={vendor}
             slug={slug}
-            chapters={apiData?.data?.chapters}
+            chapters={apiData?.data?.manga?.chapters}
+            progress={apiData?.data?.progress}
           />
         )}
       </Modal>

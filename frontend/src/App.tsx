@@ -13,6 +13,7 @@ import Layout, { GenericPage } from "./components/layout/Layout";
 import Signup from "./components/signup/Signup";
 import Button from "./components/button/Button";
 import useApi from "./hooks/useApi";
+import SliderRadio from "./components/SliderRadio/SliderRadio";
 /* import { registerSW } from "virtual:pwa-register"; */
 
 /* if ("serviceWorker" in navigator) {
@@ -148,7 +149,14 @@ function App() {
 function Test() {
   const navigate = useNavigate();
 
-  return <Button onClick={() => navigate("/")}>test</Button>;
+  return (
+    <>
+      <Button onClick={() => navigate("/")}></Button>
+    {/* <SliderRadio>
+      
+    </SliderRadio> */}
+    </>
+  );
 }
 
 dom.render(<App />, document.getElementById("root"));

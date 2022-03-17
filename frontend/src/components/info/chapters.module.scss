@@ -14,7 +14,14 @@
   flex-direction: column;
   row-gap: 0.5rem;
 }
-
+.chapter {
+  border-radius: 0.25em;
+  position: relative;
+  background: var(--button-bg);
+  &:hover {
+    background: var(--bgShaded);
+  }
+}
 .chapterName {
   text-align: left;
   position: relative;
@@ -27,4 +34,18 @@
   .date {
     color: var(--color);
   }
+}
+.button {
+  display: block;
+}
+.chapterProgress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  opacity: 0.5;
+  width: 0;
+  height: 100%;
+  transition: width 0.2s ease-in-out;
 }

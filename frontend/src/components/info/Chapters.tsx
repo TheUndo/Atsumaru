@@ -1,6 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { Chapter, MangaInfo } from "../../types";
+import useTimeout from "../../hooks/useTimeout";
+import { parseChapterName } from "../../pages/progressSyncing/ProgressSyncing";
+import { resolvePageUrlParameter } from "../../pages/read/helpers";
+import { Chapter, MangaInfo, ProgressInfo } from "../../types";
+import { getSpecificProgress } from "../../utils/getLatestProgress";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
 import Button from "../button/Button";
 import Header from "../header/Header";
@@ -11,9 +15,10 @@ type Props = {
   chapters: Chapter[];
   slug: string;
   vendor: MangaInfo["vendor"];
+  progress: ProgressInfo | undefined;
 };
 
-export default function Chapters({ chapters, slug, vendor }: Props) {
+export default function Chapters({ chapters, slug, vendor, progress }: Props) {
   const [sort, setSort] = useLocalStorage("manga-sort-chapters");
   const id = useMemo(() => Math.random() + "", []);
 
@@ -21,7 +26,7 @@ export default function Chapters({ chapters, slug, vendor }: Props) {
   const reversed = useMemo(() => chapters?.slice(0).reverse(), [chapters]);
   const sorted = useMemo(
     () => (sort === "asc" ? reversed : chapters) ?? [],
-    [reversed, chapters, sort]
+    [reversed, chapters, sort],
   );
   return (
     <>
@@ -43,8 +48,7 @@ export default function Chapters({ chapters, slug, vendor }: Props) {
             }
             iconLoc="right"
             label="Sort"
-            onClick={() => setSort(sort === "asc" ? "desc" : "asc")}
-          >
+            onClick={() => setSort(sort === "asc" ? "desc" : "asc")}>
             {sort === "asc" ? "Ascending" : "Descending"}
           </Button>
         </div>
@@ -52,6 +56,7 @@ export default function Chapters({ chapters, slug, vendor }: Props) {
           <div className={classes?.content}>
             {sorted.map((chapter, i, arr) => (
               <ChapterItem
+                progress={progress}
                 vendor={vendor}
                 slug={slug}
                 key={i + id}
@@ -69,19 +74,55 @@ export function ChapterItem({
   chapter,
   slug,
   vendor,
+  progress,
 }: {
   slug: string;
   chapter: Chapter;
   vendor: MangaInfo["vendor"];
+  progress: ProgressInfo | undefined;
 }) {
+  const progressNode =
+    progress?.chapterProgress &&
+    getSpecificProgress(
+      progress,
+      Object.keys(progress.chapterProgress).findIndex(
+        name => parseChapterName(name) === parseChapterName(chapter.name),
+      ),
+    );
+
+  const [showProgress, setShowProgress] = useState(false);
+  useTimeout(() => void setShowProgress(true), 10);
+
+  const cssProgress = progressNode?.meta?.page
+    ? `calc((${chapter.pages.findIndex(
+        page => progressNode?.meta.page === page.name,
+      )} + 1) / ${chapter.pages.length} * 100%)`
+    : chapter && progressNode?.meta?.progress
+    ? `calc(${progressNode.meta.progress} * 100%)`
+    : "0";
+
   return (
     <>
       <div className={classes.chapter}>
+        {progressNode && (
+          <div
+            className={classes.chapterProgress}
+            style={{
+              width: showProgress ? cssProgress || "0" : "0",
+            }}></div>
+        )}
         <Button
-          to={`/read/${resolveVendorSlug(vendor)}/${slug}/${chapter.name}/${1}`}
+          noHoverEffect
+          transparent
+          to={`/read/${resolveVendorSlug(vendor)}/${slug}/${
+            chapter.name
+          }/${resolvePageUrlParameter(
+            parseInt(progressNode?.meta?.page ?? "1") || 1,
+            progressNode?.meta?.progress,
+          )}`}
           fullWidth
           icon={<Icon icon="playSolid" />}
-        >
+          className={classes.button}>
           <div className={classes.chapterName}>
             <div className={classes.text}>
               {chapter.type || "Chapter"} {chapter.name}

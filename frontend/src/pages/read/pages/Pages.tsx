@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import useOnline from "../../../hooks/useOnline";
 import { Page } from "../../../types";
-import { loadPagesSequentially } from "../helpers";
+import { loadPagesSequentially, parsePageUrlParameter } from "../helpers";
 import PageItem from "../pageItem/PageItem";
 import { ReaderContext } from "../Reader";
 
@@ -12,34 +12,46 @@ export default function Pages({
   pages: Page[];
   chapterName: string;
 }) {
-  const { setLoadPages, loadPages } = useContext(ReaderContext);
+  const { setLoadPages, loadPages, currentPage, initialPage } =
+    useContext(ReaderContext);
   const online = useOnline();
+  const [page] = parsePageUrlParameter((initialPage || currentPage) ?? "1");
+  const pageIndex = pages.findIndex(
+    pageIteration => pageIteration.name === page,
+  );
 
   useEffect(() => {
-    loadPagesSequentially(4, pages, (page, src) => {
-      if (src)
-        setLoadPages?.((prev) => ({
-          ...prev,
-          [page.name]: {
-            ...prev[page.name],
-            src,
-            loaded: true,
-            loading: false,
-            failed: false,
-          },
-        }));
-      else
-        setLoadPages?.((prev) => ({
-          ...prev,
-          [page.name]: {
-            ...prev[page.name],
-            loaded: true,
-            loading: false,
-            failed: true,
-          },
-        }));
-    });
-  }, [pages, online]);
+    if (initialPage) {
+      loadPagesSequentially(
+        4,
+        pages,
+        pageIndex < 0 ? 0 : pageIndex,
+        (page, src) => {
+          if (src)
+            setLoadPages?.(prev => ({
+              ...prev,
+              [page.name]: {
+                ...prev[page.name],
+                src,
+                loaded: true,
+                loading: false,
+                failed: false,
+              },
+            }));
+          else
+            setLoadPages?.(prev => ({
+              ...prev,
+              [page.name]: {
+                ...prev[page.name],
+                loaded: true,
+                loading: false,
+                failed: true,
+              },
+            }));
+        },
+      );
+    }
+  }, [pages, initialPage, page, online]);
 
   return (
     <>

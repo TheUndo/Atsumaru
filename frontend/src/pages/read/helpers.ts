@@ -1,14 +1,17 @@
 import { Page } from "../../types";
-import chunk from "../../utils/chunk";
+import { priorityChunking } from "../../utils/chunk";
 import { clamp } from "../../utils/utils";
 
 /** helper */
 export async function loadPagesSequentially(
   chunkSize: number,
   pages: Page[],
-  onload: (page: Page, src?: string) => void
+  prioritize: number,
+  onload: (page: Page, src?: string) => void,
 ) {
-  for (const c of chunk(pages, chunkSize)) {
+  const chunks = priorityChunking(prioritize, pages, chunkSize);
+  console.log(chunks, prioritize);
+  for (const c of chunks) {
     await Promise.all(loadPageChunk(c, onload));
   }
 }
@@ -16,17 +19,17 @@ export async function loadPagesSequentially(
 /** helper */
 export function loadPageChunk(
   chunk: Page[],
-  onload: (page: Page, src?: string) => void
+  onload: (page: Page, src?: string) => void,
 ) {
-  return chunk.map((page) => loadPage(page, onload));
+  return chunk.map(page => loadPage(page, onload));
 }
 /** helper */
 export async function loadPage(
   page: Page,
-  onload: (page: Page, src?: string) => void
+  onload: (page: Page, src?: string) => void,
 ) {
   for (const src of page.pageURLs) {
-    const attempt = await new Promise<string | null>((res) => {
+    const attempt = await new Promise<string | null>(res => {
       const image = new Image();
       image.addEventListener("load", () => res(src));
       image.addEventListener("error", () => res(null));
@@ -40,7 +43,7 @@ export async function loadPage(
 
 export function parsePageUrlParameter(page: string) {
   const [pageNumber, progress] = ["1", undefined].map(
-    (_, i) => page.split("-")[i]
+    (_, i) => page.split("-")[i],
   );
   return [pageNumber, progress?.replace("_", ".") ?? undefined];
 }

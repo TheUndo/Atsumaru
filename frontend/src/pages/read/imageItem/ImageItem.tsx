@@ -5,7 +5,11 @@ import Icon from "../../../components/icon/Icon";
 import Loading from "../../../components/loading/Loading";
 import { Page } from "../../../types";
 import cm from "../../../utils/classMerger";
-import { loadPage, loadPagesSequentially } from "../helpers";
+import {
+  loadPage,
+  loadPagesSequentially,
+  parsePageUrlParameter,
+} from "../helpers";
 import { PageState, ReaderContext } from "../Reader";
 import classes from "./imageItem.module.scss";
 import pageClasses from "../pageItem/pageItem.module.scss";
@@ -15,10 +19,14 @@ export default function ImageItem({
   ...state
 }: PageState & { page: Page }) {
   const { loading, failed, src } = state;
-  const { setLoadPages, loadPages, currentChapter } = useContext(ReaderContext);
+  const { setLoadPages, loadPages, currentChapter, currentPage } =
+    useContext(ReaderContext);
   const [{ imageFitMethod, readingDirection }] = useContext(AppContext)
     ?.settings ?? [{}];
-
+  const [currentParsedPage] = parsePageUrlParameter(currentPage ?? "1");
+  const pageIndex = currentChapter?.pages.findIndex(
+    pageIteration => pageIteration.name === currentParsedPage,
+  );
   return (
     <>
       {loading ? (
@@ -34,9 +42,9 @@ export default function ImageItem({
               <Button
                 className={cm("reader-control-button")}
                 icon={<Icon icon="reload" />}
-                onClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
-                  setLoadPages?.((prev) => ({
+                  setLoadPages?.(prev => ({
                     ...prev,
                     [page.name]: {
                       ...prev[page.name],
@@ -47,7 +55,7 @@ export default function ImageItem({
                   }));
                   loadPage(page, (page, src) => {
                     if (src)
-                      setLoadPages?.((prev) => ({
+                      setLoadPages?.(prev => ({
                         ...prev,
                         [page.name]: {
                           ...prev[page.name],
@@ -58,7 +66,7 @@ export default function ImageItem({
                         },
                       }));
                     else
-                      setLoadPages?.((prev) => ({
+                      setLoadPages?.(prev => ({
                         ...prev,
                         [page.name]: {
                           ...prev[page.name],
@@ -68,30 +76,30 @@ export default function ImageItem({
                         },
                       }));
                   });
-                }}
-              >
+                }}>
                 Retry
               </Button>
             </div>
             <div>
-              {Object.values(loadPages).filter((v) => v.failed).length > 1 && (
+              {Object.values(loadPages).filter(v => v.failed).length > 1 && (
                 <Button
                   style={{
                     marginTop: ".5rem",
                   }}
                   className={cm("reader-control-button")}
                   icon={<Icon icon="reload" />}
-                  onClick={(e) => {
+                  onClick={e => {
                     if (!currentChapter) return;
                     e.stopPropagation();
                     loadPagesSequentially(
                       4,
                       currentChapter.pages.filter(
-                        (page) => loadPages[page.name]?.failed
+                        page => loadPages[page.name]?.failed,
                       ),
+                      (pageIndex ?? -1) < 0 ? 0 : pageIndex ?? 0,
                       (page, src) => {
                         if (src)
-                          setLoadPages?.((prev) => ({
+                          setLoadPages?.(prev => ({
                             ...prev,
                             [page.name]: {
                               ...prev[page.name],
@@ -102,7 +110,7 @@ export default function ImageItem({
                             },
                           }));
                         else
-                          setLoadPages?.((prev) => ({
+                          setLoadPages?.(prev => ({
                             ...prev,
                             [page.name]: {
                               ...prev[page.name],
@@ -111,10 +119,9 @@ export default function ImageItem({
                               failed: true,
                             },
                           }));
-                      }
+                      },
                     );
-                  }}
-                >
+                  }}>
                   Retry all failed
                 </Button>
               )}
@@ -127,15 +134,13 @@ export default function ImageItem({
           style={{
             backgroundImage: `url("${encodeURI(src!)}")`,
           }}
-          className={pageClasses.img}
-        ></div>
+          className={pageClasses.img}></div>
       ) : (
         <div
           className={cm(
             pageClasses.imgContainer,
-            imageFitMethod === "TO-HEIGHT" && pageClasses.imageFitToHeight
-          )}
-        >
+            imageFitMethod === "TO-HEIGHT" && pageClasses.imageFitToHeight,
+          )}>
           <img src={src} />
         </div>
       )}

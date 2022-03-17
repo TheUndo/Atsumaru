@@ -37,4 +37,28 @@
     pointer-events: none;
     transform: scale(0.98);
   }
+  .navButton {
+    position: absolute;
+    bottom: 0;
+    flex: 1;
+    padding-bottom: calc(var(--ratio) * 100% + 6px);
+    &.navButton-right {
+      right: 0;
+      transform: translateX(calc(100% + 0.25rem));
+    }
+    &.navButton-left {
+      left: 0;
+      transform: translateX(calc(-100% - 0.25rem));
+    }
+    width: calc(100% - 0.25rem);
+    > *:first-child {
+      height: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &.navButton-left > *:first-child {
+      right: 0;
+    }
+  }
 }

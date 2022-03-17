@@ -40,9 +40,12 @@
     .pageThumbnailLabel {
       position: absolute;
       bottom: -0.2em;
+      border-radius: .2em;
       transform: translateY(100%) translateX(-50%);
       pointer-events: none;
       color: rgb(235, 235, 235);
+      background-color: var(--button-bg);
+      width: inherit;
       transition: color 0.1s ease-in-out;
       text-align: center;
       left: 50%;
@@ -50,7 +53,7 @@
       font-size: clamp(0.8rem, 1vw, 1.2rem);
     }
   }
-  &:hover {
+  &.isHover {
     flex: 1;
     padding: 0 1rem;
     .pageThumbnailContent {
@@ -67,7 +70,8 @@
     .pageThumbnailContent {
       border-color: var(--accent);
       .pageThumbnailLabel {
-        color: var(--accent);
+        background-color: var(--accent);
+        color: rgb(235, 235, 235);
       }
     }
   }

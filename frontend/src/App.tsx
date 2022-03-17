@@ -15,7 +15,7 @@ import Button from "./components/button/Button";
 import useApi from "./hooks/useApi";
 /* import { registerSW } from "virtual:pwa-register"; */
 
-if ("serviceWorker" in navigator) {
+/* if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/sw.js");
 
   navigator.serviceWorker.ready.then(sw => {
@@ -24,7 +24,7 @@ if ("serviceWorker" in navigator) {
       src: "https://scans-ongoing-2.planeptune.us/manga/Yuusha-Shoutai-Kamoku-Yuusha-Wa/0001-001.png",
     });
   });
-}
+} */
 
 /* downloadFile(
     "https://scans-ongoing-2.planeptune.us/manga/Yuusha-Shoutai-Kamoku-Yuusha-Wa/0001-001.png"

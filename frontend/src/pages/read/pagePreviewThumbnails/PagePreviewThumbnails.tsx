@@ -36,10 +36,13 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
     return () => window.removeEventListener("resize", event);
   }, []);
 
-  const getRowNumber = (): number =>
-    !(currentPageNumber % maxPagesInARow)
-      ? ~~(currentPageNumber / maxPagesInARow) - 1
-      : ~~(currentPageNumber / maxPagesInARow);
+  const getRowNumber = useCallback(
+    () =>
+      !(currentPageNumber % maxPagesInARow)
+        ? ~~(currentPageNumber / maxPagesInARow) - 1
+        : ~~(currentPageNumber / maxPagesInARow),
+    [currentPageNumber, maxPagesInARow],
+  );
 
   const [currentRowNumber, setCurrentRowNumber] = useState<number>(
     getRowNumber(),
@@ -47,7 +50,7 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
 
   useEffect(() => {
     setCurrentRowNumber(getRowNumber());
-  }, [currentPageNumber]);
+  }, [currentPageNumber, getRowNumber]);
 
   const firstPageInRow: number = maxPagesInARow * currentRowNumber + 1;
   const lastPageInRow: number = maxPagesInARow * (currentRowNumber + 1);
@@ -76,19 +79,16 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
       ? false
       : shown;
 
-  const firstReadingDirection = settings?.readingDirection
-    .split("-")?.[0]
-    .toLowerCase()!;
-  const navigationButtonsLocation = ["left", "top"].includes(
-    firstReadingDirection,
+  const navigationButtonsLocation = ["TOP-TO-BOTTOM", "LEFT-TO-RIGHT"].includes(
+    settings?.readingDirection!,
   )
-    ? ["left", "right"]
-    : ["right", "left"];
-  const navButtonIconsOrientation = ["left", "top"].includes(
-    firstReadingDirection,
+    ? (["left", "right"] as const)
+    : (["right", "left"] as const);
+  const navButtonIconsOrientation = ["TOP-TO-BOTTOM", "LEFT-TO-RIGHT"].includes(
+    settings?.readingDirection!,
   )
-    ? ["-.5turn", undefined]
-    : [undefined, "-.5turn"];
+    ? (["-.5turn", undefined] as const)
+    : ([undefined, "-.5turn"] as const);
 
   return (
     <>
@@ -117,7 +117,7 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
                 <PageThumbnail key={page.name} state={page}>
                   {i === 0 && (
                     <NavigationButton
-                      loc={navigationButtonsLocation[0] as "left" | "right"}
+                      loc={navigationButtonsLocation[0]}
                       button={
                         <Button
                           disabled={!currentRowNumber}
@@ -134,7 +134,7 @@ export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
                   )}
                   {i === arr.length - 1 && (
                     <NavigationButton
-                      loc={navigationButtonsLocation[1] as "left" | "right"}
+                      loc={navigationButtonsLocation[1]}
                       button={
                         <Button
                           onClick={handleRightPageButtonClick}

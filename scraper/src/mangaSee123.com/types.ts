@@ -32,7 +32,7 @@ export namespace MangaSee {
 
     export type RawMangaSeeChapterStruct = {
         Chapter: string;
-        type: string;
+        Type: string;
         Date: string;
         ChapterName: string | null;
     }

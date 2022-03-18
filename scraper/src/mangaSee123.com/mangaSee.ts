@@ -266,7 +266,7 @@ function normalizeMangaSeeChapterName(
     /* handle prologues */
     chapter.Type.toLowerCase() === "chapter"
       ? ""
-      : chapter.Type[0].toLowerCase()
+      : chapter.Type?.[0]?.toLowerCase() ?? ""
   }${res}`;
 }
 

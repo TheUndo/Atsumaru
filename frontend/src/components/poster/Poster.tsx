@@ -32,7 +32,7 @@ export default function Poster(props: Props) {
     fail,
     retry,
   } = useImage([manga?.cover], failImage);
-
+  console.log(fail, "FAIL?")
   const navigate = useNavigate();
 
   useEffect(() => {

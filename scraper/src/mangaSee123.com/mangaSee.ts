@@ -258,7 +258,7 @@ function extractChapters(html: string) {
 function normalizeMangaSeeChapterName(
   chapter: MangaSee.RawMangaSeeChapterStruct,
 ) {
-  const chapterName = chapter.ChapterName ?? "";
+  const chapterName = chapter.Chapter ?? "";
   const left = parseInt(chapterName.slice(1, -1));
   const right = chapterName[chapterName.length - 1];
   const res = 0 === +right ? left.toString() : `${left}.${right}`;

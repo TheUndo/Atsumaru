@@ -5,12 +5,8 @@ export default function chunk<T>(arr: T[], size: number): T[][] {
 }
 
 export function priorityChunking<T>(idx: number, arr: T[], size: number) {
-  const region = [...Array(size)].map((_, i) => i + idx);
-  return chunk(
-    [
-      ...arr.slice(idx, idx + size),
-      ...arr.filter((_, i) => !region.includes(i)),
-    ],
-    size,
-  );
+  return [
+    [arr[idx]],
+    ...chunk([...arr.slice(idx + 1), ...arr.slice(0, idx)], size),
+  ];
 }

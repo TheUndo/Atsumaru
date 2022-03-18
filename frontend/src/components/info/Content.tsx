@@ -6,6 +6,7 @@ import { resolvePageUrlParameter } from "../../pages/read/helpers";
 import { Chapter, MangaInfo, ProgressInfo } from "../../types";
 import cm from "../../utils/classMerger";
 import getLatestProgress from "../../utils/getLatestProgress";
+import normalizeChapterNames from "../../utils/normalizeChapterNames";
 import percentage from "../../utils/percentage";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
 import Button from "../button/Button";
@@ -128,7 +129,7 @@ export default function Content({
                 ? "404"
                 : (firstChapter?.type || "Chapter") +
                   " " +
-                  (firstChapter?.name ?? "")
+                  (normalizeChapterNames(firstChapter?.name ?? "") ?? "")
             }
             icon={<Icon icon="playSolid" />}
             to={`/read/${resolveVendorSlug(

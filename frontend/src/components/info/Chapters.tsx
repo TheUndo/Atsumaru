@@ -1,10 +1,14 @@
 import React, { useMemo, useState } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import useTimeout from "../../hooks/useTimeout";
-import { parseChapterName } from "../../pages/progressSyncing/ProgressSyncing";
+import {
+  parseChapterName,
+  serializeChapterName,
+} from "../../pages/progressSyncing/ProgressSyncing";
 import { resolvePageUrlParameter } from "../../pages/read/helpers";
 import { Chapter, MangaInfo, ProgressInfo } from "../../types";
 import { getSpecificProgress } from "../../utils/getLatestProgress";
+import normalizeChapterNames from "../../utils/normalizeChapterNames";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
 import Button from "../button/Button";
 import Header from "../header/Header";
@@ -125,7 +129,8 @@ export function ChapterItem({
           className={classes.button}>
           <div className={classes.chapterName}>
             <div className={classes.text}>
-              {chapter.type || "Chapter"} {chapter.name}
+              {chapter.type || "Chapter"}{" "}
+              {normalizeChapterNames(chapter?.name ?? "404")}
             </div>
             <div className={classes.date}>
               {new Date(chapter.date)?.toLocaleDateString()}

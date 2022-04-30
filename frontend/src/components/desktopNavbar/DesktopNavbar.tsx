@@ -34,6 +34,11 @@ function Item({ item }: { item: ReturnType<NavbarItemType> }) {
     <>
       <div className={classes.item}>
         <div className={classes.itemInner}>
+          <div
+            className={cm(
+              classes.itemBackground,
+              !match && classes.bgHidden,
+            )}></div>
           <Button
             onClick={item.onClick}
             icon={(match && item.activeIcon) || item.icon}

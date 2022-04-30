@@ -1,0 +1,42 @@
+.results {
+  position: relative;
+ 
+}
+.inner {
+  position: relative;
+  box-sizing: border-box;
+  padding: 1rem;
+  
+  @media screen and (max-width: 800px) {
+    padding: 0;
+  }
+}
+.top {
+  position: relative;
+  h2 {
+    font-size: clamp(1.1rem, 3vw, 2.2rem);
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1.5em;
+    @media screen and (max-width: 800px) {
+      display: none;
+    }
+  }
+}
+.content {
+  position: relative;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  --gap: 0rem;
+  --height: clamp(
+    100px,
+    calc((33vw / var(--aspect-ratio)) - var(--gap) * 2 - 10px),
+    350px
+  );
+}

@@ -5,9 +5,13 @@ import {
   scrapeInfoPage,
   scrapeSearch,
 } from "./mangaSee123.com/mangaSee";
+import ensureIndex, { ensureDocuments } from "./search/ensureIndex";
 import log from "./utils/logger";
 import sleep from "./utils/sleep";
 
+void ensureIndex()
+  .then(() => ensureDocuments())
+  .catch(console.error);
 //performSearch(["Koujo Denka no Katei Kyoushi"]).then(console.log);
 
 /* front page */

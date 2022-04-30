@@ -8,6 +8,8 @@ import React, {
 } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../App";
+import Button from "../../components/button/Button";
+import Icon from "../../components/icon/Icon";
 import { MangaEndPointResponse } from "../../components/info/Info";
 import useApi from "../../hooks/useApi";
 import { Chapter, MangaInfo } from "../../types";
@@ -154,10 +156,9 @@ export default function Reader() {
       void setInitialPage(page);
       void setCurrentPage(page);
       setDesktopControlsVisible(false);
-      return void history.replaceState(
-        {},
-        "",
+      return navigate(
         `/read/${vendor}/${mangaData.slug}/${currentChapter.name}/${page}`,
+        { replace: true },
       );
     },
     [currentChapter, vendor, apiData],
@@ -232,11 +233,11 @@ export default function Reader() {
 
   useEffect(() => {
     const event = () => {
-      setDesktopControlsVisible(true);
+      if (!desktopControlsVisible) setDesktopControlsVisible(true);
     };
     window.addEventListener("mousemove", event);
     return () => window.removeEventListener("mousemove", event);
-  }, []);
+  }, [desktopControlsVisible]);
 
   useEffect(() => {
     if (!desktopControlsVisible) setCursorShown(false);
@@ -248,18 +249,15 @@ export default function Reader() {
 
   useEffect(() => {
     if (!mangaData || !currentChapter) return;
-    // needs debounce for browser performance reasons
-    void clearTimeout(__readerURLUpdater);
-    __readerURLUpdater = setTimeout(() => {
-      window.history.replaceState(
-        {},
-        "",
+    const timeout = setTimeout(() => {
+      navigate(
         `/read/${vendor}/${mangaData.slug}/${currentChapter.name}/${currentPage}`,
+        { replace: true },
       );
     }, 350);
 
-    return () => clearTimeout(__readerURLUpdater);
-  }, [currentPage, apiData, currentChapter]);
+    return () => clearTimeout(timeout);
+  }, [currentPage, apiData, currentChapter, vendor, mangaData?.slug]);
 
   const background =
     readerBackgroundColor === "custom"
@@ -302,10 +300,21 @@ export default function Reader() {
               {value?.currentChapter && (
                 <PagePreviewThumbnails pages={value?.currentChapter?.pages} />
               )}
-              <RenderPages
-                hideControls={value.setControlsShown}
-                manga={mangaData}
-              />
+              {mangaData?.chapters?.length ? (
+                <RenderPages
+                  hideControls={value.setControlsShown}
+                  manga={mangaData}
+                />
+              ) : (
+                <div className={classes.noChapters}>
+                  <div>
+                    <h1>This manga contains no chapters yet</h1>
+                    <Button to="/" icon={<Icon icon="home" />}>
+                      Back home
+                    </Button>
+                  </div>
+                </div>
+              )}
               <DesktopChapterNavigation />
             </div>
             <aside className={classes.aside}>

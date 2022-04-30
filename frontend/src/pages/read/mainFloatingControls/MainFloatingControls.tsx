@@ -70,7 +70,7 @@ export default function MainFloatingControls({
                   currentPageIndicatorLocation === "RIGHT"
                     ? "0"
                     : ["LEFT", "CENTER", undefined].includes(
-                        currentPageIndicatorLocation
+                        currentPageIndicatorLocation,
                       )
                     ? "unset"
                     : "50%",
@@ -84,8 +84,7 @@ export default function MainFloatingControls({
                     ? ".5rem"
                     : "-30px"
                 } - .5rem))`,
-              }}
-            >
+              }}>
               <div>
                 {page} / {currentChapter?.pages.length || "?"}
               </div>
@@ -94,9 +93,8 @@ export default function MainFloatingControls({
               className={cm(
                 controlClasses.floatingControlCollection,
                 controlClasses.floatApart,
-                !controlsShown && controlClasses.floatingControlsHidden
-              )}
-            >
+                !controlsShown && controlClasses.floatingControlsHidden,
+              )}>
               <div className={controlClasses.floatingControlCollection}>
                 <div className={controlClasses.floatingControl}>
                   <Button
@@ -122,8 +120,7 @@ export default function MainFloatingControls({
                         setSetting?.("readingDirection", "TOP-TO-BOTTOM");
                         setSetting?.("imageFitMethod", "TO-SCREEN");
                       }}
-                      icon={<Icon icon="arrow" orientation=".5turn" />}
-                    >
+                      icon={<Icon icon="arrow" orientation=".5turn" />}>
                       Strip mode
                     </Button>
                   </div>
@@ -141,22 +138,19 @@ export default function MainFloatingControls({
               className={cm(
                 controlClasses.floatingControlCollection,
                 controlClasses.floatTogether,
-                !controlsShown && controlClasses.floatingControlsHidden
-              )}
-            >
+                !controlsShown && controlClasses.floatingControlsHidden,
+              )}>
               <div className={controlClasses.floatingControl}>
                 <Button
                   className={cm("reader-control-button")}
                   disabled={!previousChapter}
                   onClick={() => jumpChapter(-1)}
-                  icon={<Icon icon="chevron" orientation=".5turn" />}
-                ></Button>
+                  icon={<Icon icon="chevron" orientation=".5turn" />}></Button>
               </div>
               <div className={controlClasses.floatingControl}>
                 <Button className={cm("reader-control-button")}>
-                  {currentChapter?.name ?? "?"}{" "}
-                  <div className={controlClasses.slash}></div>{" "}
-                  {chapters?.[0]?.name}
+                  {serializeChapterName(currentChapter?.name)} /{" "}
+                  {serializeChapterName(chapters?.[0]?.name)}
                 </Button>
               </div>
               <div className={controlClasses.floatingControl}>
@@ -164,8 +158,7 @@ export default function MainFloatingControls({
                   className={cm("reader-control-button")}
                   disabled={!nextChapter}
                   onClick={() => jumpChapter(1)}
-                  icon={<Icon icon="chevron" />}
-                ></Button>
+                  icon={<Icon icon="chevron" />}></Button>
               </div>
             </div>
           </>
@@ -173,4 +166,9 @@ export default function MainFloatingControls({
       </ReaderContext.Consumer>
     </>
   );
+}
+
+function serializeChapterName(name?: string) {
+  if (!name) return "?";
+  return name.replace(/[^\d.]/g, "");
 }

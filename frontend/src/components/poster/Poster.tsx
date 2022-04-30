@@ -32,7 +32,7 @@ export default function Poster(props: Props) {
     fail,
     retry,
   } = useImage([manga?.cover], failImage);
-  console.log(fail, "FAIL?")
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function Poster(props: Props) {
         {progress && (
           <div className={classes.badge}>{`ch. ${progress.latest.chapter}${
             manga?.chapters
-              ? `/${manga.chapters[0].name} • p. ${
+              ? `/${manga.chapters[0]?.name} • p. ${
                   progress.full.preferredDirection === "TOP-TO-BOTTOM"
                     ? percentage(progress.latest.meta.progress ?? 0, 3) + "%"
                     : progress.latest.meta.page

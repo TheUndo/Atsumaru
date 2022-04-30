@@ -75,7 +75,10 @@ async function sync() {
         Accept: "application/json",
       },
     });
-    const res = await req.json();
+    await req.json();
+    const event = new Event("progressSync");
+
+    window.dispatchEvent(event);
   } catch (e) {
     console.error(e);
     return false;

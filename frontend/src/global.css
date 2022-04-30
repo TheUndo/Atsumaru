@@ -1,5 +1,5 @@
 :root {
-  --bg: #0e0e0e;
+  --bg: #161616;
 
   --bg2: #111111;
   --bg3: #333;
@@ -38,8 +38,12 @@ body {
   width: 100%;
 }
 html {
-  overflow: hidden;
   height: 100%;
+}
+@media (pointer: coarse) {
+  html {
+    overflow: hidden;
+  }
 }
 body {
   overflow: auto;
@@ -49,7 +53,6 @@ body {
   body:not(.standalone) {
     height: calc(100% - env(safe-area-inset-bottom));
   }
-  
 }
 
 body.standalone {

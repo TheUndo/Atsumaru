@@ -23,7 +23,7 @@
   position: relative;
   box-sizing: border-box;
   height: 100%;
-  padding: calc(50px + 0.5rem) 0.5rem 0.5rem 0.5rem;
+  padding: calc(var(--topBarHeight) + 0.5rem) 0.5rem 0.5rem 0.5rem;
 }
 
 .items {
@@ -37,7 +37,7 @@
   position: fixed;
   top: 0.5rem;
   left: 1.25rem;
-  z-index: 10;
+  z-index: 1001;
   transition: opacity 0.1s ease-in-out;
 
   @media only screen and (max-width: 1000px) {
@@ -63,13 +63,16 @@
     display: block;
     background-color: transparent;
     transition: none;
-    padding: .8em;
+    padding: 0.8em;
     &:hover {
       background-color: var(--button-bg);
     }
     :global(.iconCont) {
       padding: 0 1em;
     }
+  }
+  .itemInner {
+    position: relative;
   }
 }
 
@@ -78,12 +81,28 @@
   top: 50%;
   left: -60px;
   transform: translateY(-50%);
-  height: 80%;
+  height: 120%;
   width: 5px;
   background: var(--accent);
   transition: height 0.1s ease-in;
   border-radius: 99px;
   &.hidden {
     height: 0;
+  }
+}
+
+.itemBackground {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.25em;
+  background: var(--accent);
+  opacity: 0.2;
+  transition: opacity 0.1s ease-in-out;
+  &.bgHidden {
+    opacity: 0;
   }
 }

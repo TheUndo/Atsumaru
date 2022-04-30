@@ -1,32 +1,37 @@
 import mongo from "../db/mongo";
+import { ensureMS } from "../search/ensureIndex";
 import log from "../utils/logger";
 import sleep from "../utils/sleep";
 import { scrapeInfoPage } from "./mangaSee";
 import { MangaSee } from "./types";
 
-
 export async function pushMangaFromSlugs(mangaSeeSlugs: string[]) {
-    for (const [i, slug] of mangaSeeSlugs.entries()) {
-        void log(`Scraping item ${i + 1}/${mangaSeeSlugs.length} - ${((i + 1) / mangaSeeSlugs.length * 100).toFixed(2)}% - ${slug}`)
+  for (const [i, slug] of mangaSeeSlugs.entries()) {
+    void log(
+      `Scraping item ${i + 1}/${mangaSeeSlugs.length} - ${(
+        ((i + 1) / mangaSeeSlugs.length) *
+        100
+      ).toFixed(2)}% - ${slug}`,
+    );
+    try {
+      const mangaEntry = await scrapeInfoPage(slug);
+      if (mangaEntry) {
+        /* manga.push(mangaEntry); */
         try {
-            const mangaEntry = await scrapeInfoPage(slug);
-            if (mangaEntry) {
-                /* manga.push(mangaEntry); */
-                try {
-                    // causes db side effect
-                    void await upsertMangaSee(mangaEntry);
-                } catch (e) {
-                    console.error(e);
-                    void log("Error when upserting", mangaEntry.title);
-                }
-            }
+          // causes db side effect
+          void (await upsertMangaSee(mangaEntry));
         } catch (e) {
-            void console.log(e);
-            void log("Error while scarping ManagSee info page", e);
+          console.error(e);
+          void log("Error when upserting", mangaEntry.title);
         }
-        void await sleep(100);
+      }
+    } catch (e) {
+      void console.log(e);
+      void log("Error while scarping ManagSee info page", e);
     }
-    /* if (manga.length) {
+    void (await sleep(100));
+  }
+  /* if (manga.length) {
         for (const mangaItem of manga) {
             try {
                 // causes db side effect
@@ -41,16 +46,21 @@ export async function pushMangaFromSlugs(mangaSeeSlugs: string[]) {
 }
 
 export async function upsertMangaSee(mangaItem: MangaSee.MangaInfo) {
-    const db = await mongo();
+  const db = await mongo();
+  const query = {
+    title: mangaItem.title,
+  };
+  await db.collection("mangaSee").updateOne(
+    query,
+    {
+      $set: mangaItem,
+    },
+    {
+      upsert: true,
+    },
+  );
 
-    void await db
-        .collection("mangaSee")
-        .updateOne({
-            title: mangaItem.title,
-        }, {
-            $set: mangaItem,
-        }, {
-            upsert: true,
-        });
-    return void log("Successfully upserted", mangaItem.title);
+  await ensureMS(db, query); // TODO skip trip to db... index directly with the returned ObjectId
+
+  return void log("Successfully upserted", mangaItem.title);
 }

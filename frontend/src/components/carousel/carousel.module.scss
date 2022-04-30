@@ -1,7 +1,7 @@
 .header {
   display: flex;
   @media screen and (max-width: 800px) {
-    gap: .5em;
+    gap: 0.5em;
     align-items: center;
   }
   .title {
@@ -47,12 +47,24 @@
 
   box-sizing: border-box;
   padding: var(--gap);
-
+  :global(.swiper-scrollbar) {
+    background: var(--bg);
+    transform: scaleY(.6);
+    opacity: 0;
+    transform-origin: bottom center;
+    pointer-events: none;
+    transition: all .2s ease-out;
+  }
   &:hover {
     .header .controls {
       transform: none;
       transition: opacity 0.2s ease-in;
       opacity: 1;
+    }
+    :global(.swiper-scrollbar) {
+      transform: none;
+      opacity: 1;
+      pointer-events: all;
     }
   }
 }

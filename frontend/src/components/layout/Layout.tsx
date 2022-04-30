@@ -9,6 +9,7 @@ import { AppContext } from "../../App";
 import cm from "../../utils/classMerger";
 import DesktopNavbar from "../desktopNavbar/DesktopNavbar";
 import Navbar from "../navbar/Navbar";
+import TopBar from "../topBar/TopBar";
 import classes from "./layout.module.scss";
 
 type Props = {
@@ -25,10 +26,13 @@ export default function Layout(props: Props) {
   return (
     <>
       <DesktopNavbar />
+      <TopBar />
       <main className={classes.layout}>
         <section
-          className={cm(classes.navbar, desktopNavbarShown && classes.shown)}
-        ></section>
+          className={cm(
+            classes.navbar,
+            desktopNavbarShown && classes.shown,
+          )}></section>
         <section className={classes.freeContent}>
           {props.children}
           <Outlet />

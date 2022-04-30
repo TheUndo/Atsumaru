@@ -1,7 +1,13 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import dom from "react-dom";
 import { RecoilRoot } from "recoil";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  useMatch,
+} from "react-router-dom";
 import Front from "./pages/front/Front";
 import "./global.css";
 import E404 from "./pages/e404/E404";
@@ -14,6 +20,9 @@ import Signup from "./components/signup/Signup";
 import Button from "./components/button/Button";
 import useApi from "./hooks/useApi";
 import SliderRadio from "./components/SliderRadio/SliderRadio";
+import Search from "./pages/search/Search";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+
 /* import { registerSW } from "virtual:pwa-register"; */
 
 /* if ("serviceWorker" in navigator) {
@@ -36,6 +45,7 @@ export type AppContext = {
   desktopNavbar?: readonly [boolean, (value: boolean) => void];
   signIn?: [boolean, (value: boolean) => void];
   loggedIn?: [false | User, React.Dispatch<React.SetStateAction<false | User>>];
+  searchQuery?: [string, React.Dispatch<React.SetStateAction<string>>];
 };
 export type UserContext = {
   user?: [
@@ -54,11 +64,14 @@ export type User = {
 };
 
 export const AppContext = createContext<AppContext>({});
+const queryClient = new QueryClient();
 
 function App() {
+  const searchMatch = useMatch("/search/:query");
   const settings = useSettings();
   const loggedIn = useState<User | false>(false);
   const desktopNavbarState = settings[0].desktopSideMenuOpen === "YES";
+  const searchQuery = useState(searchMatch?.params?.query ?? "");
   const setDesktopNavbarState = useCallback(
     (value: boolean) => {
       settings[1]("desktopSideMenuOpen", value ? "YES" : "NO");
@@ -71,11 +84,19 @@ function App() {
     desktopNavbar: [desktopNavbarState, setDesktopNavbarState] as const,
     signIn,
     loggedIn,
+    searchQuery,
   };
+
+  useEffect(() => {
+    const q = searchMatch?.params.query;
+    if (q) {
+      searchQuery[1](q);
+    }
+  }, [searchMatch])
 
   const me = useApi<User>("/auth/myself");
 
-  useEffect(() => {
+  /* useEffect(() => {
     document.body.addEventListener("scroll", async () => {
       await new Promise(resolve => window.requestAnimationFrame(resolve));
       const { scrollTop, scrollLeft, scrollHeight, clientHeight } =
@@ -91,7 +112,7 @@ function App() {
         document.body.scrollTo(scrollLeft, beforeBottom);
       }
     });
-  }, []);
+  }, []); */
 
   useEffect(() => {
     if (me.data) loggedIn[1](me.data);
@@ -100,16 +121,19 @@ function App() {
   return (
     <>
       <React.StrictMode>
-        <AppContext.Provider value={value}>
-          <RecoilRoot>
-            <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <AppContext.Provider value={value}>
+            <RecoilRoot>
               <BurgerButton />
               <Signup />
+              <Search />
               <Layout>
                 <Routes>
                   <Route
                     path="/read/:vendor/:readSlug/:chapter/:page"
-                    element={<Reader />}></Route>
+                    element={<Reader />}
+                  />
+
                   <Route
                     path="/"
                     element={
@@ -117,17 +141,18 @@ function App() {
                         <Front />
                       </GenericPage>
                     }>
+                    <Route path="/search/:query" element={<></>} />
                     <Route path="/manga/:vendor/:mangaSlug" element={<></>}>
                       <Route path="chapters" element={<></>} />
                     </Route>
                   </Route>
-                  <Route
+                  {/* <Route
                     path="/search"
                     element={
                       <GenericPage>
                         <Test />
                       </GenericPage>
-                    }></Route>
+                    }></Route> */}
                   <Route
                     path="*"
                     element={
@@ -138,9 +163,9 @@ function App() {
                   />
                 </Routes>
               </Layout>
-            </BrowserRouter>
-          </RecoilRoot>
-        </AppContext.Provider>
+            </RecoilRoot>
+          </AppContext.Provider>
+        </QueryClientProvider>
       </React.StrictMode>
     </>
   );
@@ -152,11 +177,16 @@ function Test() {
   return (
     <>
       <Button onClick={() => navigate("/")}></Button>
-    {/* <SliderRadio>
+      {/* <SliderRadio>
       
     </SliderRadio> */}
     </>
   );
 }
 
-dom.render(<App />, document.getElementById("root"));
+dom.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById("root"),
+);

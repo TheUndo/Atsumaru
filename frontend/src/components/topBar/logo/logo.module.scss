@@ -1,0 +1,42 @@
+.logo {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  justify-content: center;
+  @media only screen and (min-width: 1000px) {
+    left: 80px;
+    width: unset;
+    font-size: 30px;
+  }
+  h1 {
+    span {
+      color: var(--accent);
+    }
+    margin: 0;
+    user-select: none;
+    font-size: inherit;
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.1s ease-in-out;
+    @media only screen and (min-width: 1000px) {
+      &:hover {
+        transform: scale(1.07);
+        opacity: 0.8;
+      }
+    }
+  }
+  a {
+    font-size: inherit;
+    color: inherit;
+  }
+  @media only screen and (min-width: 1000px) {
+    a {
+      &:active h1 {
+        transform: scale(0.97);
+      }
+    }
+  }
+}

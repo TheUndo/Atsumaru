@@ -3,8 +3,9 @@ import { useMatch, useNavigate, useParams } from "react-router-dom";
 import Content from "./Content";
 import Modal from "../modal/Modal";
 import Chapters from "./Chapters";
-import useApi from "../../hooks/useApi";
+import useApi, { apiBase } from "../../hooks/useApi";
 import { MangaInfo, ProgressInfo } from "../../types";
+import { useQuery } from "react-query";
 
 export type MangaEndPointResponse = {
   manga: MangaInfo;
@@ -44,7 +45,22 @@ function ShowModal({
   vendor: MangaInfo["vendor"];
 }) {
   //const [shown, setShown] = useState(false);
-  const apiData = useApi<MangaEndPointResponse>(`/manga/${vendor}/${slug}`);
+  const apiData = useQuery<MangaEndPointResponse>(
+    ["mangaInfo", vendor, slug],
+    () =>
+      fetch(`${apiBase}/manga/${vendor}/${slug}`, {
+        credentials: "include",
+      }).then(d => d.json()),
+  );
+
+  useEffect(() => {
+    const handler = () => {
+      apiData.refetch();
+    };
+    window.addEventListener("progressSync", handler);
+    return () => window.removeEventListener("progressSync", handler);
+  }, []);
+
   const navigate = useNavigate();
 
   return (

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { UseQueryResult } from "react-query";
 import { Link } from "react-router-dom";
 import useMedia from "../../hooks/useMedia";
 import { parseChapterName } from "../../pages/progressSyncing/ProgressSyncing";
@@ -23,14 +24,10 @@ export default function Content({
   slug,
 }: {
   slug?: string;
-  apiData: {
-    data: MangaEndPointResponse;
-    error: string | undefined;
-    loading: boolean;
-  };
+  apiData: UseQueryResult<MangaEndPointResponse, unknown>;
 }) {
   const [bookmarked, setBookmarked] = useState(false);
-  const { data, error, loading } = apiData;
+  const { data, error, isLoading } = apiData;
   const firstChapter =
     data?.manga?.chapters?.[data?.manga?.chapters?.length - 1];
 
@@ -50,14 +47,18 @@ export default function Content({
               [
                 [
                   "Alternative names",
-                  data?.manga?.alternativeNames?.join(", "),
+                  data && data?.manga?.alternativeNames?.join(", "),
                 ],
                 [
-                  `Author${data?.manga?.authors?.length > 1 ? "s" : ""}`,
-                  data?.manga?.authors?.join(", "),
+                  `Author${
+                    data && data?.manga?.authors?.length > 1 ? "s" : ""
+                  }`,
+                  data && data?.manga?.authors?.join(", "),
                 ],
                 [
-                  `Status${data?.manga?.statuses?.length > 1 ? "es" : ""}`,
+                  `Status${
+                    data && data?.manga?.statuses?.length > 1 ? "es" : ""
+                  }`,
                   <>
                     {data?.manga?.statuses?.[0]}
                     {data?.manga?.statuses?.[1] && (
@@ -94,7 +95,7 @@ export default function Content({
           </div>
         </div>
         <div className={classes.title}>
-          {loading ? (
+          {isLoading ? (
             <Loading key="loading" />
           ) : (
             <Header key="header" level={1}>
@@ -133,7 +134,7 @@ export default function Content({
             }
             icon={<Icon icon="playSolid" />}
             to={`/read/${resolveVendorSlug(
-              apiData?.data?.manga?.vendor,
+              apiData?.data?.manga?.vendor! ?? "",
             )}/${slug}/${firstChapter?.name}/1`}></Button>
           <Button
             disabled={!!error}
@@ -145,7 +146,7 @@ export default function Content({
           <Button
             disabled={!!error}
             legend="Chapters"
-            to={`/manga/${resolveVendorSlug(apiData?.data?.manga?.vendor)}/${
+            to={`/manga/${resolveVendorSlug(apiData?.data?.manga?.vendor!)}/${
               data?.manga?.slug
             }/chapters`}
             icon={<Icon icon="bulletList" />}></Button>
@@ -303,7 +304,15 @@ function SlicedChapters({
                 />
               ))}
             </div>
-            <div className={classes.chapterEllipsis}>...</div>
+            <div className={classes.chapterEllipsis}>
+              <Button
+                transparent
+                alignCenter
+                fullWidth
+                to={`/manga/${vendor}/${slug}/chapters`}>
+                ...
+              </Button>
+            </div>
             <div className={classes.chapters}>
               {chapters.slice(-5).map(chapter => (
                 <ChapterItem

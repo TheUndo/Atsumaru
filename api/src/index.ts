@@ -11,6 +11,7 @@ import myself from "./routes/auth/myself";
 import syncProgress from "./routes/user/syncProgrsss";
 import { Request } from "./types";
 import mangaSeeFront from "./routes/layouts/front/mangaSee";
+import search from "./routes/search/search";
 
 dotenv.config();
 
@@ -55,6 +56,10 @@ app.get(base("/layout/:source/front"), auth, (req: Request, res) => {
       break;
   }
 });
+
+/* GET search */
+app.get(base("/search/:query"), search);
+
 
 /* GET manga details */
 app.get(base("/manga/:source/:slug"), auth, manga);

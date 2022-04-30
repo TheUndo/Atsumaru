@@ -13,6 +13,11 @@
 .button {
   --padding: 0.7em;
   min-width: 41px;
+  @media only screen and (max-width: 1000px) {
+    --padding: 0.55em;
+    min-width: 36px;
+  }
+  
   padding: var(--padding);
   background: var(--button-bg);
   &.hasLegend {

@@ -82,6 +82,7 @@ export default function RenderPages({
   ) : (
     <Loading />
   );
+  const { chapter: chapterParam } = useParams();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -103,6 +104,7 @@ export default function RenderPages({
     const { width, height } = ref.current.getBoundingClientRect();
     const size = readingDirection === "TOP-TO-BOTTOM" ? height : width;
     const [page, progress] = parsePageUrlParameter(initialPage);
+
     const value =
       size *
       ((parseInt(page ?? "1") || 1) - 1) *
@@ -142,11 +144,14 @@ export default function RenderPages({
       ref.current
     ) {
       setAwaitChapterLoading(false);
+      const [, progress] = parsePageUrlParameter(initialPage ?? "1");
       setInitialPage?.(void 0);
       const { scrollHeight } = ref.current;
-      ref.current.scrollTop = scrollHeight * parseFloat(progress) || 0;
+      if (progress) {
+        ref.current.scrollTop = scrollHeight * parseFloat(progress) || 0;
+      }
     }
-  }, [ref, chapterLoaded, readingDirection, progress]);
+  }, [ref, chapterLoaded, readingDirection, initialPage]);
 
   const onScroll = useCallback(
     (cb?: () => void) => {

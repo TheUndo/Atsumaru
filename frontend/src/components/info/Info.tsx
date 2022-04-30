@@ -51,6 +51,9 @@ function ShowModal({
       fetch(`${apiBase}/manga/${vendor}/${slug}`, {
         credentials: "include",
       }).then(d => d.json()),
+    {
+      enabled: !!slug,
+    },
   );
 
   useEffect(() => {

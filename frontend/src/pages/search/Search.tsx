@@ -32,10 +32,15 @@ export default function Search(props: Props) {
       info: MangaInfo;
       vendor: MangaInfo["vendor"];
     }[];
-  }>(["query", query], () =>
-    fetch(`${apiBase}/search/${encodeURIComponent(query)}`).then(res =>
-      res.json(),
-    ),
+  }>(
+    ["query", query],
+    () =>
+      fetch(`${apiBase}/search/${encodeURIComponent(query)}`).then(res =>
+        res.json(),
+      ),
+    {
+      enabled: !!query,
+    },
   );
 
   useEffect(() => {

@@ -37,6 +37,7 @@
   position: relative;
   width: 100%;
   height: 100%;
+  overflow-x: hidden; // might cause issues with ios (if it does ):
 }
 .content {
   --constrain: 1200px;

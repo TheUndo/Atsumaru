@@ -6,12 +6,13 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../App";
 import Button from "../../components/button/Button";
 import Icon from "../../components/icon/Icon";
 import { MangaEndPointResponse } from "../../components/info/Info";
-import useApi from "../../hooks/useApi";
+import useApi, { apiBase } from "../../hooks/useApi";
 import { Chapter, MangaInfo } from "../../types";
 import cm from "../../utils/classMerger";
 import E404 from "../e404/E404";
@@ -116,8 +117,17 @@ export default function Reader() {
     page ?? "1",
   );
   const [currentPage, setCurrentPage] = useState<string>(initialPage ?? "1");
-  const apiData = useApi<MangaEndPointResponse>(`/manga/${vendor}/${readSlug}`);
-  const mangaData = apiData.data?.manga;
+  const apiData = useQuery<MangaEndPointResponse>(
+    ["mangaInfo", vendor, readSlug],
+    () =>
+      fetch(`${apiBase}/manga/${vendor}/${readSlug}`, {
+        credentials: "include",
+      }).then(d => d.json()),
+    {
+      enabled: !!readSlug,
+    },
+  );
+  const mangaData = apiData.data?.manga!;
   const navigate = useNavigate();
   const currentChapterIndex = mangaData?.chapters.findIndex(
     c => c.name === chapter,
@@ -264,7 +274,7 @@ export default function Reader() {
       ? readerCustomBackgroundColor
       : readerBackgroundColor ?? "#000";
 
-  if (apiData.loading === false && !mangaData) {
+  if (apiData.isLoading === false && !mangaData) {
     return <E404 />;
   }
 

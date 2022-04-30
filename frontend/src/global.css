@@ -43,12 +43,15 @@ html {
 
 body {
   overflow: auto;
-  height: calc(100% - env(safe-area-inset-bottom));
   height: 100vh;
+}
+body:not(.standalone) {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  height: calc(100% - env(safe-area-inset-bottom) - env(safe-area-inset-top));
 }
 @media only screen and (min-width: 1000px) {
   body {
-    height: 100%;
   }
 }
 
@@ -57,6 +60,7 @@ body {
 }
 body.standalone {
   height: 100%;
+  background: #000;
 }
 
 #root {

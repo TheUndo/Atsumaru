@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import cm from "../../utils/classMerger";
 import classes from "./button.module.scss";
 import useRipple from "use-ripple-hook";
+import useMedia from "../../hooks/useMedia";
 
 type Props = {
   children?: React.ReactNode | React.ReactNode[];
@@ -22,7 +23,14 @@ type Props = {
   Partial<React.ComponentProps<typeof Link>>;
 
 const Button = (masterProps: Props) => {
-  const [ripple, event] = useRipple();
+  const mobile = useMedia(
+    ["(pointer: coarse)", "(pointer: fine)"],
+    [true, false],
+    false,
+  );
+  const [ripple, event] = useRipple({
+    disabled: mobile,
+  });
   const {
     css,
     children,

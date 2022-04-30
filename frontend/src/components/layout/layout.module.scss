@@ -1,12 +1,16 @@
 .layout {
   position: relative;
   height: 100%;
+
   transform: scale(var(--scaler-reset, 1));
   padding-top: env(safe-area-inset-top, 0);
   box-sizing: border-box;
   display: flex;
-  overflow: hidden;
   width: 100%;
+
+  @media (pointer: coarse) {
+    height: 100vh;
+  }
 }
 
 .navbar {
@@ -32,7 +36,7 @@
 .freeContent {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  height: 100%;
 }
 .content {
   --constrain: 1200px;

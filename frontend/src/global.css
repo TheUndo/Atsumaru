@@ -38,23 +38,23 @@ body {
   width: 100%;
 }
 html {
-  height: 100%;
+  height: 100vh;
 }
-@media (pointer: coarse) {
-  html {
-    overflow: hidden;
-  }
-}
+
 body {
   overflow: auto;
-  height: calc(100% - env(safe-area-inset-bottom) - 50px);
+  height: calc(100% - env(safe-area-inset-bottom));
+  height: 100vh;
 }
 @media only screen and (min-width: 1000px) {
-  body:not(.standalone) {
-    height: calc(100% - env(safe-area-inset-bottom));
+  body {
+    height: 100%;
   }
 }
 
+#root {
+  height: 100%;
+}
 body.standalone {
   height: 100%;
 }

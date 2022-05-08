@@ -12,7 +12,7 @@
   max-width: 100vw;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
-  z-index: 100;
+  z-index: 10000;
 
   overflow: hidden;
   &.shown {

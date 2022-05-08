@@ -46,6 +46,7 @@ export const items: NavbarItemType[] = [
       : {
           /* to: "/profile", */
           onClick: () => {
+            console.log("hi");
             ctx?.signIn?.[1](true);
           },
           legend: "Sign in",
@@ -75,11 +76,14 @@ function NavbarItem({ item }: { item: ReturnType<NavbarItemType> }) {
 
   return (
     <>
-      <div className={cm(classes.item, match && classes.active)}>
+      <div
+        onClick={item.onClick}
+        className={cm(classes.item, match && classes.active)}>
         <Button
+          to={item.to}
           icon={(!!match && item.activeIcon) || item.icon}
           legend={item.legend}
-          to={item.to}></Button>
+        />
       </div>
     </>
   );

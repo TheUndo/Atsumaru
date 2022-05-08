@@ -8,6 +8,7 @@ import anilistAuth from "./routes/auth/anilist";
 import cookieParser from "cookie-parser";
 import auth from "./middleware/auth";
 import myself from "./routes/auth/myself";
+import logout from "./routes/auth/logout";
 import syncProgress from "./routes/user/syncProgrsss";
 import { Request } from "./types";
 import mangaSeeFront from "./routes/layouts/front/mangaSee";
@@ -45,6 +46,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get(base("/auth/myself"), auth, myself);
+app.get(base("/auth/logout"), auth, logout);
 app.post(base("/user/sync-progress"), auth, syncProgress);
 
 app.get(base("/layout/:source/front"), auth, (req: Request, res) => {

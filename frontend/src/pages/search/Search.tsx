@@ -25,7 +25,7 @@ export default function Search(props: Props) {
   const shown = !!query;
   const ref = useRef(null);
 
-  const { isLoading, error, data } = useQuery<{
+    const { isLoading, error, data } = useQuery<{
     hits: {
       title: string;
       description: string;

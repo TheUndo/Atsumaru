@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "../button/Button";
 import Grid from "../grid/Grid";
 import Input from "../input/Input";
@@ -14,6 +14,7 @@ import Loading from "../loading/Loading";
 import { AppContext } from "../../App";
 import Header from "../header/Header";
 import { apiBase } from "../../hooks/useApi";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -34,7 +35,9 @@ export default function Signup(props: Props) {
 
   const [authorizing, setAuthorizing] = useState(false);
   const [fail, setFail] = useState(false);
-  const onSuccess = (response: any) => {
+  const paramCode = new URLSearchParams(window.location.search).get("code");
+  const navigate = useNavigate();
+  const onSuccess = (response: any, nav?: boolean) => {
     setFail(false);
     setAuthorizing(false);
     if (!response?.code) return onFailure(null);
@@ -46,6 +49,7 @@ export default function Signup(props: Props) {
           setAuthorizing(false);
           setUser?.(user.data.Viewer);
           setShown?.(false);
+          if (nav) navigate("/");
         })
         .catch(error => {
           console.error("[TROUBLESHOOT] Auth error", error + "");
@@ -59,6 +63,13 @@ export default function Signup(props: Props) {
     setFail(true);
     setAuthorizing(false);
   };
+
+  useEffect(() => {
+    if (paramCode) {
+      onSuccess({ code: paramCode }, true);
+    }
+  }, []);
+
   return (
     <>
       <Popup title="Sign in" shown={!!shown} onClose={() => setShown?.(false)}>

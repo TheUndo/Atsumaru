@@ -92,7 +92,7 @@ function App() {
     if (q) {
       searchQuery[1](q);
     }
-  }, [searchMatch])
+  }, [searchMatch]);
 
   const me = useApi<User>("/auth/myself");
 
@@ -141,6 +141,7 @@ function App() {
                         <Front />
                       </GenericPage>
                     }>
+                    <Route path="/ouath/anilist" element={<Signup />} />
                     <Route path="/search/:query" element={<></>} />
                     <Route path="/manga/:vendor/:mangaSlug" element={<></>}>
                       <Route path="chapters" element={<></>} />

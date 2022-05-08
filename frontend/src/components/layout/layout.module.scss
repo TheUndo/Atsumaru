@@ -37,7 +37,12 @@
   position: relative;
   width: 100%;
   height: 100%;
-  overflow-x: hidden; // might cause issues with ios (if it does ):
+  @media only screen and (pointer: coarse) {
+    overflow-x: hidden; // might cause issues with ios (if it does ):
+  }
+  @media only screen and (pointer: fine) {
+    overflow: hidden;
+  }
 }
 .content {
   --constrain: 1200px;

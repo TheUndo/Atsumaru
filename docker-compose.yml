@@ -73,7 +73,7 @@ services:
     restart: unless-stopped
 
   search_engine:
-    image: "getmeili/meilisearch"
+    image: "getmeili/meilisearch:latest"
     env_file:
       - ./.env
     ports:

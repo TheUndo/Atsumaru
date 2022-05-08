@@ -31,6 +31,8 @@ const whitelist = [
   "http://localhost:4000",
   "http://local.com",
   "http://650a-158-174-187-200.ngrok.io",
+  "https://undo.club",
+  "https://a.undo.club",
 ];
 const corsOptions = {
   credentials: true,
@@ -61,7 +63,6 @@ app.get(base("/layout/:source/front"), auth, (req: Request, res) => {
 
 /* GET search */
 app.get(base("/search/:query"), search);
-
 
 /* GET manga details */
 app.get(base("/manga/:source/:slug"), auth, manga);

@@ -85,3 +85,5 @@ services:
             dockerfile: ./Dockerfile
         volumes:
             - ./storage/frontend:/app/dist
+        env_file:
+            - ./.env

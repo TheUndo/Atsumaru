@@ -101,7 +101,7 @@ export default function Signup(props: Props) {
                   authorizationUrl={`https://anilist.co/api/v2/oauth/authorize?client_id=${env.VITE_ANILIST_CLIENT_ID}&redirect_uri=${env.VITE_ANILIST_REDIRECT_URI}&response_type=code`}
                   responseType="code"
                   clientId={env.VITE_ANILIST_CLIENT_ID}
-                  redirectUri="http://localhost:3000/ouath/anilist"
+                  redirectUri={env.VITE_ANILIST_CLIENT_ID}
                   onSuccess={onSuccess}
                   onFailure={onFailure}></OAuth2Login>
               </Button>

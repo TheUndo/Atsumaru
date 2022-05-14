@@ -13,5 +13,12 @@ export default async function indexManga(
     info: any;
   }[],
 ) {
-  return await client.index("manga").updateDocuments(manga);
+  return await client.index("manga").updateDocuments(
+    manga.map(manga => {
+      try {
+        delete manga.info.chapters;
+      } catch (e) {}
+      return manga;
+    }),
+  );
 }

@@ -1,10 +1,12 @@
 .settings {
   position: relative;
   padding: 1rem 0;
+  
 }
 
 .settingsInner {
   position: relative;
+  box-sizing: border-box;
 }
 
 .setting {

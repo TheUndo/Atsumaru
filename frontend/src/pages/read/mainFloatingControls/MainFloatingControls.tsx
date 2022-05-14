@@ -49,7 +49,7 @@ export default function MainFloatingControls({
         }) => (
           <>
             <div
-              className={classes.pageIndicator}
+              className={cm("reader-control-button", classes.pageIndicator)}
               style={{
                 opacity:
                   displayCurrentPageIndicator === "NEVER"

@@ -44,6 +44,7 @@ html {
 body {
   overflow: auto;
   height: 100vh;
+  
 }
 body:not(.standalone) {
   padding-top: env(safe-area-inset-top);

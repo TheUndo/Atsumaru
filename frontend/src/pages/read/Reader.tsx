@@ -12,6 +12,7 @@ import { AppContext } from "../../App";
 import Button from "../../components/button/Button";
 import Icon from "../../components/icon/Icon";
 import { MangaEndPointResponse } from "../../components/info/Info";
+import Loading, { LoadingPage } from "../../components/loading/Loading";
 import useApi, { apiBase } from "../../hooks/useApi";
 import { Chapter, MangaInfo } from "../../types";
 import cm from "../../utils/classMerger";
@@ -315,6 +316,12 @@ export default function Reader() {
                   hideControls={value.setControlsShown}
                   manga={mangaData}
                 />
+              ) : apiData.isLoading ? (
+                <>
+                  <LoadingPage>
+                    <Loading />
+                  </LoadingPage>
+                </>
               ) : (
                 <div className={classes.noChapters}>
                   <div>

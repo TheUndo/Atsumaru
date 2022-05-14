@@ -25,7 +25,7 @@ export default function Search(props: Props) {
   const shown = !!query;
   const ref = useRef(null);
 
-    const { isLoading, error, data } = useQuery<{
+  const { isLoading, error, data } = useQuery<{
     hits: {
       title: string;
       description: string;
@@ -34,10 +34,10 @@ export default function Search(props: Props) {
     }[];
   }>(
     ["query", query],
-    () =>
-      fetch(`${apiBase}/search/${encodeURIComponent(query)}`).then(res =>
-        res.json(),
-      ),
+    ({ signal }) =>
+      fetch(`${apiBase}/search/${encodeURIComponent(query)}`, {
+        signal,
+      }).then(res => res.json()),
     {
       enabled: !!query,
     },

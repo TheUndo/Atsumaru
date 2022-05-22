@@ -45,6 +45,7 @@
     overscroll-behavior: contain;
     flex-direction: row; // can be changed
     scroll-snap-type: both mandatory;
+    scroll-snap-stop: always;
     -webkit-overflow-scrolling: touch;
   }
   .pageContentOverlay {

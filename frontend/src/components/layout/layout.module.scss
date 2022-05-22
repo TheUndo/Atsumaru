@@ -1,6 +1,6 @@
 .layout {
   position: relative;
-  height: 100%;
+  transition: height 0.15s ease-in;
 
   transform: scale(var(--scaler-reset, 1));
 
@@ -49,6 +49,7 @@
     overflow: hidden;
   }
 }
+
 .content {
   --constrain: 1200px;
   max-width: calc(min(100%, var(--constrain)));

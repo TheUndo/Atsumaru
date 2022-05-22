@@ -35,7 +35,7 @@
   position: relative;
   --gap: 0rem;
   --height: clamp(
-    100px,
+    200px,
     calc((33vw / var(--aspect-ratio)) - var(--gap) * 2 - 10px),
     350px
   );

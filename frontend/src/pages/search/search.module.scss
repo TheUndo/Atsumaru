@@ -16,6 +16,7 @@
   transition: opacity 0.2s ease-in-out;
   will-change: opacity;
   overflow: auto;
+  padding-top: env(safe-area-inset-top);
   &.shown {
     opacity: 1;
     pointer-events: all;

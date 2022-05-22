@@ -136,7 +136,7 @@ export default function Reader() {
   const nextChapter = mangaData?.chapters[currentChapterIndex - 1];
   const currentChapter = mangaData?.chapters[currentChapterIndex];
   const previousChapter = mangaData?.chapters[currentChapterIndex + 1];
-
+  const [sidebarShown] = appCtx.desktopNavbar ?? [];
   const [loadPages, setLoadPages] = useState<{ [k: string]: PageState }>({});
 
   useEffect(() => {
@@ -288,6 +288,7 @@ export default function Reader() {
           ref={scrollRef}
           className={cm(
             classes.reader,
+            sidebarShown && classes.navbarShown,
             readerButtonsAppearance === "HOLLOW"
               ? classes.readerWithHollowControls
               : readerButtonsAppearance === "TRANSPARENT"

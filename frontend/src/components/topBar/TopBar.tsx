@@ -15,15 +15,24 @@ export default function TopBar(props: Props) {
   const readMatch = useMatch("/read/:source/:slug/:chapter/:page");
   const ctx = useContext(AppContext);
   const [query, setQuery] = ctx.searchQuery ?? [];
-
+  const [sideBar] = ctx.desktopNavbar ?? [];
   const [searchShown, setSearchShown] = useState(false);
-  const shown = !readMatch;
+  const shown = !readMatch || sideBar;
   const mobile = useMedia(["(max-width: 1000px)"], [true], false);
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     setSearchShown(!!query);
   }, [query]);
-  
+
+  useEffect(
+    () =>
+      void document.body.style.setProperty(
+        "--topBarResolvedHeight",
+        shown ? "var(--topBarHeight)" : "0",
+      ),
+    [shown],
+  );
+
   return (
     <>
       <div

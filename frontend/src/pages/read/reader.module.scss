@@ -6,7 +6,12 @@
   isolation: isolate;
   width: 100%;
   z-index: 1000;
-  
+
+  transition: height 0.15s ease-in;
+
+  &.navbarShown {
+    transition-timing-function: ease-in;
+  }
 
   @media (pointer: coarse) {
     position: fixed;

@@ -41,10 +41,16 @@ html {
   height: 100vh;
 }
 
-body {
-  overflow: auto;
-  height: 100vh;
-  
+@media (pointer: coarse) {
+  body {
+    overflow: auto;
+  }
+}
+@media (pointer: fine) {
+  body {
+    overflow: auto;
+    height: 100vh;
+  }
 }
 body:not(.standalone) {
   padding-top: env(safe-area-inset-top);

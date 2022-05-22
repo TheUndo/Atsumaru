@@ -3,7 +3,13 @@ import {
   disableBodyScroll,
   enableBodyScroll,
 } from "body-scroll-lock";
-import React, { useContext, useEffect, useRef } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  useDeferredValue,
+  useMemo,
+} from "react";
 import { createPortal } from "react-dom";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
@@ -22,6 +28,7 @@ type Props = {};
 export default function Search(props: Props) {
   const ctx = useContext(AppContext);
   const [query] = ctx.searchQuery ?? ["sup"];
+  const deferredQuery = useDeferredValue(query);
   const shown = !!query;
   const ref = useRef(null);
 
@@ -43,6 +50,8 @@ export default function Search(props: Props) {
     },
   );
 
+  const deferredData = useDeferredValue(data);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!ref.current) return;
@@ -54,7 +63,12 @@ export default function Search(props: Props) {
       }
     }, 0);
     return () => clearTimeout(timeout);
-  }, [query, ref]);
+  }, [deferredQuery, ref]);
+
+  const results = useMemo(
+    () => data?.hits && <SearchResults data={data.hits} query={query} />,
+    [deferredQuery, deferredData],
+  );
 
   const content = (() => {
     if (isLoading)
@@ -79,7 +93,7 @@ export default function Search(props: Props) {
         </>
       );
     else if (data?.hits?.length) {
-      return <SearchResults data={data.hits} query={query} />;
+      return results;
     } else {
       return (
         <>
@@ -90,8 +104,6 @@ export default function Search(props: Props) {
       );
     }
   })();
-
-  useEffect(() => {}, []);
 
   return (
     <>

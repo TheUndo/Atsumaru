@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useRipple from "use-ripple-hook";
 import useImage from "../../hooks/useImage";
 import { MangaInfo, ProgressInfo } from "../../types";
+import normalizeChapterNames from "../../utils/normalizeChapterNames";
 import percentage from "../../utils/percentage";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
 import Button from "../button/Button";
@@ -32,7 +33,7 @@ export default function Poster(props: Props) {
     fail,
     retry,
   } = useImage([manga?.cover], failImage);
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,29 +51,54 @@ export default function Poster(props: Props) {
           }}>
           {loading && <div className={classes.loader}></div>}
         </div>
-        {progress && (
-          <div className={classes.badge}>{`ch. ${progress.latest.chapter}${
-            manga?.chapters
-              ? `/${manga.chapters[0]?.name} • p. ${
-                  progress.full.preferredDirection === "TOP-TO-BOTTOM"
-                    ? percentage(progress.latest.meta.progress ?? 0, 3) + "%"
-                    : progress.latest.meta.page
-                }`
-              : ""
-          }`}</div>
+        {progress && manga && (
+          <ProgressMeta progress={progress} manga={manga} />
         )}
-       {manga && progress && window.matchMedia("(pointer: fine)").matches && <div className={classes.infoButton}>
-          <Button
-            onClick={e => {
-              e.stopPropagation();
-              navigate(`/manga/${resolveVendorSlug(manga.vendor)}/${manga.slug}`)
-            }}
-            icon={<Icon icon="info" />}
-            circle
-          />
-        </div>}
+        {manga && progress && window.matchMedia("(pointer: fine)").matches && (
+          <div className={classes.infoButton}>
+            <Button
+              onClick={e => {
+                e.stopPropagation();
+                navigate(
+                  `/manga/${resolveVendorSlug(manga.vendor)}/${manga.slug}`,
+                );
+              }}
+              icon={<Icon icon="info" />}
+              circle
+            />
+          </div>
+        )}
         <div className={classes.label}>{label}</div>
       </div>
     </>
+  );
+}
+
+function ProgressMeta({
+  manga,
+  progress,
+}: {
+  manga: MangaInfo;
+  progress: NonNullable<Props["progress"]>;
+}) {
+  return (
+    <div className={classes.badge}>
+      <span className={classes.desktopBullet}>ch. </span>
+      <span>{normalizeChapterNames(progress!.latest.chapter)}</span>
+      <span>/</span>
+      {manga?.chapters && (
+        <>
+          <span>{normalizeChapterNames(manga.chapters[0]?.name)}</span>
+          <span className={classes.desktopBullet}> • </span>
+          <br className={classes.mobileBreakLine} />
+          <span className={classes.desktopBullet}>
+            p.{" "}
+            {progress.full.preferredDirection === "TOP-TO-BOTTOM"
+              ? percentage(progress.latest.meta.progress ?? 0, 3) + "%"
+              : progress.latest.meta.page}
+          </span>
+        </>
+      )}
+    </div>
   );
 }

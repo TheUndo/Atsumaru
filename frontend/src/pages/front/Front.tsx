@@ -15,32 +15,38 @@ import classes from "./front.module.scss";
 
 export default function Front() {
   const online = useOnline();
-
+  const [isOnline, setIsOnline] = useState(online);
   const ctx = useContext(AppContext);
   const [loggedIn] = ctx.loggedIn ?? [];
   const { refetch, isLoading, error, data } = useQuery<{
     layout: GenericItem[];
-  }>(["front"], () =>
-    fetch(`${apiBase}/layout/s1/front`, {
-      credentials: "include",
-    }).then(res => res.json()),
+  }>(
+    ["front"],
+    () =>
+      fetch(`${apiBase}/layout/s1/front`, {
+        credentials: "include",
+      }).then(res => res.json()),
+    {
+      retry: false,
+    },
   );
   useEffect(() => {
     if (!isLoading) {
-      if (online || loggedIn) {
+      if ((online || loggedIn) && !isOnline) {
         refetch();
       }
     }
-  }, [online, loggedIn, refetch, isLoading]);
+    if (online !== isOnline) setIsOnline(online);
+  }, [online, loggedIn, isOnline]);
   const { slug } = useParams();
   const layout = useRef<HTMLDivElement>(null);
-
+  console.log(isLoading, error);
   return (
     <>
       <div ref={layout} className={cm(classes.front, slug && classes.hidden)}>
         <Debug />
         {online ? (
-          isLoading && !data ? (
+          isLoading && !data && !error ? (
             <Loading />
           ) : error ? (
             <>
@@ -50,8 +56,7 @@ export default function Front() {
                 a few minutes.
               </p>
               <p>
-                Error: <code>{error as any}</code> (api probably temporarily
-                down)
+                Error: <code>{error + ""}</code> (api probably temporarily down)
               </p>
             </>
           ) : data ? (

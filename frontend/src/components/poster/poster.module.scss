@@ -63,6 +63,16 @@
     border-radius: 0.3em;
     padding: 0.3em;
     box-sizing: border-box;
+    @media screen and (min-width: 700px) {
+      .mobileBreakLine {
+        display: none;
+      }
+    }
+    @media screen and (max-width: 700px) {
+      .desktopBullet {
+        display: none;
+      }
+    }
   }
   &:hover .badge {
     background: #111;
@@ -83,7 +93,7 @@
       transform: scale(0.8);
       transform-origin: top right;
       opacity: 0;
-      transition: all .1s ease-in;
+      transition: all 0.1s ease-in;
     }
   }
   &:hover .infoButton {

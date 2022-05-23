@@ -279,8 +279,6 @@ function normalizeMangaSeeChapterName(
               return "cash";
             case "=":
               return "equals";
-            case "=":
-              return "equals";
             case "-":
               return "mi";
             case "+":

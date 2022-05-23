@@ -91,7 +91,7 @@ function cacheSettings(settings: SettingsType) {
 function updateDeep(obj: any, value: any, path: any) {
   var i;
   path = path.split(".");
-  for (i = 0; i < path.length - 1; i++) obj = obj[path[i]];
+  for (i = 0; i < path.length - 1; i++) if (obj[path[i]]) obj = obj[path[i]];
 
   obj[path[i]] = value;
 }

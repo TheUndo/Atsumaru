@@ -1,4 +1,4 @@
-FROM node:17
+FROM node:17 AS builder
 
 ARG anilist_client_id
 ARG anilist_redirect_uri
@@ -12,4 +12,14 @@ ENV VITE_ANILIST_REDIRECT_URI=$anilist_redirect_uri
 
 RUN npm i
 
-CMD ["npm", "run", "build"]
+RUN npm run build
+
+FROM nginx:alpine
+
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+
+COPY --from=builder /app/dist .
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

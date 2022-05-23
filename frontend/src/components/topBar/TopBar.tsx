@@ -28,7 +28,7 @@ export default function TopBar(props: Props) {
     () =>
       void document.body.style.setProperty(
         "--topBarResolvedHeight",
-        shown ? "var(--topBarHeight)" : "0",
+        shown ? "var(--topBarHeight)" : ".00001px",
       ),
     [shown],
   );

@@ -8,6 +8,8 @@
   display: flex;
   width: 100%;
 
+  height: calc(100% - var(--topBarResolvedHeight) * 1);
+
   @media (pointer: coarse) {
     height: 100vh;
   }

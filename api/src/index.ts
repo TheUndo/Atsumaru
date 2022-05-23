@@ -33,6 +33,8 @@ const whitelist = [
   "http://650a-158-174-187-200.ngrok.io",
   "https://undo.club",
   "https://a.undo.club",
+  "https://atsu.moe",
+  "https://www.atsu.moe",
 ];
 const corsOptions = {
   credentials: true,

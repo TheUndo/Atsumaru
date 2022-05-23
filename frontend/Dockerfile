@@ -22,4 +22,8 @@ RUN rm -rf ./*
 
 COPY --from=builder /app/dist .
 
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY ./nginx/nginx.conf /etc/nginx/conf.d
+
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

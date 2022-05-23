@@ -262,11 +262,48 @@ function normalizeMangaSeeChapterName(
   const left = parseInt(chapterName.slice(1, -1));
   const right = chapterName[chapterName.length - 1];
   const res = 0 === +right ? left.toString() : `${left}.${right}`;
+  const firstLetter = chapter.Type?.[0]?.toLowerCase();
   return `${
     /* handle prologues */
     chapter.Type.toLowerCase() === "chapter"
       ? ""
-      : chapter.Type?.[0]?.toLowerCase() ?? ""
+      : /\w/.test(firstLetter)
+      ? firstLetter
+      : (() => {
+          switch (firstLetter) {
+            case "#":
+              return "no";
+            case "!":
+              return "bang";
+            case "$":
+              return "cash";
+            case "=":
+              return "equals";
+            case "=":
+              return "equals";
+            case "-":
+              return "mi";
+            case "+":
+              return "pl";
+            case "*":
+              return "mu";
+            case "/":
+              return "di";
+            case "^":
+              return "hat";
+            case "~":
+              return "tilde";
+            case "&":
+              return "and";
+            case "@":
+              return "at";
+            case '"':
+              return "qo";
+            case "'":
+              return "sqo";
+          }
+          return "spchar";
+        })() ?? ""
   }${res}`;
 }
 

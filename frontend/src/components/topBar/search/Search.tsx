@@ -12,31 +12,6 @@ type Props = {
 export default function Search({ shown, forwardRef }: Props) {
   const ctx = useContext(AppContext);
   const [query, setQuery] = ctx.searchQuery ?? [];
-  const location = useLocation();
-  const [initialPath, setInitialPath] = useState(
-    /* /^\/search/.test(location.pathname) ? "/" : */ genUrl(location),
-  );
-  const match = useMatch("/search/:query");
-  const { query: queryParam } = match?.params ?? {};
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!/^\/search/.test(location.pathname)) {
-      setQuery?.("");
-      setInitialPath(genUrl(location));
-    }
-  }, [location]);
-
-  /* useEffect(() => {
-    const currentQuery = encodeURIComponent(query ?? "");
-
-    if (query && currentQuery !== queryParam) {
-      console.log("YUP", query, currentQuery, currentQuery !== queryParam);
-      console.log("yup");
-      navigate(`/search/${currentQuery}`, { replace: true });
-    }
-  }, [query, queryParam, location]); */
 
   return (
     <>

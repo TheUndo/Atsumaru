@@ -23,12 +23,14 @@ import cm from "../../utils/classMerger";
 import classes from "./search.module.scss";
 import SearchResults from "./SearchResults/SearchResults";
 import Helmet from "react-helmet";
+import Button from "../../components/button/Button";
+import Icon from "../../components/icon/Icon";
 
 type Props = {};
 
 export default function Search(props: Props) {
   const ctx = useContext(AppContext);
-  const [query] = ctx.searchQuery ?? ["sup"];
+  const [query] = ctx.searchQuery ?? [""];
   const deferredQuery = useDeferredValue(query);
   const shown = !!query;
   const ref = useRef(null);
@@ -114,7 +116,9 @@ export default function Search(props: Props) {
         </Helmet>
       )}
       <div ref={ref} className={cm(classes.search, shown && classes.shown)}>
-        <div className={classes.inner}>{content}</div>
+        <div className={classes.inner}>
+          {content}
+        </div>
       </div>
     </>
   );

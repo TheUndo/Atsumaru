@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AppContext } from "../../../App";
+import Button from "../../../components/button/Button";
 import Header from "../../../components/header/Header";
+import Icon from "../../../components/icon/Icon";
 import Poster from "../../../components/poster/Poster";
 import PosterGrid from "../../../components/posterGrid/PosterGrid";
 import { MangaInfo } from "../../../types";
@@ -16,6 +19,19 @@ type Props = {
 };
 
 export default function SearchResults({ query, data }: Props) {
+  const ctx = useContext(AppContext);
+
+  const [, setQuery] = ctx.searchQuery ?? [];
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && document.activeElement === document.body)
+        setQuery?.("");
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [setQuery]);
+
   return (
     <>
       <div className={classes.results}>
@@ -25,6 +41,13 @@ export default function SearchResults({ query, data }: Props) {
               <Header level={2}>Search results for "{query}"</Header>
             </div>
             <PosterGrid>
+              <Button
+                key="close"
+                className={classes.close}
+                circle
+                icon={<Icon icon="close" />}
+                onClick={() => setQuery?.("")}
+              />
               {data.map(result => (
                 <Item
                   manga={{

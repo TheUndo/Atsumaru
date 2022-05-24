@@ -52,7 +52,7 @@ Run in your terminal
    cd frontend
    ```
    ```sh
-   npm i && npm run dev
+   npm i --force && npm run dev
    ```
    Open <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> to view the development build.
 

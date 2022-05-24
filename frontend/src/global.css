@@ -27,6 +27,7 @@ body {
   margin: 0;
   padding: 0;
   background: var(--bg);
+
   position: relative;
   font-family: "Montserrat", sans-serif;
   font-family: "Roboto", sans-serif;
@@ -39,17 +40,18 @@ body {
 }
 html {
   height: 100vh;
+  background: red;
 }
 
 @media (pointer: coarse) {
   body {
     overflow: auto;
+    height: 100vh;
   }
 }
 @media (pointer: fine) {
   body {
     overflow: auto;
-    height: 100vh;
   }
 }
 body:not(.standalone) {

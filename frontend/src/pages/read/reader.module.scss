@@ -15,7 +15,6 @@
 
   @media (pointer: coarse) {
     position: fixed;
-
     width: 100vw;
     height: 100vh;
   }
@@ -38,6 +37,7 @@
     cursor: none;
   }
 }
+
 .inner {
   position: relative;
   display: flex;

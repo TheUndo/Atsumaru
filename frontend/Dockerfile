@@ -10,7 +10,7 @@ COPY . .
 ENV VITE_ANILIST_CLIENT_ID=$anilist_client_id
 ENV VITE_ANILIST_REDIRECT_URI=$anilist_redirect_uri
 
-RUN npm i
+RUN npm --force i
 
 RUN npm run build
 

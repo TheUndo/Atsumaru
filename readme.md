@@ -20,6 +20,7 @@ For support/discussion visit the [Atsumaru Discord server](https://discord.gg/Tj
 ## Installing for non-development
 ### Prerequisites
 Install the following beforehand
+- [Git cli](https://git-scm.com/downloads)
 - [Docker (docker-compose)](https://www.docker.com/get-started)
 
    <details>
@@ -65,10 +66,7 @@ Install the following beforehand
 Open your terminal and run the following commands
 1. Clone the repository
    ```sh
-   git clone https://github.com/TheUndo/atsumaru.git
-    ```
-    ```sh
-   cd Atsumaru
+   git clone https://github.com/TheUndo/atsumaru.git &&cd Atsumaru
     ```
 3. Configure environment
 

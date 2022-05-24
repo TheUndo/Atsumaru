@@ -22,6 +22,7 @@
     only screen and (-o-min-device-pixel-ratio: 3/2),
     only screen and (min--moz-device-pixel-ratio: 1.5),
     only screen and (min-device-pixel-ratio: 1.5) {
-    transform: translateX(calc(-83px / 2));
+    transform: translateY(-14px) translateX(calc(-83px / 2 + 28px));
+    border-radius: var(--br);
   }
 }

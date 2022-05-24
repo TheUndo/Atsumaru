@@ -17,11 +17,82 @@ Contributions of any kind are welcomed. Feel free to make pull requests with new
 
 For support/discussion visit the [Atsumaru Discord server](https://discord.gg/Tj4QmEF4uV),
 
+## Installing for non-development
+### Prerequisites
+Install the following beforehand
+- [Docker (docker-compose)](https://www.docker.com/get-started)
+
+   <details>
+   <summary>Arch</summary>
+   
+   ```sh
+   sudo pacman -S docker
+   ```
+  </details>
+
+  <details>
+   <summary>Ubuntu</summary>
+   
+   Guide: https://docs.docker.com/engine/install/ubuntu/
+  </details>
+
+   <details>
+   <summary>Mac OS</summary>
+   
+   ```sh
+   brew install docker-compose
+   ```
+  </details>
+
+  <details>
+   <summary>Windows</summary>
+   With chocololatey:
+   
+   ```sh
+   choco install docker-compose
+   ```
+
+   *or*
+
+   With installer: https://www.docker.com/get-started/
+  </details>
+  <details>
+   <summary>Other OS</summary>
+   Google/Duck it or use this link: https://www.docker.com/get-started/
+  </details>
+
+### Steps
+Open your terminal and run the following commands
+1. Clone the repository
+   ```sh
+   git clone https://github.com/TheUndo/atsumaru.git
+    ```
+    ```sh
+   cd Atsumaru
+    ```
+3. Copy `.env.prod.example` as `.env`
+
+   *bash/zsh:*
+   ```sh
+   $ cp .env.prod.example .env
+   ```
+   *Windows cmd/powershell:*
+   ```sh
+   copy .env.prod.example .env
+   ```
+3. 
+   start Atsumaru (this may take a few minutes)
+   ```sh
+   docker-compose up -d
+   ```
+
+When installed and running open [localhost:4000](http://localhost:4000) and view Atsumaru locally! (it may take some time to become fully operational)
+
 ## Installing for development
 All modern operating systems are supported GNU/Linux, Windows, Mac OS.
 ### Prerequisites
 Install the following beforehand
-- [Docker](https://www.docker.com/get-started)
+- [Docker (docker-compose)](https://www.docker.com/get-started)
 - [Node.js](https://nodejs.dev/)
 
 ### Steps

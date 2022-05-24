@@ -87,7 +87,7 @@ Open your terminal and run the following commands
 When installed and running open [localhost:4000](http://localhost:4000) and view Atsumaru locally! (it may take some time to become fully operational)
 
 ## Installing for development
-All modern operating systems are supported GNU/Linux, Windows, Mac OS.
+All major operating systems are supported GNU/Linux, Windows, Mac OS.
 ### Prerequisites
 Install the following beforehand
 - [Docker (docker-compose)](https://www.docker.com/get-started)

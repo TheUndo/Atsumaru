@@ -70,7 +70,7 @@ Open your terminal and run the following commands
     ```sh
    cd Atsumaru
     ```
-3. Copy `.env.prod.example` as `.env`
+3. Configure environment
 
    *bash/zsh:*
    ```sh
@@ -104,15 +104,15 @@ Run in your terminal
     ```sh
    cd Atsumaru
     ```
-3. Copy `.env.example` as `.env`
+3. Copy `.env.dev.example` as `.env`
 
    *bash/zsh:*
    ```sh
-   $ cp .env.example .env
+   $ cp .env.dev.example .env
    ```
    *Windows cmd/powershell:*
    ```sh
-   copy .env.example .env
+   copy .env.dev.example .env
    ```
 4. Build and start the backend. Omit the `-d` flag if you want to use another terminal for the frontend
    ```sh

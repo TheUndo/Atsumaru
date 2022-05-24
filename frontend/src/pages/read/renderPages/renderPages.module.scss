@@ -38,7 +38,10 @@
     }
   }
   .pageContent {
-    /*  overflow: auto; */
+    @media (pointer: coarse) {
+      overflow: auto;
+    }
+
     position: relative;
     height: 100%;
     display: flex;

@@ -40,7 +40,6 @@ body {
 }
 html {
   height: 100vh;
-  background: red;
 }
 
 @media (pointer: coarse) {
@@ -64,7 +63,7 @@ body:not(.standalone) {
   }
 }
 
-#root {
+.standalone #root {
   height: 100%;
 }
 body.standalone {

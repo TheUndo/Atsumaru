@@ -24,6 +24,14 @@ export type SettingsType = {
     previousPage: "YES" | "NO"; // wrongly named page, please fix
     spacebar: "NEXT-PAGE" | "NEXT-CHAPTER" | "DISABLED";
   };
+  readerMeta: {
+    disabled: "YES" | "NO";
+    chapter: "YES" | "NO";
+    page: "YES" | "NO";
+    time: "YES" | "NO";
+    battery: "YES";
+    labels: "YES" | "NO";
+  };
   readerShowDesktopDrawer: "YES" | "NO";
   readerClickNavigationDisabled: "NO" | "YES";
   readerClickNavigation: "PREV-MENU-NEXT" | "PREV-NEXT" | "ONLY-NEXT";
@@ -51,6 +59,14 @@ const defaultSettings: SettingsType = {
     previousPage: "YES",
     spacebar: "NEXT-PAGE",
   },
+  readerMeta: {
+    disabled: "NO",
+    chapter: "YES",
+    page: "YES",
+    time: "YES",
+    battery: "YES",
+    labels: "YES",
+  },
   readerShowDesktopDrawer: "YES",
   readerClickNavigationDisabled: "NO",
   readerClickNavigation: "PREV-MENU-NEXT",
@@ -66,6 +82,7 @@ export default function useSettings() {
       void updateDeep(settings, value, keys); // With reference!
       void update(snapshot);
       void setSettings(prevState => ({
+        ...defaultSettings,
         ...prevState,
         ...settings,
       }));
@@ -80,7 +97,12 @@ export default function useSettings() {
 function getCachedSettings(): SettingsType {
   const cached = tryJSONParse<SettingsType>(localStorage.getItem(key));
 
-  return cached || defaultSettings;
+  return cached
+    ? {
+        ...defaultSettings,
+        ...cached,
+      }
+    : defaultSettings;
 }
 
 function cacheSettings(settings: SettingsType) {

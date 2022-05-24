@@ -1,0 +1,27 @@
+.readerMeta {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 4px;
+  --br: 3px;
+  border-radius: var(--br) var(--br) 0 0;
+  background: var(--button-bg);
+  z-index: 9999;
+  font-size: 12px;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  &.hidden {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  .inner {
+    display: flex;
+    gap: 5px;
+  }
+  @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+    only screen and (-o-min-device-pixel-ratio: 3/2),
+    only screen and (min--moz-device-pixel-ratio: 1.5),
+    only screen and (min-device-pixel-ratio: 1.5) {
+    transform: translateX(calc(-83px / 2));
+  }
+}

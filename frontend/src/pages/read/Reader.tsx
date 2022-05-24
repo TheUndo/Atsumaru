@@ -27,6 +27,7 @@ import KeyboardController from "./keyboardController/KeyboardController";
 import MainFloatingControls from "./mainFloatingControls/MainFloatingControls";
 import PagePreviewThumbnails from "./pagePreviewThumbnails/PagePreviewThumbnails";
 import classes from "./reader.module.scss";
+import ReaderMeta from "./readerMeta/ReaderMeta";
 import RenderPages from "./renderPages/RenderPages";
 import SettingsContainer from "./settingsContainer/SettingsContainer";
 
@@ -50,6 +51,7 @@ export type ReaderCtx = {
   currentChapter?: Chapter;
   previousChapter?: Chapter;
   initialPage?: string;
+  background?: string;
   setInitialPage?: React.Dispatch<React.SetStateAction<string | undefined>>;
   chapters: Chapter[];
   currentPage?: string;
@@ -174,6 +176,10 @@ export default function Reader() {
     },
     [currentChapter, vendor, apiData],
   );
+  const background =
+    readerBackgroundColor === "custom"
+      ? readerCustomBackgroundColor
+      : readerBackgroundColor ?? "#000";
   const value: ReaderCtx = {
     manga: mangaData,
     settingsShown,
@@ -196,6 +202,7 @@ export default function Reader() {
       [chapter, mangaData, currentChapterIndex, setInitialPage, setCurrentPage],
     ),
     jumpToFixedPage,
+    background,
     nextChapter,
     currentChapter,
     previousChapter,
@@ -270,11 +277,6 @@ export default function Reader() {
     return () => clearTimeout(timeout);
   }, [currentPage, apiData, currentChapter, vendor, mangaData?.slug]);
 
-  const background =
-    readerBackgroundColor === "custom"
-      ? readerCustomBackgroundColor
-      : readerBackgroundColor ?? "#000";
-
   if (apiData.isLoading === false && !mangaData) {
     return <E404 />;
   }
@@ -283,6 +285,7 @@ export default function Reader() {
     <>
       <ReaderContext.Provider value={value}>
         <ProgressSyncing />
+
         <KeyboardController />
         <div
           ref={scrollRef}
@@ -309,6 +312,7 @@ export default function Reader() {
             }}>
             <DesktopSettingsBurger />
             <div className={classes.content}>
+              <ReaderMeta />
               {value?.currentChapter && (
                 <PagePreviewThumbnails pages={value?.currentChapter?.pages} />
               )}

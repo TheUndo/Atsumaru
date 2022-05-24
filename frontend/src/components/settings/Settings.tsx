@@ -7,6 +7,7 @@ import Icon from "../icon/Icon";
 import Loading, { LoadingPage } from "../loading/Loading";
 import ClickNavigation from "./items/readerItems/ClickNavigation";
 import KeyboardControls from "./items/readerItems/KeyboardControls";
+import ReaderMeta from "./items/readerItems/ReaderMeta";
 import PageColorModifier from "./items/readerItems/PageColorModifier";
 import PageFillMethod from "./items/readerItems/PageFillMethod";
 import PageProgressIndicator from "./items/readerItems/PageProgressIndicator";
@@ -36,6 +37,7 @@ export default function Settings() {
           <PageFillMethod />
           <ClickNavigation />
           <KeyboardControls />
+          <ReaderMeta />
           <ReaderBackgroundColor />
           <ReaderUIAppearance />
           <PageProgressIndicator />

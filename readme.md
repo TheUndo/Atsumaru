@@ -66,7 +66,7 @@ Install the following beforehand
 Open your terminal and run the following commands
 1. Clone the repository
    ```sh
-   git clone https://github.com/TheUndo/atsumaru.git &&cd Atsumaru
+   git clone https://github.com/TheUndo/atsumaru.git&&cd Atsumaru
     ```
 3. Configure environment
 

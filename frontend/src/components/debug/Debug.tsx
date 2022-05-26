@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { AppContext } from "../../App";
 import { apiBase } from "../../hooks/useApi";
+import isDev from "../../utils/isDev";
 import Button from "../button/Button";
 import Header from "../header/Header";
 import Icon from "../icon/Icon";
@@ -9,9 +10,7 @@ import SettingsDebugger from "./SettingsDebugger";
 /* import classes from "./debug.module.scss"; */
 
 export default function Debug() {
-  const debug = ["localhost", "local.com", "atsumaru.local"].includes(
-    location.hostname,
-  );
+  const debug = isDev();
   const ctx = useContext(AppContext);
   const [loggedIn, setLoggedIn] = ctx.loggedIn ?? [];
   const [shown, setShown] = useState(false);

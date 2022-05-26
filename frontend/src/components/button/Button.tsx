@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import cm from "../../utils/classMerger";
 import classes from "./button.module.scss";
@@ -19,8 +19,9 @@ type Props = {
   transparent?: boolean;
   hoverReveal?: boolean;
   noHoverEffect?: boolean;
-} & Partial<React.ComponentProps<"button">> &
-  Partial<React.ComponentProps<typeof Link>>;
+  forwardRef?: React.RefObject<HTMLElement>;
+} & Omit<Partial<React.ComponentProps<"button">>, "ref"> &
+  Omit<Partial<React.ComponentProps<typeof Link>>, "ref">;
 
 const Button = (masterProps: Props) => {
   const mobile = useMedia(
@@ -28,9 +29,9 @@ const Button = (masterProps: Props) => {
     [true, false],
     false,
   );
-  const [ripple, event] = useRipple({
-    disabled: mobile,
-  });
+
+  const selfRef = useRef<HTMLElement>(null);
+
   const {
     css,
     children,
@@ -46,8 +47,16 @@ const Button = (masterProps: Props) => {
     transparent,
     hoverReveal,
     noHoverEffect,
+    forwardRef,
     ...props
   } = masterProps;
+
+  const resolvedRef = forwardRef ?? selfRef;
+
+  const [ripple, event] = useRipple({
+    disabled: mobile,
+    ref: resolvedRef,
+  });
   const loc = iconLoc || "left";
   const iconContent = (
     <div className={cm(classes.iconCont, "iconCont")}>{icon}</div>

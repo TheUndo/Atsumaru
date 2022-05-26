@@ -1,0 +1,21 @@
+.switcher {
+  position: relative;
+  display: inline-flex;
+  --gap: 0.3rem;
+  gap: var(--gap);
+  padding: var(--gap);
+  border-radius: 6px;
+  background: var(--bg3);
+  .active {
+    position: absolute;
+    transition: all 0.2s ease-in-out;
+    background: var(--accent);
+  }
+}
+
+.item {
+  position: relative;
+  &.activeItem {
+    pointer-events: none;
+  }
+}

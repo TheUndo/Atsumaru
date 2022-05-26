@@ -22,6 +22,8 @@ import useApi from "./hooks/useApi";
 import SliderRadio from "./components/SliderRadio/SliderRadio";
 import Search from "./pages/search/Search";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import ReactDOM from "react-dom/client";
+import Dev from "./pages/dev/Dev";
 
 /* import { registerSW } from "virtual:pwa-register"; */
 
@@ -147,13 +149,13 @@ function App() {
                       <Route path="chapters" element={<></>} />
                     </Route>
                   </Route>
-                  {/* <Route
-                    path="/search"
+                  <Route
+                    path="/dev"
                     element={
                       <GenericPage>
-                        <Test />
+                        <Dev />
                       </GenericPage>
-                    }></Route> */}
+                    }></Route>
                   <Route
                     path="*"
                     element={
@@ -172,22 +174,11 @@ function App() {
   );
 }
 
-function Test() {
-  const navigate = useNavigate();
+const container = document.getElementById("root");
+const root = ReactDOM.createRoot(container);
 
-  return (
-    <>
-      <Button onClick={() => navigate("/")}></Button>
-      {/* <SliderRadio>
-      
-    </SliderRadio> */}
-    </>
-  );
-}
-
-dom.render(
+root.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
-  document.getElementById("root"),
 );

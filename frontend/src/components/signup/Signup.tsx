@@ -20,6 +20,8 @@ type Props = {};
 
 const env = (import.meta as any).env;
 
+console.log(env);
+
 export default function Signup(props: Props) {
   //const [username, setUsername] = useState("");
   //const [email, setEmail] = useState("");

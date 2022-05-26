@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useMatch } from "react-router-dom";
 import { AppContext } from "../../App";
 import cm from "../../utils/classMerger";
+import isDev from "../../utils/isDev";
 import Button from "../button/Button";
 import Icon from "../icon/Icon";
 import classes from "./navbar.module.scss";
@@ -34,6 +35,15 @@ export const items: NavbarItemType[] = [
     legend: "Your library",
     icon: <Icon icon="yourLibrary" />,
   }),
+  ...(isDev()
+    ? [
+        () => ({
+          to: "/dev",
+          legend: "Dev",
+          icon: <Icon icon="bracketsCurly" />,
+        }),
+      ]
+    : []),
   (ctx?: AppContext) =>
     ctx?.loggedIn?.[0]
       ? {

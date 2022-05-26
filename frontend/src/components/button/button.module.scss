@@ -11,13 +11,14 @@
 }
 
 .button {
+  -webkit-tap-highlight-color: transparent;
   --padding: 0.7em;
   min-width: 41px;
   @media only screen and (max-width: 1000px) {
     --padding: 0.55em;
     min-width: 36px;
   }
-  
+
   padding: var(--padding);
   background: var(--button-bg);
   &.hasLegend {
@@ -36,7 +37,7 @@
   box-sizing: border-box;
   cursor: pointer;
   overflow: hidden;
-  transition: filter 0.3s ease-out, background 0.25s ease-in;
+  transition: filter 0.3s ease-out, background 0.25s ease-in, transform .05s ease-out;
   &[disabled] {
     opacity: 0.7;
     pointer-events: none;
@@ -56,6 +57,7 @@
   }
   &:active {
     filter: drop-shadow(0 2px 5px #111);
+    transform: scale(.95);
   }
   &.fullWidth,
   & .text {
@@ -94,6 +96,7 @@
   }
 }
 .inner {
+  -webkit-tap-highlight-color: transparent;
   position: relative;
   display: flex;
   gap: calc(var(--padding) * 0.8);
@@ -104,6 +107,7 @@
   .text {
     display: flex;
     align-items: center;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 

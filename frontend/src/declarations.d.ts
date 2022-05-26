@@ -15,3 +15,5 @@ declare module "virtual:pwa-register/react" {
 }
 
 declare module "*.svg";
+
+declare module "react-dom/client";

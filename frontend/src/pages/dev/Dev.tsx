@@ -19,11 +19,7 @@ export default function Dev(props: Props) {
             {
               value: "test",
               content: (forwardRef, props) => (
-                <Button
-                  transparent
-                  noHoverEffect
-                  forwardRef={forwardRef}
-                  {...props}>
+                <Button transparent forwardRef={forwardRef} {...props}>
                   sup dude?
                 </Button>
               ),
@@ -34,7 +30,6 @@ export default function Dev(props: Props) {
                 <Button
                   icon={<Icon icon="home" />}
                   transparent
-                  noHoverEffect
                   forwardRef={forwardRef}
                   {...props}>
                   sup dude?
@@ -44,11 +39,7 @@ export default function Dev(props: Props) {
             {
               value: "test3",
               content: (forwardRef, props) => (
-                <Button
-                  transparent
-                  noHoverEffect
-                  forwardRef={forwardRef}
-                  {...props}>
+                <Button transparent forwardRef={forwardRef} {...props}>
                   YEP
                 </Button>
               ),

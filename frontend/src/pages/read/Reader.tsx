@@ -108,6 +108,7 @@ export default function Reader() {
   const [desktopControlsVisible, setDesktopControlsVisible] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const appCtx = useContext(AppContext);
+  const [, setQuery] = appCtx.searchQuery ?? [];
   const [
     {
       readerButtonsAppearance,
@@ -162,6 +163,10 @@ export default function Reader() {
     setTimeout(() => {
       appCtx.desktopNavbar?.[1](false);
     }, 20);
+  }, []);
+
+  useEffect(() => {
+    setQuery?.("");
   }, []);
 
   const jumpToFixedPage = useCallback(

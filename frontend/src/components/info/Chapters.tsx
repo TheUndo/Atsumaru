@@ -1,5 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
-import { AppContext } from "../../App";
+import React, { useMemo, useState } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import useTimeout from "../../hooks/useTimeout";
 import {
@@ -86,9 +85,6 @@ export function ChapterItem({
   vendor: MangaInfo["vendor"];
   progress: ProgressInfo | undefined;
 }) {
-  const ctx = useContext(AppContext);
-  const [, setQuery] = ctx.searchQuery ?? [];
-
   const progressNode =
     progress?.chapterProgress &&
     getSpecificProgress(
@@ -128,7 +124,6 @@ export function ChapterItem({
             parseInt(progressNode?.meta?.page ?? "1") || 1,
             progressNode?.meta?.progress,
           )}`}
-          onClick={() => setQuery?.("")}
           fullWidth
           icon={<Icon icon="playSolid" />}
           className={classes.button}>

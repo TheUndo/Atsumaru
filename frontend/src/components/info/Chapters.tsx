@@ -25,7 +25,6 @@ type Props = {
 export default function Chapters({ chapters, slug, vendor, progress }: Props) {
   const [sort, setSort] = useLocalStorage("manga-sort-chapters", "desc");
   const id = useMemo(() => Math.random() + "", []);
-
   // performance gains
   const reversed = useMemo(() => chapters?.slice(0).reverse(), [chapters]);
   const sorted = useMemo(
@@ -42,33 +41,34 @@ export default function Chapters({ chapters, slug, vendor, progress }: Props) {
             "Loading chapters..."
           )}
         </Header>
-        <div className={classes.sort}>
-          <Button
-            icon={
-              <Icon
-                orientation={sort === "asc" ? "0" : ".5turn"}
-                icon="arrow"
-              />
-            }
-            iconLoc="right"
-            label="Sort"
-            onClick={() => setSort(sort === "asc" ? "desc" : "asc")}>
-            {sort === "asc" ? "Ascending" : "Descending"}
-          </Button>
-        </div>
         {(chapters?.length ?? 0) > 5 && (
-          <div className={classes?.content}>
-            {sorted.map((chapter, i, arr) => (
-              <ChapterItem
-                progress={progress}
-                vendor={vendor}
-                slug={slug}
-                key={i + id}
-                chapter={chapter}
-              />
-            ))}
+          <div className={classes.sort}>
+            <Button
+              icon={
+                <Icon
+                  orientation={sort === "asc" ? "0" : ".5turn"}
+                  icon="arrow"
+                />
+              }
+              iconLoc="right"
+              label="Sort"
+              onClick={() => setSort(sort === "asc" ? "desc" : "asc")}>
+              {sort === "asc" ? "Ascending" : "Descending"}
+            </Button>
           </div>
         )}
+
+        <div className={classes?.content}>
+          {sorted.map((chapter, i, arr) => (
+            <ChapterItem
+              progress={progress}
+              vendor={vendor}
+              slug={slug}
+              key={i + id}
+              chapter={chapter}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

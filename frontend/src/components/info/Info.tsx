@@ -18,7 +18,6 @@ export type MangaEndPointResponse = {
 };
 
 export default function Info() {
-  const location = useLocation();
   const match = useMatch(`/manga/:vendor/:mangaSlug`);
   const { vendor, mangaSlug } = match?.params ?? {};
   const layout = {
@@ -32,11 +31,7 @@ export default function Info() {
         layout={layout}
         slug={mangaSlug}
       />
-      <ChapterModal
-        vendor={vendor as MangaInfo["vendor"]}
-        layout={layout}
-        slug={mangaSlug}
-      />
+      <ChapterModal layout={layout} />
     </>
   );
 }
@@ -79,7 +74,7 @@ function ShowModal({
         shown={!!slug}
         scaleElements={[layout.current]}
         onClose={() => {
-          console.log("hi")
+          console.log("hi");
           navigate(
             (location.state as any)?.backgroundLocation?.pathname ?? "/",
           );
@@ -91,34 +86,36 @@ function ShowModal({
   );
 }
 
-const ChapterModal = React.memo(
-  ({
-    slug,
-    layout,
-    vendor,
-  }: {
-    slug?: string;
-    layout: React.RefObject<HTMLDivElement>;
-    vendor: MangaInfo["vendor"];
-  }) => {
-    const navigate = useNavigate();
-    const match = useMatch(`/manga/${vendor}/:mangaSlug/chapters`);
-    const apiData = useApi<MangaEndPointResponse>(`/manga/${vendor}/${slug}`);
+const ChapterModal = ({
+  layout,
+}: {
+  layout: React.RefObject<HTMLDivElement>;
+}) => {
+  const navigate = useNavigate();
+  const match = useMatch(`/manga/:vendor/:mangaSlug/chapters`);
+  const { vendor, mangaSlug } = match?.params ?? {};
+  const apiData = useApi<MangaEndPointResponse>(
+    `/manga/${vendor}/${mangaSlug}`,
+  );
+  const location = useLocation();
 
-    return (
-      <Modal
-        scaleElements={[document.getElementById("info-modal")]}
-        shown={!!match}
-        onClose={() => navigate(`/manga/${vendor}/${slug}`)}>
-        {slug && (
-          <Chapters
-            vendor={vendor}
-            slug={slug}
-            chapters={apiData?.data?.manga?.chapters}
-            progress={apiData?.data?.progress}
-          />
-        )}
-      </Modal>
-    );
-  },
-);
+  return (
+    <Modal
+      scaleElements={[document.getElementById("info-modal")]}
+      shown={!!match}
+      onClose={() =>
+        navigate(`/manga/${vendor}/${mangaSlug}`, {
+          state: location.state,
+        })
+      }>
+      {mangaSlug && (
+        <Chapters
+          vendor={vendor as MangaInfo["vendor"]}
+          slug={mangaSlug}
+          chapters={apiData?.data?.manga?.chapters}
+          progress={apiData?.data?.progress}
+        />
+      )}
+    </Modal>
+  );
+};

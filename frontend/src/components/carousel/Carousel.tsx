@@ -4,6 +4,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { MangaInfo, ProgressInfo } from "../../types";
@@ -11,7 +12,7 @@ import Header from "../header/Header";
 import Poster from "../poster/Poster";
 import classes from "./carousel.module.scss";
 import cm from "../../utils/classMerger";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
 import Swiper, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import {
@@ -187,7 +188,7 @@ function Item({
     () => progress && getLatestProgress(progress),
     [progress],
   );
-
+  const location = useLocation();
   const url = useMemo(
     () =>
       progress && latestProgress
@@ -204,7 +205,7 @@ function Item({
     (read: boolean) => (
       <Poster
         onClick={() => {
-          if (read) navigate(url);
+          if (read) navigate(url, { state: location.state });
         }}
         label={manga.title}
         progress={
@@ -218,13 +219,9 @@ function Item({
         manga={manga}
       />
     ),
-    [manga, progress, latestProgress, url],
+    [manga, progress, latestProgress, url, location],
   );
-  return progress && latestProgress ? (
-    poster(true)
-  ) : (
-    <MangaLink to={url}>{poster(false)}</MangaLink>
-  );
+  return poster(true);
   /* return (
         <Link
             style={{

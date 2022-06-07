@@ -14,6 +14,7 @@ import Button from "../button/Button";
 import Header from "../header/Header";
 import Icon from "../icon/Icon";
 import Loading from "../loading/Loading";
+import MangaLink from "../MangaLink/MangaLink";
 import Poster from "../poster/Poster";
 import { ChapterItem } from "./Chapters";
 import classes from "./content.module.scss";
@@ -143,13 +144,15 @@ export default function Content({
               <Icon icon={bookmarked ? "bookmarkSolid" : "bookmarkHollow"} />
             }
             onClick={() => setBookmarked(!bookmarked)}></Button>
-          <Button
-            disabled={!!error}
-            legend="Chapters"
+          <MangaLink
             to={`/manga/${resolveVendorSlug(apiData?.data?.manga?.vendor!)}/${
               data?.manga?.slug
-            }/chapters`}
-            icon={<Icon icon="bulletList" />}></Button>
+            }/chapters`}>
+            <Button
+              disabled={!!error}
+              legend="Chapters"
+              icon={<Icon icon="bulletList" />}></Button>
+          </MangaLink>
           <Button
             disabled={!!error}
             legend="Share"
@@ -305,14 +308,11 @@ function SlicedChapters({
               ))}
             </div>
             <div className={classes.chapterEllipsis}>
-              <Button
-                transparent
-                alignCenter
-                compact
-                fullWidth
-                to={`/manga/${vendor}/${slug}/chapters`}>
-                ...
-              </Button>
+              <MangaLink to={`/manga/${vendor}/${slug}/chapters`}>
+                <Button transparent alignCenter compact fullWidth>
+                  ...
+                </Button>
+              </MangaLink>
             </div>
             <div className={classes.chapters}>
               {chapters.slice(-5).map(chapter => (

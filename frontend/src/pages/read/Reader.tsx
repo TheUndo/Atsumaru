@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import Button from "../../components/button/Button";
 import Icon from "../../components/icon/Icon";
 import { MangaEndPointResponse } from "../../components/info/Info";
@@ -273,10 +273,12 @@ export default function Reader() {
   useEffect(() => {
     if (!mangaData || !currentChapter) return;
     const timeout = setTimeout(() => {
-      navigate(
-        `/read/${vendor}/${mangaData.slug}/${currentChapter.name}/${currentPage}`,
-        { replace: true },
-      );
+      const loc = (location as any)?.state || location;
+      if (/^\/read/.test(loc))
+        navigate(
+          `/read/${vendor}/${mangaData.slug}/${currentChapter.name}/${currentPage}`,
+          { replace: true },
+        );
     }, 350);
 
     return () => clearTimeout(timeout);

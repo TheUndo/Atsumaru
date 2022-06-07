@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useMatch } from "react-router-dom";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import cm from "../../utils/classMerger";
 import isDev from "../../utils/isDev";
 import Button from "../button/Button";

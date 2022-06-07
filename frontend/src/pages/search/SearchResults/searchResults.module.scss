@@ -1,11 +1,23 @@
 .results {
   position: relative;
+  .closeCont {
+    display: flex;
+    justify-content: flex-end;
+    position: sticky;
+    top: 10px;
+    z-index: 99;
+    max-width: 1500px;
+    margin: 0 auto;
+    height: 0;
+  }
   .close {
+    z-index: 99;
     position: absolute;
-    top: 0;
     right: 0;
-    transform: scale(1.5);
-    @media screen and (max-width: 800px) {
+    top: 0;
+    background: var(--bg3);
+    box-shadow: 0 3px 10px #000;
+    @media screen and (max-width: 1000px) {
       display: none;
     }
   }

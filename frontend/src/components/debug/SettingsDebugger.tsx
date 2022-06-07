@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import Header from "../header/Header";
 /* import classes from "./myComponent.module.scss"; */
 

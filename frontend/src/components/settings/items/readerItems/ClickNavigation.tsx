@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AppContext } from "../../../../App";
+import { AppContext } from "../../../../appContext";
 import { SettingsType } from "../../../../hooks/useSettings";
 import Button from "../../../button/Button";
 import RadioCircle from "../../radioCircle/RadioCircle";

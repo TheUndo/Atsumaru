@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import Carousel, { GenericItem } from "../../components/carousel/Carousel";
 import Debug from "../../components/debug/Debug";
 import Header from "../../components/header/Header";
@@ -40,7 +40,7 @@ export default function Front() {
   }, [online, loggedIn, isOnline]);
   const { slug } = useParams();
   const layout = useRef<HTMLDivElement>(null);
-  console.log(isLoading, error);
+  
   return (
     <>
       <div ref={layout} className={cm(classes.front, slug && classes.hidden)}>
@@ -73,7 +73,6 @@ export default function Front() {
           </>
         )}
       </div>
-      <Info layout={layout} />
       {/* <div style={{height: "1000px"}}></div> */}
     </>
   );

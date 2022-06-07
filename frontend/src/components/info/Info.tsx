@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useMatch, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  useLocation,
+  useMatch,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import Content from "./Content";
 import Modal from "../modal/Modal";
 import Chapters from "./Chapters";
@@ -12,12 +17,13 @@ export type MangaEndPointResponse = {
   progress?: ProgressInfo;
 };
 
-export default function Info({
-  layout,
-}: {
-  layout: React.RefObject<HTMLDivElement>;
-}) {
-  const { mangaSlug, vendor } = useParams();
+export default function Info() {
+  const location = useLocation();
+  const match = useMatch(`/manga/:vendor/:mangaSlug`);
+  const { vendor, mangaSlug } = match?.params ?? {};
+  const layout = {
+    current: document.getElementById("freeContent") as HTMLDivElement,
+  };
 
   return (
     <>
@@ -65,6 +71,7 @@ function ShowModal({
   }, []);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <>
@@ -72,8 +79,10 @@ function ShowModal({
         shown={!!slug}
         scaleElements={[layout.current]}
         onClose={() => {
-          //setShown(false);
-          navigate("/");
+          console.log("hi")
+          navigate(
+            (location.state as any)?.backgroundLocation?.pathname ?? "/",
+          );
         }}
         id="info-modal">
         <Content slug={slug} apiData={apiData} />

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { AppContext } from "../../../App";
+import { AppContext } from "../../../appContext";
 import getBattery, { BatteryLevel } from "../../../utils/battery";
 import cm from "../../../utils/classMerger";
 import percentage from "../../../utils/percentage";

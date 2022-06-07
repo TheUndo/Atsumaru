@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AppContext } from "../../../App";
+import { AppContext } from "../../../appContext";
 import Button from "../../../components/button/Button";
 import Header from "../../../components/header/Header";
 import Icon from "../../../components/icon/Icon";
+import MangaLink from "../../../components/MangaLink/MangaLink";
 import Settings from "../../../components/settings/Settings";
 import { MangaInfo } from "../../../types";
 import cm from "../../../utils/classMerger";
@@ -24,9 +25,8 @@ export default function DesktopSettings({
         className={cm(
           classes.desktopSettings,
           settings?.readerShowDesktopDrawer === "NO" &&
-            classes.desktopSettingsHidden
-        )}
-      >
+            classes.desktopSettingsHidden,
+        )}>
         <div className={classes.desktopSettingsDrawer}>
           <div className={classes.desktopSettingsInner}>
             <div className={classes.desktopSettingsHeader}>
@@ -35,18 +35,18 @@ export default function DesktopSettings({
                 onClick={() => setSetting?.("readerShowDesktopDrawer", "NO")}
                 fullWidth
                 iconLoc="right"
-                icon={<Icon icon="arrowWall" />}
-              >
+                compact
+                icon={<Icon icon="arrowWall" />}>
                 Hide settings
               </Button>
             </div>
             <div className={classes.desktopSettingsHeader}>
               {manga && vendor && (
-                <Link to={`/manga/${vendor}/${manga.slug}`}>
+                <MangaLink to={`/manga/${vendor}/${manga.slug}`}>
                   <Button fullWidth alignCenter transparent>
                     <Header level={2}>{manga.title}</Header>
                   </Button>
-                </Link>
+                </MangaLink>
               )}
             </div>
             <div className={classes.desktopSettingsHeader}>

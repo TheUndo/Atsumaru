@@ -3,6 +3,7 @@
   margin: 0;
   position: relative;
   font-size: clamp(1.5em, 2vw, 2em);
+
   :global(.icon) {
     position: relative;
     height: 0.8em;
@@ -14,4 +15,8 @@
     color: currentColor;
     position: relative;
   }
+}
+
+h4.header {
+  font-size: clamp(1.2em, 1.3vw, 1.8em);
 }

@@ -1,6 +1,13 @@
 .grid {
   padding-top: env(safe-area-inset-top);
-  display: grid;
-  column-gap: 1rem;
-  row-gap: 3rem;
+  .inner {
+    display: grid;
+    column-gap: 1rem;
+    row-gap: 1rem;
+
+    padding-top: 1rem;
+  }
+  &.isGrid .inner {
+    row-gap: 4rem;
+  }
 }

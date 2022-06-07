@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import useMeasure from "react-use-measure";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import cm from "../../utils/classMerger";
 import Button from "../button/Button";
 import Icon from "../icon/Icon";

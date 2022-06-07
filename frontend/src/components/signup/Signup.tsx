@@ -11,7 +11,7 @@ import LinkButton from "../LinkButton/LinkButton";
 // @ts-ignore goddammit. Rachel, get the bible
 import OAuth2Login from "react-simple-oauth2-login";
 import Loading from "../loading/Loading";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import Header from "../header/Header";
 import { apiBase } from "../../hooks/useApi";
 import { useNavigate } from "react-router-dom";
@@ -19,8 +19,6 @@ import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const env = (import.meta as any).env;
-
-console.log(env);
 
 export default function Signup(props: Props) {
   //const [username, setUsername] = useState("");

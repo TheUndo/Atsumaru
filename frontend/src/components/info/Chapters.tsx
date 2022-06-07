@@ -23,7 +23,7 @@ type Props = {
 };
 
 export default function Chapters({ chapters, slug, vendor, progress }: Props) {
-  const [sort, setSort] = useLocalStorage("manga-sort-chapters");
+  const [sort, setSort] = useLocalStorage("manga-sort-chapters", "desc");
   const id = useMemo(() => Math.random() + "", []);
 
   // performance gains
@@ -116,6 +116,7 @@ export function ChapterItem({
             }}></div>
         )}
         <Button
+          compact
           noHoverEffect
           transparent
           to={`/read/${resolveVendorSlug(vendor)}/${slug}/${

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useMatch, useNavigate } from "react-router-dom";
-import { AppContext } from "../../../App";
+import { AppContext } from "../../../appContext";
 import cm from "../../../utils/classMerger";
 import classes from "./search.module.scss";
 

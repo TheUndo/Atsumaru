@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../../../App";
+import { AppContext } from "../../../../appContext";
 import { SettingsType } from "../../../../hooks/useSettings";
 import getBattery from "../../../../utils/battery";
 import Button from "../../../button/Button";

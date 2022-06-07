@@ -60,7 +60,7 @@ const defaultSettings: SettingsType = {
     spacebar: "NEXT-PAGE",
   },
   readerMeta: {
-    disabled: "NO",
+    disabled: "YES",
     chapter: "YES",
     page: "YES",
     time: "YES",

@@ -7,6 +7,7 @@ import {
   Route,
   useNavigate,
   useMatch,
+  useLocation,
 } from "react-router-dom";
 import Front from "./pages/front/Front";
 import "./global.css";
@@ -24,6 +25,7 @@ import Search from "./pages/search/Search";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import ReactDOM from "react-dom/client";
 import Dev from "./pages/dev/Dev";
+import { AppContext, User } from "./appContext";
 
 /* import { registerSW } from "virtual:pwa-register"; */
 
@@ -42,31 +44,13 @@ import Dev from "./pages/dev/Dev";
     "https://scans-ongoing-2.planeptune.us/manga/Yuusha-Shoutai-Kamoku-Yuusha-Wa/0001-001.png"
 ); */
 
-export type AppContext = {
-  settings?: readonly [SettingsType, (keys: string, value: any) => void];
-  desktopNavbar?: readonly [boolean, (value: boolean) => void];
-  signIn?: [boolean, (value: boolean) => void];
-  loggedIn?: [false | User, React.Dispatch<React.SetStateAction<false | User>>];
-  searchQuery?: [string, React.Dispatch<React.SetStateAction<string>>];
-};
-export type UserContext = {
-  user?: [
-    User | undefined,
-    React.Dispatch<React.SetStateAction<User | undefined>>,
-  ];
-};
-
-export type User = {
-  name: string;
-  id: number;
-  avatar?: {
-    large: string;
-    medium: string;
-  };
-};
-
-export const AppContext = createContext<AppContext>({});
 const queryClient = new QueryClient();
+
+const info = (
+  <Route path="/manga/:vendor/:mangaSlug" element={<></>}>
+    <Route path="chapters" element={<></>} />
+  </Route>
+);
 
 function App() {
   const searchMatch = useMatch("/search/:query");
@@ -74,6 +58,9 @@ function App() {
   const loggedIn = useState<User | false>(false);
   const desktopNavbarState = settings[0].desktopSideMenuOpen === "YES";
   const searchQuery = useState(searchMatch?.params?.query ?? "");
+  const location = useLocation();
+  const state = location.state as { backgroundLocation?: Location };
+
   const setDesktopNavbarState = useCallback(
     (value: boolean) => {
       settings[1]("desktopSideMenuOpen", value ? "YES" : "NO");
@@ -98,24 +85,6 @@ function App() {
 
   const me = useApi<User>("/auth/myself");
 
-  /* useEffect(() => {
-    document.body.addEventListener("scroll", async () => {
-      await new Promise(resolve => window.requestAnimationFrame(resolve));
-      const { scrollTop, scrollLeft, scrollHeight, clientHeight } =
-        document.body;
-      const atTop = scrollTop === 0;
-      const beforeTop = 1;
-      const atBottom = scrollTop === scrollHeight - clientHeight;
-      const beforeBottom = scrollHeight - clientHeight - 1;
-
-      if (atTop) {
-        document.body.scrollTo(scrollLeft, beforeTop);
-      } else if (atBottom) {
-        document.body.scrollTo(scrollLeft, beforeBottom);
-      }
-    });
-  }, []); */
-
   useEffect(() => {
     if (me.data) loggedIn[1](me.data);
   }, [me]);
@@ -130,25 +99,12 @@ function App() {
               <Signup />
               <Search />
               <Layout>
-                <Routes>
+                <Routes location={state?.backgroundLocation || location}>
                   <Route
                     path="/read/:vendor/:readSlug/:chapter/:page"
                     element={<Reader />}
                   />
 
-                  <Route
-                    path="/"
-                    element={
-                      <GenericPage>
-                        <Front />
-                      </GenericPage>
-                    }>
-                    <Route path="/ouath/anilist" element={<Signup />} />
-                    <Route path="/search/:query" element={<></>} />
-                    <Route path="/manga/:vendor/:mangaSlug" element={<></>}>
-                      <Route path="chapters" element={<></>} />
-                    </Route>
-                  </Route>
                   <Route
                     path="/dev"
                     element={
@@ -156,6 +112,18 @@ function App() {
                         <Dev />
                       </GenericPage>
                     }></Route>
+                  <Route
+                    path="/"
+                    element={
+                      <GenericPage>
+                        <Front />
+                      </GenericPage>
+                    }>
+                    {info}
+                    <Route path="/ouath/anilist" element={<Signup />} />
+                    <Route path="/search/:query" element={<></>} />
+                  </Route>
+
                   <Route
                     path="*"
                     element={
@@ -165,6 +133,13 @@ function App() {
                     }
                   />
                 </Routes>
+                {state?.backgroundLocation && (
+                  <Routes>
+                    <Route path="/manga/:vendor/:mangaSlug" element={<></>}>
+                      <Route path="chapters" element={<></>} />
+                    </Route>
+                  </Routes>
+                )}
               </Layout>
             </RecoilRoot>
           </AppContext.Provider>

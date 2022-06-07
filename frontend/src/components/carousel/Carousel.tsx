@@ -1,5 +1,6 @@
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -27,6 +28,7 @@ import { resolvePageUrlParameter } from "../../pages/read/helpers";
 import Icon from "../icon/Icon";
 import Button from "../button/Button";
 import getLatestProgress from "../../utils/getLatestProgress";
+import MangaLink from "../MangaLink/MangaLink";
 
 export type GenericItem = {
   header: string;
@@ -198,20 +200,30 @@ function Item({
         : `/manga/${resolveVendorSlug(manga.vendor)}/${manga.slug}`,
     [manga, progress, latestProgress],
   );
-  return (
-    <Poster
-      onClick={() => navigate(url)}
-      label={manga.title}
-      progress={
-        progress && latestProgress
-          ? {
-              full: progress,
-              latest: latestProgress,
-            }
-          : undefined
-      }
-      manga={manga}
-    />
+  const poster = useCallback(
+    (read: boolean) => (
+      <Poster
+        onClick={() => {
+          if (read) navigate(url);
+        }}
+        label={manga.title}
+        progress={
+          progress && latestProgress
+            ? {
+                full: progress,
+                latest: latestProgress,
+              }
+            : undefined
+        }
+        manga={manga}
+      />
+    ),
+    [manga, progress, latestProgress, url],
+  );
+  return progress && latestProgress ? (
+    poster(true)
+  ) : (
+    <MangaLink to={url}>{poster(false)}</MangaLink>
   );
   /* return (
         <Link

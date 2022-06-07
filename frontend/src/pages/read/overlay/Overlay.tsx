@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../../App";
+import { AppContext } from "../../../appContext";
 import Header from "../../../components/header/Header";
 import Icon from "../../../components/icon/Icon";
 import cm from "../../../utils/classMerger";

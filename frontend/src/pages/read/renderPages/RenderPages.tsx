@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { useParams } from "react-router-dom";
-import { AppContext } from "../../../App";
+import { AppContext } from "../../../appContext";
 import Button from "../../../components/button/Button";
 import Loading from "../../../components/loading/Loading";
 import { MangaInfo } from "../../../types";

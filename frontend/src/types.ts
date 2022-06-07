@@ -45,3 +45,5 @@ export type Page = {
   name: string;
   pageURLs: string[];
 };
+
+export type GridDisplayType = "GRID" | "LIST" | "DETAILS";

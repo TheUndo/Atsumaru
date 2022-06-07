@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Button from "../../components/button/Button";
 import Header from "../../components/header/Header";
 import Icon from "../../components/icon/Icon";
+import MangaLink from "../../components/MangaLink/MangaLink";
+import PosterGrid from "../../components/posterGrid/PosterGrid";
 import Switcher from "../../components/switcher/Switcher";
 import classes from "./dev.module.scss";
 
@@ -13,6 +15,8 @@ export default function Dev(props: Props) {
   return (
     <>
       <div>
+        <Header level={1}>Show manga page</Header>
+        <Button onClick={() => {}}>YEP</Button>
         <Header level={1}>Switcher</Header>
         <Switcher
           items={[
@@ -49,6 +53,14 @@ export default function Dev(props: Props) {
           selected={selected}
         />
         <div>Selected: {selected}</div>
+
+        <div>
+          <PosterGrid>
+            <MangaLink to="/manga/s1/atsu-atsu-trattoria">
+              <Button compact>To manga</Button>
+            </MangaLink>
+          </PosterGrid>
+        </div>
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useDebounce } from "use-debounce";
-import { AppContext } from "../../../../App";
+import { AppContext } from "../../../../appContext";
 import Slider from "../../slider/Slider";
 
 function StripWidth({ active }: { active: boolean }) {

@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from "react";
-import { AppContext } from "../../../App";
+import { AppContext } from "../../../appContext";
 import { Page } from "../../../types";
 import cm from "../../../utils/classMerger";
 import ImageItem from "../imageItem/ImageItem";

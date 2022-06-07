@@ -5,9 +5,10 @@ import React, {
   useLayoutEffect,
 } from "react";
 import { Outlet, useMatch } from "react-router-dom";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import cm from "../../utils/classMerger";
 import DesktopNavbar from "../desktopNavbar/DesktopNavbar";
+import Info from "../info/Info";
 import Navbar from "../navbar/Navbar";
 import TopBar from "../topBar/TopBar";
 import classes from "./layout.module.scss";
@@ -33,11 +34,12 @@ export default function Layout(props: Props) {
             classes.navbar,
             desktopNavbarShown && classes.shown,
           )}></section>
-        <section className={classes.freeContent}>
+        <section id="freeContent" className={classes.freeContent}>
           {props.children}
           <Outlet />
         </section>
         <section className={classes.sidebar}></section>
+        <Info />
       </main>
       <Navbar />
     </>

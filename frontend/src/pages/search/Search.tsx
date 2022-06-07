@@ -14,7 +14,7 @@ import React, {
 import { createPortal } from "react-dom";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import Header from "../../components/header/Header";
 import Loading from "../../components/loading/Loading";
 import { apiBase } from "../../hooks/useApi";

@@ -14,9 +14,18 @@
   -webkit-tap-highlight-color: transparent;
   --padding: 0.7em;
   min-width: 41px;
+  font-size: 1rem;
   @media only screen and (max-width: 1000px) {
     --padding: 0.55em;
     min-width: 36px;
+  }
+
+  &.compact {
+    --padding: 0.6em;
+    font-size: 0.8rem;
+    @media only screen and (max-width: 1000px) {
+      --padding: 0.5em;
+    }
   }
 
   padding: var(--padding);
@@ -27,7 +36,7 @@
   color: #fff;
   border: none;
   margin: 0;
-  font-size: 1rem;
+
   border-radius: 0.25em;
   &.circle {
     border-radius: 50%;

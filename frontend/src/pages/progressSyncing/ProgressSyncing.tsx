@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useLayoutEffect } from "react";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import { apiBase } from "../../hooks/useApi";
 import useInterval from "../../hooks/useInterval";
 import { SettingsType } from "../../hooks/useSettings";

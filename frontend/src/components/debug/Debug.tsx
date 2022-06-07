@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import { apiBase } from "../../hooks/useApi";
 import isDev from "../../utils/isDev";
 import Button from "../button/Button";

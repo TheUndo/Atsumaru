@@ -1,18 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import useRipple from "use-ripple-hook";
 import useImage from "../../hooks/useImage";
-import { MangaInfo, ProgressInfo } from "../../types";
+import { GridDisplayType, MangaInfo, ProgressInfo } from "../../types";
+import cm from "../../utils/classMerger";
 import normalizeChapterNames from "../../utils/normalizeChapterNames";
 import percentage from "../../utils/percentage";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
 import Button from "../button/Button";
+import Header from "../header/Header";
 import Icon from "../icon/Icon";
 import classes from "./poster.module.scss";
 
 type Props = {
   manga?: MangaInfo;
   label?: string;
+  displayType?: GridDisplayType;
   progress?: {
     full: ProgressInfo;
     latest: {
@@ -40,17 +43,56 @@ export default function Poster(props: Props) {
     retry();
   }, [manga]);
 
+  const Image = useMemo(
+    () => (
+      <div
+        ref={ripple}
+        className={classes.posterImage}
+        style={{
+          backgroundImage: `url("${fail ? failImage : image}")`,
+        }}>
+        {loading && <div className={classes.loader}></div>}
+      </div>
+    ),
+    [ripple, fail, image, loading],
+  );
+
+  if (props.displayType && ["LIST", "DETAILS"].includes(props.displayType)) {
+    return (
+      <>
+        <div
+          onMouseDown={event}
+          className={cm(classes.posterList, props.displayType === "DETAILS" && classes.details)}
+          {...compProps}>
+          <div ref={ripple} className={classes.content}>
+            <div className={classes.posterWrapper}>{Image}</div>
+            <div className={classes.info}>
+              <div>
+                <Header className={classes.title} level={4}>
+                  {manga?.title ?? "Unknown manga"}
+                </Header>
+              </div>
+              <div className={classes.genres}>
+                {manga?.genres.map((v, i) => (
+                  <div key={v} className={classes.genre}>
+                    {v}
+                  </div>
+                ))}
+              </div>
+              <div className={classes.desc}>
+                {manga?.description ?? <i>No description was found</i>}
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <div className={classes.poster} onMouseDown={event} {...compProps}>
-        <div
-          ref={ripple}
-          className={classes.posterImage}
-          style={{
-            backgroundImage: `url("${fail ? failImage : image}")`,
-          }}>
-          {loading && <div className={classes.loader}></div>}
-        </div>
+        {Image}
         {progress && manga && (
           <ProgressMeta progress={progress} manga={manga} />
         )}

@@ -9,10 +9,10 @@ type Props = {
 } & React.ComponentProps<"h1">;
 
 export default function Header(props: Props) {
-  const { level, children, ...compProps } = props;
+  const { level, children, className, ...compProps } = props;
   return React.createElement(`h${level}`, {
     ...compProps,
     children,
-    className: cm(classes.header, "header"),
+    className: cm(classes.header, "header", className),
   });
 }

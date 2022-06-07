@@ -308,6 +308,7 @@ function SlicedChapters({
               <Button
                 transparent
                 alignCenter
+                compact
                 fullWidth
                 to={`/manga/${vendor}/${slug}/chapters`}>
                 ...
@@ -343,6 +344,7 @@ function SlicedChapters({
         <Button
           icon={<Icon icon="bulletList" />}
           fullWidth
+          compact
           to={`/manga/${vendor}/${slug}/chapters`}>
           View all chapters
         </Button>

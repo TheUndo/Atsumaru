@@ -6,7 +6,6 @@ import React, {
   useState,
 } from "react";
 import cm from "../../utils/classMerger";
-import Button from "../button/Button";
 import classes from "./switcher.module.scss";
 
 type Item<T> = {

@@ -1,6 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useMatch, useParams } from "react-router-dom";
-import { AppContext } from "../../App";
+import { AppContext } from "../../appContext";
 import useMedia from "../../hooks/useMedia";
 import cm from "../../utils/classMerger";
 import Button from "../button/Button";
@@ -20,9 +26,26 @@ export default function TopBar(props: Props) {
   const shown = !readMatch || sideBar;
   const mobile = useMedia(["(max-width: 1000px)"], [true], false);
   const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
-    setSearchShown(!!query);
-  }, [query]);
+    if (!inputRef.current) return;
+    const focus = () => {
+      setSearchShown(true);
+    };
+    const blur = () => {
+      setTimeout(() => {
+        setSearchShown(!!query);
+      }, 0);
+    };
+    inputRef.current.addEventListener("focus", focus);
+    inputRef.current.addEventListener("blur", blur);
+    return () => {
+      if (!inputRef.current) return;
+
+      inputRef.current.removeEventListener("focus", focus);
+      inputRef.current.removeEventListener("blur", blur);
+    };
+  }, [query, inputRef]);
 
   useEffect(
     () =>
@@ -47,19 +70,30 @@ export default function TopBar(props: Props) {
         <Search forwardRef={inputRef} shown={mobile ? searchShown : true} />
         <Logo />
         {mobile && (
-          <Button
-            onClick={() => {
-              setSearchShown(!searchShown);
-              if (!searchShown) {
-                inputRef.current?.focus();
-              } else {
-                setQuery?.("");
-              }
-            }}
-            className={classes.exitButton}
-            transparent
-            icon={<Icon icon={searchShown ? "close" : "search"} />}
-          />
+          <>
+            {searchShown ? (
+              <Button
+                onClick={() => {
+                  setQuery?.("");
+                  setSearchShown(false);
+                }}
+                className={classes.exitButton}
+                transparent
+                icon={<Icon icon="close" />}
+              />
+            ) : (
+              <Button
+                onClick={() => {
+                  setSearchShown(true);
+                  if (document.activeElement !== inputRef.current)
+                    inputRef.current?.focus();
+                }}
+                className={classes.exitButton}
+                transparent
+                icon={<Icon icon="search" />}
+              />
+            )}
+          </>
         )}
       </div>
     </>

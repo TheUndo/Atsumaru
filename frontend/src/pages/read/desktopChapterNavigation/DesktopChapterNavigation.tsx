@@ -6,7 +6,7 @@ import Icon from "../../../components/icon/Icon";
 import useMedia from "../../../hooks/useMedia";
 import cm from "../../../utils/classMerger";
 import { parsePageUrlParameter } from "../helpers";
-import { ReaderContext } from "../Reader";
+import { ReaderContext } from "../ReaderContext";
 import classes from "./desktopChapterNavigation.module.scss";
 
 export default function DesktopChapterNavigation() {

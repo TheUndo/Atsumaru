@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "../../components/button/Button";
+import Dropdown from "../../components/dropdown/Dropdown";
 import Header from "../../components/header/Header";
 import Icon from "../../components/icon/Icon";
 import MangaLink from "../../components/MangaLink/MangaLink";
@@ -61,6 +62,26 @@ export default function Dev(props: Props) {
             </MangaLink>
           </PosterGrid>
         </div>
+        <div style={{height: "500px"}}></div>
+
+
+        <div>
+          <Dropdown
+            button={
+              <Button
+                iconLoc="right"
+                icon={<Icon icon="chevron" orientation=".25turn" />}>
+                Dropdown
+              </Button>
+            }
+            items={[...Array(100)].map((v, i) => ({
+              value: "test" + i,
+              content: <Button fullWidth>Option {i + 1}</Button>,
+            }))}
+          />
+        </div>
+        <br />
+        <div style={{height: "1000px"}}></div>
       </div>
     </>
   );

@@ -10,7 +10,7 @@ import {
   loadPagesSequentially,
   parsePageUrlParameter,
 } from "../helpers";
-import { PageState, ReaderContext } from "../Reader";
+import { PageState, ReaderContext } from "../ReaderContext";
 import classes from "./imageItem.module.scss";
 import pageClasses from "../pageItem/pageItem.module.scss";
 

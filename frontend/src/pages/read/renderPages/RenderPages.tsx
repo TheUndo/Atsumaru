@@ -17,7 +17,7 @@ import { parsePageUrlParameter, resolvePageUrlParameter } from "../helpers";
 import NextChapterIndicator from "../nextChapterIndicator/NextChaptrerIndicator";
 import Overlay from "../overlay/Overlay";
 import Pages from "../pages/Pages";
-import { ReaderContext, ReaderCtx } from "../Reader";
+import { ReaderContext, ReaderCtx } from "../ReaderContext";
 import classes from "./renderPages.module.scss";
 
 type Props = {};
@@ -250,8 +250,11 @@ export default function RenderPages({
   // handle click navigation for TOP-TO-BOTTOM (otherwise handled by Overlay)
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      const closeDropdown = new CustomEvent("closeDropdown");
+      window.dispatchEvent(closeDropdown);
       if (!ref.current || !desktop || readerClickNavigationDisabled === "YES")
         return;
+      
       e.stopPropagation();
       const { left, width } = ref.current?.getBoundingClientRect();
       const relX = e.pageX - left;

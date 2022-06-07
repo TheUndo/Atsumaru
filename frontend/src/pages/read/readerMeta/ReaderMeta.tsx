@@ -4,7 +4,7 @@ import getBattery, { BatteryLevel } from "../../../utils/battery";
 import cm from "../../../utils/classMerger";
 import percentage from "../../../utils/percentage";
 import { parsePageUrlParameter } from "../helpers";
-import { ReaderContext } from "../Reader";
+import { ReaderContext } from "../ReaderContext";
 import classes from "./readerMeta.module.scss";
 
 type Props = {};
@@ -35,7 +35,10 @@ export default function ReaderMeta(props: Props) {
     const chapterShown = settings?.readerMeta?.chapter === "YES";
     const pageShown = settings?.readerMeta?.page === "YES";
     const timeShown = settings?.readerMeta?.time === "YES";
-    const showBattery = settings?.readerMeta?.battery === "YES" && !!battery;
+    const showBattery =
+      settings?.readerMeta?.battery === "YES" &&
+      !!battery &&
+      battery.level !== 1;
     const labelsShown = settings?.readerMeta?.labels === "YES";
     return [
       chapterShown &&

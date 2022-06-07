@@ -3,7 +3,7 @@ import useOnline from "../../../hooks/useOnline";
 import { Page } from "../../../types";
 import { loadPagesSequentially, parsePageUrlParameter } from "../helpers";
 import PageItem from "../pageItem/PageItem";
-import { ReaderContext } from "../Reader";
+import { ReaderContext } from "../ReaderContext";
 
 export default function Pages({
   pages,

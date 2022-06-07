@@ -13,7 +13,7 @@ import Button from "../../components/button/Button";
 import Icon from "../../components/icon/Icon";
 import { MangaEndPointResponse } from "../../components/info/Info";
 import Loading, { LoadingPage } from "../../components/loading/Loading";
-import useApi, { apiBase } from "../../hooks/useApi";
+import { apiBase } from "../../hooks/useApi";
 import { Chapter, MangaInfo } from "../../types";
 import cm from "../../utils/classMerger";
 import E404 from "../e404/E404";
@@ -27,78 +27,13 @@ import KeyboardController from "./keyboardController/KeyboardController";
 import MainFloatingControls from "./mainFloatingControls/MainFloatingControls";
 import PagePreviewThumbnails from "./pagePreviewThumbnails/PagePreviewThumbnails";
 import classes from "./reader.module.scss";
+import ReaderContextProvider, { PageState, ReaderCtx } from "./ReaderContext";
 import ReaderMeta from "./readerMeta/ReaderMeta";
 import RenderPages from "./renderPages/RenderPages";
 import SettingsContainer from "./settingsContainer/SettingsContainer";
 
-export type PageState = {
-  loading: boolean;
-  loaded: boolean;
-  src?: string;
-  name: string;
-  failed?: boolean;
-};
-
-export type ReaderCtx = {
-  manga?: MangaInfo;
-  settingsShown: boolean;
-  setSettingsShown: (value: boolean) => void;
-  controlsShown: boolean;
-  setControlsShown: (value: boolean) => void;
-  jumpChapter: (offset: number) => void;
-  jumpToFixedPage: (page: string) => void;
-  nextChapter?: Chapter;
-  currentChapter?: Chapter;
-  previousChapter?: Chapter;
-  initialPage?: string;
-  background?: string;
-  setInitialPage?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  chapters: Chapter[];
-  currentPage?: string;
-  setCurrentPage?: React.Dispatch<React.SetStateAction<string>>;
-  chapterLoaded?: boolean;
-  setChapterLoaded?: React.Dispatch<React.SetStateAction<boolean>>;
-  vendor: MangaInfo["vendor"];
-  desktopControlsVisible: boolean;
-  setDesktopControlsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
-  pageContentScrollPosition?: number;
-  setPageContentScrollPosition?: React.Dispatch<
-    React.SetStateAction<number | undefined>
-  >;
-  pageRelativeNavigate?: (offset: number) => void;
-  loadPages: {
-    [k: string]: PageState;
-  };
-  setLoadPages?: React.Dispatch<
-    React.SetStateAction<{
-      [k: string]: PageState;
-    }>
-  >;
-};
-
-export const ReaderContext = createContext<ReaderCtx>({
-  settingsShown: false,
-  setSettingsShown: (value: boolean) => void 0,
-  controlsShown: true,
-  setControlsShown: (value: boolean) => void 0,
-  jumpChapter: (offset: number) => void 0,
-  jumpToFixedPage: (page: string) => void 0,
-  nextChapter: undefined,
-  currentChapter: undefined,
-  previousChapter: undefined,
-  initialPage: "1",
-  chapters: [],
-  currentPage: void 0,
-  vendor: "MANGASEE",
-  desktopControlsVisible: true,
-  loadPages: {},
-});
-
-let __readerURLUpdater: NodeJS.Timeout;
-
 export default function Reader() {
   const { readSlug, chapter, page, vendor } = useParams();
-
   const [settingsShown, setSettingsShown] = useState(false);
   const [controlsShown, setControlsShown] = useState(true);
   const [chapterLoaded, setChapterLoaded] = useState(false);
@@ -167,7 +102,7 @@ export default function Reader() {
 
   useEffect(() => {
     setQuery?.("");
-  }, []);
+  }, [vendor, mangaData]);
 
   const jumpToFixedPage = useCallback(
     (page: string) => {
@@ -181,6 +116,30 @@ export default function Reader() {
     },
     [currentChapter, vendor, apiData],
   );
+  const jumpChapter = useCallback(
+    (offset: number) => {
+      if (!mangaData) return;
+
+      const jump = mangaData.chapters[currentChapterIndex - offset];
+      if (!jump) return;
+      setDesktopControlsVisible(false);
+      void setInitialPage("1");
+      void setCurrentPage("1");
+      return void navigate(`/read/${vendor}/${mangaData.slug}/${jump.name}/1`);
+    },
+    [vendor, chapter, mangaData, currentChapterIndex],
+  );
+  const jumpToFixedChapter = useCallback(
+    (chapter: Chapter) => {
+      setDesktopControlsVisible(false);
+      void setInitialPage("1");
+      void setCurrentPage("1");
+      return void navigate(
+        `/read/${vendor}/${mangaData.slug}/${chapter.name}/1`,
+      );
+    },
+    [mangaData, vendor],
+  );
   const background =
     readerBackgroundColor === "custom"
       ? readerCustomBackgroundColor
@@ -191,21 +150,8 @@ export default function Reader() {
     setSettingsShown: (value: boolean) => void setSettingsShown(value),
     controlsShown,
     setControlsShown: (value: boolean) => void setControlsShown(value),
-    jumpChapter: useCallback(
-      (offset: number) => {
-        if (!mangaData) return;
-
-        const jump = mangaData.chapters[currentChapterIndex - offset];
-        if (!jump) return;
-        setDesktopControlsVisible(false);
-        void setInitialPage("1");
-        void setCurrentPage("1");
-        return void navigate(
-          `/read/${vendor}/${mangaData.slug}/${jump.name}/1`,
-        );
-      },
-      [chapter, mangaData, currentChapterIndex, setInitialPage, setCurrentPage],
-    ),
+    jumpChapter,
+    jumpToFixedChapter,
     jumpToFixedPage,
     background,
     nextChapter,
@@ -290,7 +236,7 @@ export default function Reader() {
 
   return (
     <>
-      <ReaderContext.Provider value={value}>
+      <ReaderContextProvider value={value}>
         <ProgressSyncing />
 
         <KeyboardController />
@@ -352,7 +298,7 @@ export default function Reader() {
           </div>
           <SettingsContainer />
         </div>
-      </ReaderContext.Provider>
+      </ReaderContextProvider>
     </>
   );
 }

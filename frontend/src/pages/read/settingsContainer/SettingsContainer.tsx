@@ -5,7 +5,7 @@ import Icon from "../../../components/icon/Icon";
 import Settings from "../../../components/settings/Settings";
 import cm from "../../../utils/classMerger";
 import FloatingControls from "../floatingControls/FloatingControls";
-import { ReaderContext } from "../Reader";
+import { ReaderContext } from "../ReaderContext";
 import classes from "./settingsContainer.module.scss";
 import controlsClasses from "../floatingControls/floatingControls.module.scss";
 

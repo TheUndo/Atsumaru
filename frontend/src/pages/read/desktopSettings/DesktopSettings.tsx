@@ -8,6 +8,7 @@ import MangaLink from "../../../components/MangaLink/MangaLink";
 import Settings from "../../../components/settings/Settings";
 import { MangaInfo } from "../../../types";
 import cm from "../../../utils/classMerger";
+import ChapterDropdown from "./chapterDropdown/ChapterDropdown";
 import classes from "./desktopSettings.module.scss";
 
 export default function DesktopSettings({
@@ -36,19 +37,23 @@ export default function DesktopSettings({
                 fullWidth
                 iconLoc="right"
                 compact
-                icon={<Icon icon="arrowWall" />}>
-                Hide settings
+                transparent
+                icon={<Icon icon="arrowWall" />}>{" "}
               </Button>
             </div>
             <div className={classes.desktopSettingsHeader}>
               {manga && vendor && (
                 <MangaLink to={`/manga/${vendor}/${manga.slug}`}>
-                  <Button fullWidth alignCenter transparent>
+                  <Button
+                    fullWidth
+                    alignCenter
+                    transparent>
                     <Header level={2}>{manga.title}</Header>
                   </Button>
                 </MangaLink>
               )}
             </div>
+            <ChapterDropdown />
             <div className={classes.desktopSettingsHeader}>
               <Settings />
             </div>

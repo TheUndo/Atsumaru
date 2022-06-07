@@ -29,6 +29,11 @@
   }
 
   padding: var(--padding);
+  &.slim {
+    padding-right: calc(0.6 * var(--padding));
+    padding-left: calc(0.6 * var(--padding));
+    min-width: 30px;
+  }
   background: var(--button-bg);
   &.hasLegend {
     --padding: 1em 0.7em;
@@ -61,10 +66,14 @@
     text-align: center;
     left: 50%;
   }
-  &:not(.noHoverEffect):hover {
+  &.accent {
+    background: var(--accent);
+  }
+  &:not(.noHoverEffect, .accent):hover {
     filter: drop-shadow(0 1px 2px #111);
     background: var(--bgShaded);
   }
+
   &:active {
     filter: drop-shadow(0 2px 5px #111);
     transform: scale(0.95);
@@ -126,9 +135,11 @@
 .iconCont {
   position: relative;
   width: 1em;
-  min-height: 1.2em;
+  height: 1.2em;
   display: flex;
   justify-content: center;
+  align-items: center;
+  align-self: center;
   :global(.icon) {
     position: absolute;
     height: 100%;

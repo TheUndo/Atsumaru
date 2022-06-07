@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Button from "../../../components/button/Button";
 import Icon from "../../../components/icon/Icon";
 import cm from "../../../utils/classMerger";
-import { ReaderContext } from "../Reader";
+import { ReaderContext } from "../ReaderContext";
 import classes from "./desktopChapterIndicator.module.scss";
 
 export default function DesktopChapterIndicator({

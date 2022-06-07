@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect } from "react";
 import useKeyboardShortcut from "use-keyboard-shortcut";
 import { AppContext } from "../../../appContext";
-import { ReaderContext } from "../Reader";
+import { ReaderContext } from "../ReaderContext";
 
 export default function KeyboardController() {
   const [settings, setSetting] = useContext(AppContext).settings ?? [];

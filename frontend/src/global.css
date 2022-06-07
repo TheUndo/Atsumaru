@@ -14,7 +14,7 @@
   --aspect-ratio: calc(352 / 500);
 
   --bgShaded: #2b2b2b; /* for hover mostly */
-  --button-bg: rgb(39, 39, 39);
+  --button-bg: rgb(53, 53, 53);
 
   --scrollbarBG: var(--bg);
   --thumbBG: #747474;

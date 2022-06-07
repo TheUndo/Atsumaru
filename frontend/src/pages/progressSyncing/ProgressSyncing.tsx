@@ -5,7 +5,7 @@ import useInterval from "../../hooks/useInterval";
 import { SettingsType } from "../../hooks/useSettings";
 import { tryJSONParse } from "../../utils/utils";
 import { parsePageUrlParameter } from "../read/helpers";
-import { ReaderContext } from "../read/Reader";
+import { ReaderContext } from "../read/ReaderContext";
 
 export default function ProgressSyncing() {
   const reader = useContext(ReaderContext);

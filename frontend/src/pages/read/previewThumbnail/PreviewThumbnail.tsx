@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import useRipple from "use-ripple-hook";
 import cm from "../../../utils/classMerger";
 import { parsePageUrlParameter } from "../helpers";
-import { PageState, ReaderContext } from "../Reader";
+import { PageState, ReaderContext } from "../ReaderContext";
 import classes from "./previewThumbnail.module.scss";
 import DesktopChapterIndicator from "../desktopChapterIndicator/DesktopChapterIndicator";
 

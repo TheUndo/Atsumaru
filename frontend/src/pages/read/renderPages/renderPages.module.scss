@@ -2,7 +2,6 @@
   position: relative;
   height: 100%;
   max-height: calc(100vh - var(--topBarResolvedHeight));
-  overflow: auto;
   .renderPagesAwaitLoad {
     position: fixed;
     top: 0;
@@ -120,9 +119,9 @@
       display: none;
     }
   }
-  /* &.topToBottom .pageContentOverlay {
-        display: none;
-    } */
+  &.topToBottom .pageContentOverlay {
+        overflow-y: auto;
+    }
   &.rightToLeft .pageContent {
     flex-direction: row-reverse;
   }

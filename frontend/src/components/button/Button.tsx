@@ -21,6 +21,8 @@ type Props = {
   noHoverEffect?: boolean;
   forwardRef?: React.RefObject<HTMLElement>;
   compact?: boolean;
+  slim?: boolean;
+  accent?: boolean;
 } & Omit<Partial<React.ComponentProps<"button">>, "ref"> &
   Omit<Partial<React.ComponentProps<typeof Link>>, "ref">;
 
@@ -50,6 +52,8 @@ const Button = (masterProps: Props) => {
     noHoverEffect,
     forwardRef,
     compact,
+    slim,
+    accent,
     ...props
   } = masterProps;
 
@@ -90,7 +94,9 @@ const Button = (masterProps: Props) => {
     transparent && classes.transparent,
     hoverReveal && classes.hoverReveal,
     noHoverEffect && classes.noHoverEffect,
+    slim && classes.slim,
     compact && classes.compact,
+    accent && classes.accent,
   );
 
   const button = (() => {

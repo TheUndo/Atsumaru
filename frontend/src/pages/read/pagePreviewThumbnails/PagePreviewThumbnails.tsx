@@ -13,7 +13,7 @@ import cm from "../../../utils/classMerger";
 import { clamp } from "../../../utils/utils";
 import DesktopChapterIndicator from "../desktopChapterIndicator/DesktopChapterIndicator";
 import PageThumbnail from "../previewThumbnail/PreviewThumbnail";
-import { PageState, ReaderContext } from "../Reader";
+import { PageState, ReaderContext } from "../ReaderContext";
 import classes from "./pagePreviewThumbnails.module.scss";
 
 export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {

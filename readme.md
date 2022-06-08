@@ -118,7 +118,7 @@ Run in your terminal
    ```
 5. Start the frontend
    ```sh
-   cd ../frontend
+   cd ./frontend
    ```
    ```sh
    npm i --force && npm run dev

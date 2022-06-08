@@ -1,11 +1,5 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useMatch, useParams } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useMatch } from "react-router-dom";
 import { AppContext } from "../../appContext";
 import useMedia from "../../hooks/useMedia";
 import cm from "../../utils/classMerger";
@@ -15,9 +9,7 @@ import Logo from "./logo/Logo";
 import Search from "./search/Search";
 import classes from "./topBar.module.scss";
 
-type Props = {};
-
-export default function TopBar(props: Props) {
+export default function TopBar() {
   const readMatch = useMatch("/read/:source/:slug/:chapter/:page");
   const ctx = useContext(AppContext);
   const [query, setQuery] = ctx.searchQuery ?? [];
@@ -95,7 +87,31 @@ export default function TopBar(props: Props) {
             )}
           </>
         )}
+        <SocialMedia />
       </div>
     </>
+  );
+}
+
+const socialMedia = [
+  {
+    link: "https://discord.gg/Tj4QmEF4uV",
+    icon: <Icon icon="discord" />,
+  },
+  {
+    link: "https://github.com/TheUndo/Atsumaru",
+    icon: <Icon icon="github" />,
+  },
+];
+
+function SocialMedia() {
+  return (
+    <div className={classes.socialMedia}>
+      {socialMedia.map(v => (
+        <a target="_blank" key={v.link} href={v.link}>
+          <div className={classes.media}>{v.icon}</div>
+        </a>
+      ))}
+    </div>
   );
 }

@@ -26,14 +26,9 @@ export const items: NavbarItemType[] = [
     activeIcon: <Icon icon="homeSolid" />,
   }),
   () => ({
-    to: "/search",
-    legend: "Search",
+    to: "/explore",
+    legend: "Explore",
     icon: <Icon icon="search" />,
-  }),
-  () => ({
-    to: "/library",
-    legend: "Your library",
-    icon: <Icon icon="yourLibrary" />,
   }),
   ...(isDev()
     ? [

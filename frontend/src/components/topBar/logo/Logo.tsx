@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from "../../button/Button";
 import classes from "./logo.module.scss";
 
 type Props = {};
@@ -9,9 +10,11 @@ export default function Logo(props: Props) {
     <>
       <div className={classes.logo}>
         <Link to="/">
-          <h1>
-            <span>atsu</span>maru
-          </h1>
+          <Button noHoverEffect transparent>
+            <h1>
+              <span>atsu</span>maru
+            </h1>
+          </Button>
         </Link>
       </div>
     </>

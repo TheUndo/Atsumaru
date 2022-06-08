@@ -20,6 +20,14 @@ function DesktopNavbar() {
             {items.map((item, i) => (
               <Item key={i + item(ctx).legend} item={item(ctx)} />
             ))}
+            <Item
+              item={{
+                to: "/contribute",
+                legend: "Contribute",
+                icon: <Icon icon="handshakeHollow" />,
+                activeIcon: <Icon icon="handshakeSolid" />,
+              }}
+            />
           </div>
         </div>
       </div>
@@ -67,6 +75,7 @@ export function BurgerButton() {
     <Button
       className={cm(classes.burger, desktopNavbarShown && classes.navShown)}
       circle
+      transparent
       onClick={() => setDesktopShown?.(!desktopNavbarShown)}
       icon={
         desktopNavbarShown ? (

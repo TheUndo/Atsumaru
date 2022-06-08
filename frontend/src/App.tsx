@@ -26,6 +26,7 @@ import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import ReactDOM from "react-dom/client";
 import Dev from "./pages/dev/Dev";
 import { AppContext, User } from "./appContext";
+import Contribute from "./pages/contribute/Contribute";
 
 /* import { registerSW } from "virtual:pwa-register"; */
 
@@ -123,7 +124,14 @@ function App() {
                     <Route path="/ouath/anilist" element={<Signup />} />
                     <Route path="/search/:query" element={<></>} />
                   </Route>
-
+                  <Route
+                    path="/contribute"
+                    element={
+                      <GenericPage>
+                        <Contribute />
+                      </GenericPage>
+                    }
+                  />
                   <Route
                     path="*"
                     element={

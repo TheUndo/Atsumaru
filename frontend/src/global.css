@@ -7,8 +7,10 @@
   --color: #ccc;
   --color2: #fff;
 
-  --accent-old: #7069b5;
-  --accent: #8e7ce6;
+  --accent-old2: #7069b5;
+  --accent-old: #8e7ce6;
+  --accent: rgb(77, 130, 201);
+  
   --accent-complement: rgb(102, 102, 179);
 
   --aspect-ratio: calc(352 / 500);

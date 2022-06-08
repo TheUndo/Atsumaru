@@ -3,7 +3,7 @@ import { AppContext } from "../../../appContext";
 import { Page } from "../../../types";
 import cm from "../../../utils/classMerger";
 import ImageItem from "../imageItem/ImageItem";
-import { PageState } from "../Reader";
+import { PageState } from "../ReaderContext";
 import classes from "./pageItem.module.scss";
 
 export default function PageItem({

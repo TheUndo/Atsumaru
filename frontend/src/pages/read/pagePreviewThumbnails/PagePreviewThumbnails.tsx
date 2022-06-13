@@ -8,7 +8,6 @@ import React, {
 import { AppContext } from "../../../appContext";
 import Button from "../../../components/button/Button";
 import Icon from "../../../components/icon/Icon";
-import { Page } from "../../../types";
 import cm from "../../../utils/classMerger";
 import { clamp } from "../../../utils/utils";
 import DesktopChapterIndicator from "../desktopChapterIndicator/DesktopChapterIndicator";
@@ -16,13 +15,13 @@ import PageThumbnail from "../previewThumbnail/PreviewThumbnail";
 import { PageState, ReaderContext } from "../ReaderContext";
 import classes from "./pagePreviewThumbnails.module.scss";
 
-export default function PagePreviewThumbnails({ pages }: { pages: Page[] }) {
+export default function PagePreviewThumbnails() {
   const [settings] = useContext(AppContext)?.settings ?? [];
   const [shown, setShown] = useState(false);
   const { loadPages, currentPage } = useContext(ReaderContext);
 
   const calculateMaxPages = useCallback(() => {
-    return clamp(8, ~~(window.innerWidth / 110), 16);
+    return clamp(6, ~~(window.innerWidth / 110), 16);
   }, []);
 
   const [maxPagesInARow, setMaxPagesInARow] = useState(calculateMaxPages());

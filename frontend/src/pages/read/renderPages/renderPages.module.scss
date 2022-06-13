@@ -2,6 +2,7 @@
   position: relative;
   height: 100%;
   max-height: calc(100vh - var(--topBarResolvedHeight));
+
   .renderPagesAwaitLoad {
     position: fixed;
     top: 0;
@@ -120,8 +121,13 @@
     }
   }
   &.topToBottom .pageContentOverlay {
-        overflow-y: auto;
+    overflow-y: auto;
+  }
+  @media (pointer: fine) {
+    &.topToBottom .pageContent {
+      overflow: auto;
     }
+  }
   &.rightToLeft .pageContent {
     flex-direction: row-reverse;
   }

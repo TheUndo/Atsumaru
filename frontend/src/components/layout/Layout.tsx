@@ -4,9 +4,10 @@ import React, {
   useEffect,
   useLayoutEffect,
 } from "react";
-import { Outlet, useMatch } from "react-router-dom";
+import { Outlet, useLocation, useMatch } from "react-router-dom";
 import { AppContext } from "../../appContext";
 import cm from "../../utils/classMerger";
+import log from "../../utils/log";
 import DesktopNavbar from "../desktopNavbar/DesktopNavbar";
 import Info from "../info/Info";
 import Navbar from "../navbar/Navbar";
@@ -47,6 +48,16 @@ export default function Layout(props: Props) {
 }
 
 export function GenericPage({ children }: { children: React.ReactNode }) {
+  const location = useLocation().pathname.split("/")[1];
+
+  useEffect(() => {
+    if (!["manga"].includes(location)) {
+      scrollTo(0, 0);
+      log.info(
+        `Page switch detected: "/${location}" ... resetting scroll position`,
+      );
+    }
+  }, [location]);
   return (
     <>
       <section className={classes.content}>{children}</section>

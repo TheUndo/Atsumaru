@@ -23,6 +23,7 @@ type Props = {
   compact?: boolean;
   slim?: boolean;
   accent?: boolean;
+  beefy?: boolean;
 } & Omit<Partial<React.ComponentProps<"button">>, "ref"> &
   Omit<Partial<React.ComponentProps<typeof Link>>, "ref">;
 
@@ -54,6 +55,7 @@ const Button = (masterProps: Props) => {
     compact,
     slim,
     accent,
+    beefy,
     ...props
   } = masterProps;
 
@@ -97,6 +99,7 @@ const Button = (masterProps: Props) => {
     slim && classes.slim,
     compact && classes.compact,
     accent && classes.accent,
+    beefy && classes.beefy,
   );
 
   const button = (() => {

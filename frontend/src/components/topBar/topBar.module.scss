@@ -89,6 +89,9 @@
   display: flex;
   padding: 0 0.7rem;
   gap: 0.7rem;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
   .media {
     position: relative;
     height: 100%;

@@ -10,7 +10,9 @@ import Modal from "../modal/Modal";
 import Chapters from "./Chapters";
 import useApi, { apiBase } from "../../hooks/useApi";
 import { MangaInfo, ProgressInfo } from "../../types";
-import { useQuery } from "react-query";
+import { useQuery, UseQueryResult } from "react-query";
+import useMedia from "../../hooks/useMedia";
+import DesktopManga from "../desktopManga/DesktopManga";
 
 export type MangaEndPointResponse = {
   manga: MangaInfo;
@@ -46,6 +48,8 @@ function ShowModal({
   vendor: MangaInfo["vendor"];
 }) {
   //const [shown, setShown] = useState(false);
+  const [cache, setCache] =
+    useState<UseQueryResult<MangaEndPointResponse, unknown>>();
   const apiData = useQuery<MangaEndPointResponse>(
     ["mangaInfo", vendor, slug],
     () =>
@@ -58,6 +62,17 @@ function ShowModal({
   );
 
   useEffect(() => {
+    if (slug) {
+      if (
+        slug === apiData.data?.manga.slug &&
+        cache?.data?.manga.slug !== slug
+      ) {
+        setCache(apiData);
+      }
+    }
+  }, [slug, apiData]);
+
+  useEffect(() => {
     const handler = () => {
       apiData.refetch();
     };
@@ -68,20 +83,31 @@ function ShowModal({
   const navigate = useNavigate();
   const location = useLocation();
 
+  const media = "(max-width: 1000px)";
+  const mobile = useMedia([media], [true], window.matchMedia(media).matches);
+
   return (
     <>
-      <Modal
-        shown={!!slug}
-        scaleElements={[layout.current]}
-        onClose={() => {
-          console.log("hi");
-          navigate(
-            (location.state as any)?.backgroundLocation?.pathname ?? "/",
-          );
-        }}
-        id="info-modal">
-        <Content slug={slug} apiData={apiData} />
-      </Modal>
+      {mobile ? (
+        <Modal
+          shown={!!slug}
+          scaleElements={[layout.current]}
+          onClose={() => {
+            navigate(
+              (location.state as any)?.backgroundLocation?.pathname ?? "/",
+            );
+          }}
+          id="info-modal">
+          <Content slug={slug} apiData={apiData} />
+        </Modal>
+      ) : (
+        <DesktopManga
+          slug={slug}
+          apiData={
+            slug === cache?.data?.manga.slug ? cache ?? apiData : apiData
+          }
+        />
+      )}
     </>
   );
 }

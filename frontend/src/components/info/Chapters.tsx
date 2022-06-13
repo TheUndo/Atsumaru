@@ -126,7 +126,7 @@ export function ChapterItem({
             progressNode?.meta?.progress,
           )}`}
           fullWidth
-          icon={<Icon icon="playSolid" />}
+          icon={<Icon icon="playSolid" scale={.7} />}
           className={classes.button}>
           <div className={classes.chapterName}>
             <div className={classes.text}>

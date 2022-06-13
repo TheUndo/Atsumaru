@@ -13,6 +13,7 @@ import syncProgress from "./routes/user/syncProgrsss";
 import { Request } from "./types";
 import mangaSeeFront from "./routes/layouts/front/mangaSee";
 import search from "./routes/search/search";
+import getAnilist from "./routes/anilist/get";
 
 dotenv.config();
 
@@ -62,6 +63,9 @@ app.get(base("/layout/:source/front"), auth, (req: Request, res) => {
       break;
   }
 });
+
+/* GET anilist */
+app.get(base("/anilist/:id"), getAnilist);
 
 /* GET search */
 app.get(base("/search/:query"), search);

@@ -40,7 +40,7 @@ export default function Front() {
   }, [online, loggedIn, isOnline]);
   const { slug } = useParams();
   const layout = useRef<HTMLDivElement>(null);
-  
+
   return (
     <>
       <div ref={layout} className={cm(classes.front, slug && classes.hidden)}>
@@ -58,6 +58,7 @@ export default function Front() {
               <p>
                 Error: <code>{error + ""}</code> (api probably temporarily down)
               </p>
+              <img style={{borderRadius:"10px", maxWidth: "90%"}} src="/broken.gif" />
             </>
           ) : data ? (
             data.layout.map(item => <Carousel key={item.key} item={item} />)

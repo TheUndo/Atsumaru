@@ -15,6 +15,7 @@ export type MangaInfo = {
   chapters: Chapter[];
   cover?: string;
   vendor: "MANGASEE";
+  anilistID?: number;
 };
 
 export type ProgressInfo = {
@@ -47,3 +48,64 @@ export type Page = {
 };
 
 export type GridDisplayType = "GRID" | "LIST" | "DETAILS";
+
+export type ProgressNode = {
+  chapter: string;
+  meta: {
+    page: string;
+    progress?: number | undefined;
+    date: string;
+  };
+};
+
+export type Anilist = {
+  data: {
+    id: number;
+    idMal: number | null;
+    format: "MANGA" | "MANWHA" | "MANHUA";
+    status: "RELEASING" | "FINISHED";
+    description?: string;
+    startDate: {
+      year: number | null;
+      month: number | null;
+      day: number | null;
+    };
+    endDate: { year: number | null; month: number | null; day: number | null };
+    season: string | null;
+    seasonYear: string | null;
+    seasonInt: number | null;
+    duration: string | null;
+    chapters: unknown | null;
+    volumes: number | null;
+    countryOfOrigin: "JP" | "KR" | "CH";
+    isLicensed: boolean;
+    source: "OTHER" | "ORIGINAL";
+    coverImage: {
+      extraLarge: string;
+      large: string;
+      medium: string;
+      color: string;
+    };
+    genres: string[];
+    synonyms: string[];
+    averageScore: number;
+    meanScore: number;
+    popularity: number;
+    tags: {
+      id: number;
+      name: string;
+      description: string;
+      category: string;
+      rank: number;
+      isAdult: boolean;
+    }[];
+    isAdult: boolean;
+    type: "MANGA" | "MANWHA" | "MANHUA";
+    title: {
+      romaji?: string;
+      english?: string;
+      native?: string;
+    };
+  };
+  mangaSeeSlug: string;
+};

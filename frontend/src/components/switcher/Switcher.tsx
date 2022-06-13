@@ -8,7 +8,7 @@ import React, {
 import cm from "../../utils/classMerger";
 import classes from "./switcher.module.scss";
 
-type Item<T> = {
+export type SwitcherItemStruct<T> = {
   value: T;
   content: (
     forwardRef: React.RefObject<HTMLElement>,
@@ -16,19 +16,22 @@ type Item<T> = {
       onClick: () => void;
       className: string;
     },
+    selected: T | null | undefined,
   ) => React.ReactNode;
 };
 
 type Props<T> = {
-  items: Item<T>[];
+  items: SwitcherItemStruct<T>[];
   selected?: T | null;
   onChange?: (selected: T) => void;
+  variant?: "light" | "default" | "dark";
 };
 
 export default function Switcher<T extends string | number>({
   items,
   selected,
   onChange,
+  variant = "default",
 }: Props<T>) {
   const [itemsMap, setItemsMap] = useState(
     new Map<T, React.RefObject<HTMLElement>>(),
@@ -61,7 +64,7 @@ export default function Switcher<T extends string | number>({
 
   return (
     <>
-      <div className={classes.switcher}>
+      <div className={cm(classes.switcher, classes["variant-" + variant])}>
         <div style={style ?? getStyles()} className={classes.active}></div>
         {items.map(item => (
           <SwitcherItem<T>
@@ -83,7 +86,7 @@ function SwitcherItem<T>({
   selected,
   dispatch,
 }: {
-  item: Item<T>;
+  item: SwitcherItemStruct<T>;
   register: React.Dispatch<
     React.SetStateAction<Map<T, React.RefObject<HTMLElement>>>
   >;
@@ -104,12 +107,16 @@ function SwitcherItem<T>({
   return (
     <>
       <div>
-        {item.content(forwardRef, {
-          onClick: () => {
-            if (item.value) dispatch?.(item.value);
+        {item.content(
+          forwardRef,
+          {
+            onClick: () => {
+              if (item.value) dispatch?.(item.value);
+            },
+            className: cm(classes.item, active && classes.activeItem),
           },
-          className: cm(classes.item, active && classes.activeItem),
-        })}
+          selected,
+        )}
       </div>
     </>
   );

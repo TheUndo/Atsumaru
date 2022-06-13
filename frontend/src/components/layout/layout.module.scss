@@ -52,7 +52,6 @@
 }
 
 .content {
-  --constrain: 1200px;
   max-width: calc(min(100%, var(--constrain)));
   width: 100%;
   margin: 0 auto;

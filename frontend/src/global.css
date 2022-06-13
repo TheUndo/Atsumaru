@@ -8,11 +8,11 @@
   --color2: #fff;
 
   --accent-old2: #7069b5;
-  --accent-old: #8e7ce6;
-  --accent: rgb(77, 130, 201);
-  
-  --accent-complement: rgb(102, 102, 179);
+  --accent: #8e7ce6;
+  /* --accent: #4d82c9; */
 
+  --accent-complement: #6666b3;
+  --test: #62b9f3;
   --aspect-ratio: calc(352 / 500);
 
   --bgShaded: #2b2b2b; /* for hover mostly */
@@ -22,6 +22,8 @@
   --thumbBG: #747474;
 
   --blue: rgb(78, 103, 170);
+
+  --constrain: 1200px;
 }
 
 html,

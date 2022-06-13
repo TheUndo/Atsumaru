@@ -1,8 +1,27 @@
 .loading {
-  position: relative;
+  display: flex;
+  justify-content: center;
 }
-
-@-webkit-keyframes loader-spin {
+.loader {
+  position: relative;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  animation: loader-spin 0.8s infinite linear;
+  transform-origin: bottom right;
+  svg {
+    position: relative;
+  }
+}
+@keyframes loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* @-webkit-keyframes loader-spin {
   0% {
     transform: rotate(0deg);
   }
@@ -48,7 +67,7 @@
     left: -12.5%;
   }
 }
-
+ */
 .page {
   position: relative;
   width: 100%;

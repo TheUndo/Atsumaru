@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ASExample from "../../components/atsuSwipe/ASExample";
 import Button from "../../components/button/Button";
 import Dropdown from "../../components/dropdown/Dropdown";
 import Header from "../../components/header/Header";
@@ -16,6 +17,7 @@ export default function Dev(props: Props) {
   return (
     <>
       <div>
+        <ASExample />
         <Header level={1}>Show manga page</Header>
         <Button onClick={() => {}}>YEP</Button>
         <Header level={1}>Switcher</Header>

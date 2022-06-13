@@ -34,6 +34,9 @@
     padding-left: calc(0.6 * var(--padding));
     min-width: 30px;
   }
+  &.beefy {
+    --padding: 1em;
+  }
   background: var(--button-bg);
   &.hasLegend {
     --padding: 1em 0.7em;
@@ -51,7 +54,7 @@
   box-sizing: border-box;
   cursor: pointer;
   overflow: hidden;
-  transition: filter 0.3s ease-out, background 0.25s ease-in,
+  transition: filter 0.3s ease-out, background 0.15s ease-in,
     transform 0.05s ease-out;
   &[disabled] {
     opacity: 0.7;
@@ -135,7 +138,7 @@
 .iconCont {
   position: relative;
   width: 1em;
-  height: 1.2em;
+  height: 1.1em;
   display: flex;
   justify-content: center;
   align-items: center;

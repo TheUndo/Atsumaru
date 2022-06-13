@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import useMedia from "../../hooks/useMedia";
 import { parseChapterName } from "../../pages/progressSyncing/ProgressSyncing";
 import { resolvePageUrlParameter } from "../../pages/read/helpers";
-import { Chapter, MangaInfo, ProgressInfo } from "../../types";
+import { Chapter, MangaInfo, ProgressInfo, ProgressNode } from "../../types";
+import calculateProgressPercentage from "../../utils/calculateProgressPercentage";
 import cm from "../../utils/classMerger";
 import getLatestProgress from "../../utils/getLatestProgress";
 import normalizeChapterNames from "../../utils/normalizeChapterNames";
@@ -188,14 +189,6 @@ export default function Content({
   );
 }
 
-type ProgressNode = {
-  chapter: string;
-  meta: {
-    page: string;
-    progress?: number | undefined;
-    date: string;
-  };
-};
 
 function Progress({
   manga,
@@ -238,18 +231,7 @@ function Progress({
   );
 }
 
-function calculateProgressPercentage(latest: ProgressNode, manga: MangaInfo) {
-  const parsed = parseChapterName(latest.chapter);
-  const idx = manga.chapters.findIndex(chapter => {
-    return chapter.name === parsed;
-  });
 
-  return idx < 0
-    ? "0%"
-    : idx === 0
-    ? "100%"
-    : percentage(1 - idx / manga.chapters.length, 3) + "%";
-}
 
 function ResumeButton({
   latest,

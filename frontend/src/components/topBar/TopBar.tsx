@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { useMatch } from "react-router-dom";
+import { useLocation, useMatch } from "react-router-dom";
 import { AppContext } from "../../appContext";
 import useMedia from "../../hooks/useMedia";
 import cm from "../../utils/classMerger";
@@ -11,11 +11,12 @@ import classes from "./topBar.module.scss";
 
 export default function TopBar() {
   const readMatch = useMatch("/read/:source/:slug/:chapter/:page");
+  const mangaMatch = useMatch("/manga/:vendor/:slug");
   const ctx = useContext(AppContext);
   const [query, setQuery] = ctx.searchQuery ?? [];
   const [sideBar] = ctx.desktopNavbar ?? [];
   const [searchShown, setSearchShown] = useState(false);
-  const shown = !readMatch || sideBar;
+  const shown = mangaMatch ? sideBar : !readMatch || sideBar;
   const mobile = useMedia(["(max-width: 1000px)"], [true], false);
   const inputRef = useRef<HTMLInputElement>(null);
 

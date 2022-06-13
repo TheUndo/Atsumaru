@@ -126,11 +126,11 @@ function ProgressMeta({
   return (
     <div className={classes.badge}>
       <span className={classes.desktopBullet}>ch. </span>
-      <span>{normalizeChapterNames(progress!.latest.chapter)}</span>
+      <span>{normalizeChapterNames(progress!.latest.chapter ?? "??")}</span>
       <span>/</span>
       {manga?.chapters && (
         <>
-          <span>{normalizeChapterNames(manga.chapters[0]?.name)}</span>
+          <span>{normalizeChapterNames(manga.chapters[0]?.name ?? "??")}</span>
           <span className={classes.desktopBullet}> • </span>
           <br className={classes.mobileBreakLine} />
           <span className={classes.desktopBullet}>

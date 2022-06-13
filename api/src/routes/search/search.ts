@@ -4,8 +4,6 @@ import { ReadProgress, Request } from "../../types";
 import { mongoCollectionByVendor } from "../../utils";
 import MeiliSearch from "meilisearch";
 
-console.log("KEY", process.env.MEILI_MASTER_KEY);
-
 export const client = new MeiliSearch({
   host: "http://search_engine:7700",
   apiKey: process.env.MEILI_MASTER_KEY!,

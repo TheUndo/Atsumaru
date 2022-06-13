@@ -2,7 +2,7 @@ import React from "react";
 
 export default function JSXJoin<T extends React.ReactNode>(
   arr: T[],
-  glue: React.ReactNode
+  glue: React.ReactNode,
 ) {
   return (
     <>

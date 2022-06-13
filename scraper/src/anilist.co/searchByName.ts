@@ -116,7 +116,7 @@ export default async function performSearch(titles: string[]) {
 function specialCharsRemover(title: string) {
     return cyrillicToLatin(
         title
-            ?.replace(/\s+/g, "")
+            ?.replace(/\s+|\.$/g, "")
             ?.replace(/о/g, "o")
             ?.replace(/ou/gi, "o")
             ?.replace(/[:-_+~*'"\s#@%&/\\()[]{}=!?.,^¿`$¢¥£”%¶≠]/g, "")

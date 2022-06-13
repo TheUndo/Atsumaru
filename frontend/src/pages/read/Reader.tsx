@@ -266,9 +266,7 @@ export default function Reader() {
             <DesktopSettingsBurger />
             <div className={classes.content}>
               <ReaderMeta />
-              {value?.currentChapter && (
-                <PagePreviewThumbnails pages={value?.currentChapter?.pages} />
-              )}
+              {value?.currentChapter && <PagePreviewThumbnails />}
               {mangaData?.chapters?.length ? (
                 <RenderPages
                   hideControls={value.setControlsShown}

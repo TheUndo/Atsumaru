@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { memo, useContext } from "react";
 import { AppContext } from "../../../appContext";
 import Button from "../../../components/button/Button";
 import Icon from "../../../components/icon/Icon";
@@ -14,7 +14,7 @@ import { PageState, ReaderContext } from "../ReaderContext";
 import classes from "./imageItem.module.scss";
 import pageClasses from "../pageItem/pageItem.module.scss";
 
-export default function ImageItem({
+export default memo(function ImageItem({
   page,
   ...state
 }: PageState & { page: Page }) {
@@ -146,4 +146,4 @@ export default function ImageItem({
       )}
     </>
   );
-}
+});

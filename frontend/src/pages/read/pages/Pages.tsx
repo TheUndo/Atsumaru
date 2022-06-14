@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import useOnline from "../../../hooks/useOnline";
 import { Page } from "../../../types";
+import isDev from "../../../utils/isDev";
+import log from "../../../utils/log";
 import { loadPagesSequentially, parsePageUrlParameter } from "../helpers";
 import PageItem from "../pageItem/PageItem";
 import { ReaderContext } from "../ReaderContext";
 
-export default function Pages({
+export default memo(function Pages({
   pages,
   chapterName,
 }: {
@@ -68,9 +70,14 @@ export default function Pages({
       nextChapter?.pages.length &&
       preloading !== currentChapter?.name
     ) {
-      console.warn("[WARNING] preloading next chapter", nextChapter);
+      if (isDev()) log.warn("preloading next chapter", nextChapter);
       setPreloading(currentChapter?.name);
-      loadPagesSequentially(4, nextChapter.pages, 0, (page) => void console.log("Preloaded page", page.name));
+      loadPagesSequentially(
+        4,
+        nextChapter.pages,
+        0,
+        page => void console.log("Preloaded page", page.name),
+      );
     }
   }, [loadPages, nextChapter, preloading]);
 
@@ -87,4 +94,4 @@ export default function Pages({
       ))}
     </>
   );
-}
+});

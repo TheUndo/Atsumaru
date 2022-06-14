@@ -82,7 +82,6 @@ export default function RenderPages({
   ) : (
     <Loading />
   );
-  const { chapter: chapterParam } = useParams();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -187,6 +186,7 @@ export default function RenderPages({
           ) || undefined,
         ];
       })(scrolling, scrollSize, size);
+
       if (scrolling !== scrollSize) {
         void setCurrentPage?.(resolvePageUrlParameter(currentPage, progress));
       }

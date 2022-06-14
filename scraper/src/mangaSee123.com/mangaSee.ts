@@ -26,7 +26,13 @@ export async function scrapeSearch() {
 }
 
 export async function scrapeFrontPage(): Promise<
-  MangaSee.ListItem[] | null | undefined
+  | undefined
+  | {
+      latestUpdates?: MangaSee.ListItem[];
+      hotUpdates?: MangaSee.ListItem[];
+      newSeries?: MangaSee.ListItem[];
+      topTen?: MangaSee.ListItem[];
+    }
 > {
   const url = msURL("/");
 
@@ -36,16 +42,44 @@ export async function scrapeFrontPage(): Promise<
 
   if (error || !data) return void log(error);
 
-  const latestStart = data.slice(
-    data.indexOf("vm.LatestJSON = ") + "vm.LatestJSON = ".length,
-  );
-  const latestEnd = latestStart.slice(0, latestStart.indexOf("}];") + 2);
+  const latestUpdates = (() => {
+    const start = data.slice(
+      data.indexOf("vm.LatestJSON = ") + "vm.LatestJSON = ".length,
+    );
+    const end = start.slice(0, start.indexOf("}];") + 2);
+    return tryJSONParse<MangaSee.ListItem[]>(end) ?? undefined;
+  })();
 
-  const parsed = tryJSONParse<MangaSee.ListItem[]>(latestEnd);
+  const hotUpdates = (() => {
+    const start = data.slice(
+      data.indexOf("vm.HotUpdateJSON = ") + "vm.HotUpdateJSON = ".length,
+    );
+    const end = start.slice(0, start.indexOf("}];") + 2);
+    return tryJSONParse<MangaSee.ListItem[]>(end) ?? undefined;
+  })();
 
-  if (!parsed) return;
+  const newSeries = (() => {
+    const start = data.slice(
+      data.indexOf("vm.NewSeriesJSON = ") + "vm.NewSeriesJSON = ".length,
+    );
+    const end = start.slice(0, start.indexOf("}];") + 2);
+    return tryJSONParse<MangaSee.ListItem[]>(end) ?? undefined;
+  })();
 
-  return parsed;
+  const topTen = (() => {
+    const start = data.slice(
+      data.indexOf("vm.TopTenJSON = ") + "vm.TopTenJSON = ".length,
+    );
+    const end = start.slice(0, start.indexOf("}];") + 2);
+    return tryJSONParse<MangaSee.ListItem[]>(end) ?? undefined;
+  })();
+
+  return {
+    latestUpdates,
+    hotUpdates,
+    newSeries,
+    topTen,
+  };
 }
 
 /**
@@ -264,7 +298,7 @@ function normalizeMangaSeeChapterName(
   const res = 0 === +right ? left.toString() : `${left}.${right}`;
   const firstLetter = chapter.Type?.[0]?.toLowerCase();
   return `${
-    /* handle prologues */
+    /* handle weird chapter names conflicting with each other */
     chapter.Type.toLowerCase() === "chapter"
       ? ""
       : /\w/.test(firstLetter)

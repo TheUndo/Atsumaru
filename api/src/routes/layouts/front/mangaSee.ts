@@ -1,19 +1,62 @@
 import * as express from "express";
 import { getLatestUpdates } from "../../../actions/mangaSee";
 import { getRecentlyRead } from "../../../actions/readProgress";
+import mongo from "../../../db/mongo";
 import { Request } from "../../../types";
+
+async function getSliders() {
+  const db = await mongo();
+
+  const map = {
+    hotUpdates: {
+      header: "Hot updates",
+      key: "hot-updates",
+    },
+    topTen: {
+      header: "Top 10",
+      key: "top-ten",
+    },
+    newSeries: {
+      header: "New manga",
+      key: "new-series",
+    },
+  } as const;
+
+  const sliders = await db
+    .collection<{
+      key: string;
+      items: any[];
+    }>("mangaSeeFrontPage")
+    .find({
+      $or: Object.keys(map).map(key => ({ key })),
+    })
+    .toArray();
+
+  return Object.entries(map)
+    .map(([key, value]) => {
+      const items = sliders
+        .find(slider => slider.key === key)
+        ?.items?.slice(0, 32)
+        .map(item => ({ manga: { ...item, type: "GENERIC_ITEM" } }));
+      if (!items) return;
+      return {
+        ...value,
+        items,
+      };
+    })
+    .filter(v => v);
+}
 
 export default async function mangaSeeFront(
   req: Request,
   res: express.Response,
 ) {
   try {
-    const [latest, recentlyRead] = await Promise.all([
+    const [latest, recentlyRead, sliders] = await Promise.all([
       getLatestUpdates(32),
       getRecentlyRead(req.user!, "MANGASEE", 32),
+      getSliders(),
     ]);
-
-    console.log(recentlyRead)
 
     return void res.send({
       layout: [
@@ -22,6 +65,7 @@ export default async function mangaSeeFront(
           key: "continue-reading",
           items: recentlyRead,
         },
+        ...sliders,
         {
           header: "Latest updates",
           key: "latest-updates",

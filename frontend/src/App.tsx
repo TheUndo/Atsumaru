@@ -27,19 +27,20 @@ import ReactDOM from "react-dom/client";
 import Dev from "./pages/dev/Dev";
 import { AppContext, User } from "./appContext";
 import Contribute from "./pages/contribute/Contribute";
+import UnderConstruction from "./pages/underConstruction/UnderConstruction";
+import { registerSW } from "virtual:pwa-register";
+import isDev from "./utils/isDev";
 
-/* import { registerSW } from "virtual:pwa-register"; */
-
-/* if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator && !isDev()) {
   navigator.serviceWorker.register("/sw.js");
 
   navigator.serviceWorker.ready.then(sw => {
-    navigator.serviceWorker.controller?.postMessage({
+    /* navigator.serviceWorker.controller?.postMessage({
       type: "CACHE_IMAGE",
       src: "https://scans-ongoing-2.planeptune.us/manga/Yuusha-Shoutai-Kamoku-Yuusha-Wa/0001-001.png",
-    });
+    }); */
   });
-} */
+}
 
 /* downloadFile(
     "https://scans-ongoing-2.planeptune.us/manga/Yuusha-Shoutai-Kamoku-Yuusha-Wa/0001-001.png"
@@ -106,13 +107,15 @@ function App() {
                     element={<Reader />}
                   />
 
-                  <Route
-                    path="/dev"
-                    element={
-                      <GenericPage>
-                        <Dev />
-                      </GenericPage>
-                    }></Route>
+                  {isDev() && (
+                    <Route
+                      path="/dev"
+                      element={
+                        <GenericPage>
+                          <Dev />
+                        </GenericPage>
+                      }></Route>
+                  )}
                   <Route
                     path="/"
                     element={
@@ -129,6 +132,14 @@ function App() {
                     element={
                       <GenericPage>
                         <Contribute />
+                      </GenericPage>
+                    }
+                  />
+                  <Route
+                    path="/explore"
+                    element={
+                      <GenericPage>
+                        <UnderConstruction />
                       </GenericPage>
                     }
                   />

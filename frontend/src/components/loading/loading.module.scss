@@ -2,15 +2,30 @@
   display: flex;
   justify-content: center;
 }
+.cont {
+  --size: 50px;
+
+  position: relative;
+  height: var(--size);
+}
+.wrap {
+  position: absolute;
+  height: var(--size);
+  left: 50%;
+  top: 50%;
+  transform: translate(-100%, -100%) scale(0.8);
+}
 .loader {
   position: relative;
   color: #fff;
-  width: 50px;
-  height: 50px;
+  width: var(--size);
+  height: var(--size);
   animation: loader-spin 0.8s infinite linear;
   transform-origin: bottom right;
   svg {
     position: relative;
+    height: calc(var(--size) * 2);
+    width: calc(var(--size) * 2);
   }
 }
 @keyframes loader-spin {

@@ -3,6 +3,7 @@ import React, {
   useContext,
   useEffect,
   useLayoutEffect,
+  useState,
 } from "react";
 import { Outlet, useLocation, useMatch } from "react-router-dom";
 import { AppContext } from "../../appContext";
@@ -48,16 +49,25 @@ export default function Layout(props: Props) {
 }
 
 export function GenericPage({ children }: { children: React.ReactNode }) {
-  const location = useLocation().pathname.split("/")[1];
+  const locationSlice = useLocation().pathname.split("/")[1];
+  const [location, setLocation] = useState(locationSlice);
 
   useEffect(() => {
-    if (!["manga"].includes(location)) {
-      scrollTo(0, 0);
-      log.info(
-        `Page switch detected: "/${location}" ... resetting scroll position`,
-      );
-    }
-  }, [location]);
+    setLocation(prev => {
+      if (!["manga"].includes(locationSlice) && !["manga"].includes(prev)) {
+        scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+        log.info(
+          `Page switch detected: "/${location}" ... resetting scroll position`,
+        );
+      }
+      return locationSlice;
+    });
+  }, [locationSlice]);
+
   return (
     <>
       <section className={classes.content}>{children}</section>

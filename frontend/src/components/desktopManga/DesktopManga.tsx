@@ -1,7 +1,6 @@
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import React, {
   ComponentProps,
-  Ref,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -18,8 +17,6 @@ import { Anilist, MangaInfo, ProgressInfo, ProgressNode } from "../../types";
 import calculateProgressPercentage from "../../utils/calculateProgressPercentage";
 import cm from "../../utils/classMerger";
 import getLatestProgress from "../../utils/getLatestProgress";
-import JSXJoin from "../../utils/JSXJoin";
-import normalizeChapterNames from "../../utils/normalizeChapterNames";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
 import Button from "../button/Button";
 import Header from "../header/Header";
@@ -37,8 +34,12 @@ type Props = {
 };
 
 export default function DesktopManga({ apiData, slug }: Props) {
-  const { data, error, isLoading, status } = apiData;
+  const { data, isLoading, status } = apiData;
   const ref = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const exit = () =>
+    navigate((location.state as any)?.backgroundLocation.pathname ?? "/");
   const [bookmarked, setBookmarked] = useState(false);
   const firstChapter =
     data?.manga?.chapters?.[data?.manga?.chapters?.length - 1];
@@ -59,21 +60,35 @@ export default function DesktopManga({ apiData, slug }: Props) {
 
   const latestProgress: ProgressNode | undefined =
     data?.progress && getLatestProgress(data.progress);
-  const percentage = useMemo(
+  //TODO:
+  /* const percentage = useMemo(
     () =>
       latestProgress && data?.manga
         ? calculateProgressPercentage(latestProgress, data.manga)
         : "?%",
     [latestProgress, data?.manga],
-  );
+  ); */
+
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+
+    // used to allow render cycle before scroll locks
+    setTimeout(() => {
+      if (!ref.current) return;
+      if (shown) disableBodyScroll(ref.current);
+      else enableBodyScroll(ref.current);
+    }, 10);
+  }, [shown]);
 
   return createPortal(
     <div className={cm(classes.manga, shown && classes.shown)}>
       <div className={classes.bg}></div>
-      <div className={classes.content} ref={ref}>
+      <div className={classes.content} onClick={exit} ref={ref}>
         <div className={classes.inner}>
           <Nav forwardRef={ref} data={data?.manga} />
-          <div className={classes.offset}>
+          <div
+            className={classes.offset}
+            onClick={e => void e.stopPropagation()}>
             <div className={classes.topSection}>
               <aside className={classes.aside}>
                 <div className={classes.poster}>
@@ -451,12 +466,12 @@ function Desc({ data, anilist }: { data: MangaInfo; anilist?: Anilist }) {
 
 function Genres({ data }: { data: MangaInfo }) {
   const res = data.genres.map((genre, i) => (
-    <>
+    <div key={genre} className={classes.inlineGenre}>
       {i !== 0 && "•"}
-      <Link key={genre} to={`/genres/${genre}`}>
+      <Link to={`/genres/${genre}`}>
         <div className={classes.genre}>{genre}</div>
       </Link>
-    </>
+    </div>
   ));
 
   return <div className={classes.genres}>{res}</div>;
@@ -492,7 +507,9 @@ function Nav({
   }, [data]);
 
   return (
-    <div className={cm(classes.nav, scrollPos > 100 && classes.fixed)}>
+    <div
+      onClick={e => void e.stopPropagation()}
+      className={cm(classes.nav, scrollPos > 100 && classes.fixed)}>
       <Button
         onClick={exit}
         transparent

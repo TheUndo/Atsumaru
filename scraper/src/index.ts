@@ -1,5 +1,8 @@
 import performSearch from "./anilist.co/searchByName";
-import { pushMangaFromSlugs } from "./mangaSee123.com/impureDbOps";
+import {
+  msFrontPageUpsert,
+  pushMangaFromSlugs,
+} from "./mangaSee123.com/impureDbOps";
 import {
   scrapeFrontPage,
   scrapeInfoPage,
@@ -18,8 +21,14 @@ void ensureIndex()
 (async () => {
   let prev = "";
   for (;;) {
-    const items = await scrapeFrontPage();
-    const latest = items?.map(v => v.IndexName).join(" ") ?? "";
+    const { latestUpdates, hotUpdates, newSeries, topTen } =
+      (await scrapeFrontPage()) ?? {};
+
+    if (hotUpdates) msFrontPageUpsert("hotUpdates", hotUpdates);
+    if (newSeries) msFrontPageUpsert("newSeries", newSeries);
+    if (topTen) msFrontPageUpsert("topTen", topTen);
+
+    const latest = latestUpdates?.map(v => v.IndexName).join(" ") ?? "";
     void log("front page iteration");
     if (prev === latest) {
       void log("No changes detected");
@@ -27,13 +36,13 @@ void ensureIndex()
       continue;
     }
     prev = latest;
-    if (!items?.length) {
+    if (!latestUpdates?.length) {
       void log("Something went wrong while scarping MangaSee front page.");
       void (await sleep(1000 * 60 * 30));
       continue;
     } else {
       // causes db side effects
-      void pushMangaFromSlugs(items.map(({ IndexName }) => IndexName));
+      void pushMangaFromSlugs(latestUpdates.map(({ IndexName }) => IndexName));
     }
     void (await sleep(1000 * 60 * 60 * 5)); // 5 minute interval
   }

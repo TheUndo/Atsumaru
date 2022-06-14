@@ -5,25 +5,29 @@ import classes from "./loading.module.scss";
 export default function Loading() {
   return (
     <>
-      <div className={classes.loading}>
-        <div className={cm(classes.loader, "loader")}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            preserveAspectRatio="xMidYMid">
-            <path
-              d="M24 50A26 26 0 0 0 76 50A26 26.6 0 0 1 24 50"
-              fill="currentColor"
-              stroke="none">
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                dur="1s"
-                repeatCount="indefinite"
-                keyTimes="0;1"
-                values="0 50 50.3;360 50 50.3"></animateTransform>
-            </path>
-          </svg>
+      <div className={classes.cont}>
+        <div className={classes.wrap}>
+          <div className={classes.loading}>
+            <div className={cm(classes.loader, "loader")}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                preserveAspectRatio="xMidYMid">
+                <path
+                  d="M24 50A26 26 0 0 0 76 50A26 26.6 0 0 1 24 50"
+                  fill="currentColor"
+                  stroke="none">
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    dur="1s"
+                    repeatCount="indefinite"
+                    keyTimes="0;1"
+                    values="0 50 50.3;360 50 50.3"></animateTransform>
+                </path>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </>

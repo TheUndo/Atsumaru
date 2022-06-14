@@ -64,3 +64,52 @@ export async function upsertMangaSee(mangaItem: MangaSee.MangaInfo) {
 
   return void log("Successfully upserted", mangaItem.title);
 }
+
+async function mapItemsToInfo(items: MangaSee.ListItem[]) {
+  const db = await mongo();
+
+  const infoItems = await db
+    .collection("mangaSee")
+    .find({
+      $or: items.map(item => ({
+        mangaSeeSlug: item.IndexName,
+      })),
+    })
+    .project({
+      chapters: 0,
+      description: 0,
+      genres: 0,
+      "latestChapter.pages": 0,
+    })
+    .toArray();
+
+  if (!infoItems) return [];
+
+  return infoItems;
+}
+
+export async function msFrontPageUpsert(
+  key: string,
+  mangaItems: MangaSee.ListItem[],
+) {
+  const db = await mongo();
+
+  const query = {
+    key,
+  };
+  await db.collection("mangaSeeFrontPage").updateOne(
+    query,
+    {
+      $set: {
+        key,
+        latestUpdate: new Date(),
+        items: await mapItemsToInfo(mangaItems),
+      },
+    },
+    {
+      upsert: true,
+    },
+  );
+
+  return void log("Successfully upserted MS frontpage key:", key);
+}

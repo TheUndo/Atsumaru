@@ -12,8 +12,8 @@
     font-size: 30px;
   }
   :global(.button) {
-    --padding: .3em;
-    border-radius: .2rem;
+    --padding: 0.3em;
+    border-radius: 0.2rem;
     font-size: inherit;
   }
   h1 {
@@ -38,11 +38,19 @@
     font-size: inherit;
     color: inherit;
   }
-  @media only screen and (min-width: 1000px) {
+  .beta {
+    bottom: -.4rem;
+    right: 0;
+    position: absolute;
+    font-size: 0.6rem;
+    font-weight: bold;
+    color: rgb(201, 201, 201);
+  }
+  /* @media only screen and (min-width: 1000px) {
     a {
       &:active h1 {
         transform: scale(0.97);
       }
     }
-  }
+  } */
 }

@@ -8,6 +8,8 @@ import Icon from "../icon/Icon";
 import Logo from "./logo/Logo";
 import Search from "./search/Search";
 import classes from "./topBar.module.scss";
+import useKeyboardShortcut from "use-keyboard-shortcut";
+import hotkeys from "hotkeys-js";
 
 export default function TopBar() {
   const readMatch = useMatch("/read/:source/:slug/:chapter/:page");
@@ -48,6 +50,11 @@ export default function TopBar() {
       ),
     [shown],
   );
+
+  hotkeys("ctrl+s", e => {
+    e.preventDefault();
+    inputRef.current?.focus();
+  });
 
   return (
     <>

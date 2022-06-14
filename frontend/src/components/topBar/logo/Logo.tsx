@@ -14,6 +14,7 @@ export default function Logo(props: Props) {
             <h1>
               <span>atsu</span>maru
             </h1>
+            <span className={classes.beta}>beta</span>
           </Button>
         </Link>
       </div>

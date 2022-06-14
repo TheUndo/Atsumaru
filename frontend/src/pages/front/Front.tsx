@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useMatch, useParams } from "react-router-dom";
 import { AppContext } from "../../appContext";
 import Carousel, { GenericItem } from "../../components/carousel/Carousel";
 import Debug from "../../components/debug/Debug";
+import Disclaimer from "../../components/disclaimer/Disclaimer";
 import Header from "../../components/header/Header";
 import Icon from "../../components/icon/Icon";
-import Info from "../../components/info/Info";
 import Loading from "../../components/loading/Loading";
-import useApi, { apiBase } from "../../hooks/useApi";
+import { apiBase } from "../../hooks/useApi";
 import useOnline from "../../hooks/useOnline";
 import cm from "../../utils/classMerger";
 import classes from "./front.module.scss";
@@ -18,6 +18,7 @@ export default function Front() {
   const [isOnline, setIsOnline] = useState(online);
   const ctx = useContext(AppContext);
   const [loggedIn] = ctx.loggedIn ?? [];
+  const frontMatch = useMatch("/");
   const { refetch, isLoading, error, data } = useQuery<{
     layout: GenericItem[];
   }>(
@@ -28,6 +29,7 @@ export default function Front() {
       }).then(res => res.json()),
     {
       retry: false,
+      enabled: !!frontMatch,
     },
   );
   useEffect(() => {
@@ -45,6 +47,7 @@ export default function Front() {
     <>
       <div ref={layout} className={cm(classes.front, slug && classes.hidden)}>
         <Debug />
+        <Disclaimer />
         {online ? (
           isLoading && !data && !error ? (
             <Loading />
@@ -58,7 +61,10 @@ export default function Front() {
               <p>
                 Error: <code>{error + ""}</code> (api probably temporarily down)
               </p>
-              <img style={{borderRadius:"10px", maxWidth: "90%"}} src="/broken.gif" />
+              <img
+                style={{ borderRadius: "10px", maxWidth: "90%" }}
+                src="/broken.gif"
+              />
             </>
           ) : data ? (
             data.layout.map(item => <Carousel key={item.key} item={item} />)

@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../appContext";
@@ -238,7 +239,11 @@ export default function Reader() {
     <>
       <ReaderContextProvider value={value}>
         <ProgressSyncing />
-
+        {mangaData && (
+          <Helmet>
+            <title>{mangaData.title} | Atsumaru</title>
+          </Helmet>
+        )}
         <KeyboardController />
         <div
           ref={scrollRef}

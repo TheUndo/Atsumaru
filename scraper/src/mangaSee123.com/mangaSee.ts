@@ -279,6 +279,32 @@ function extractChapters(html: string) {
 
 } */
 
+(async () => {
+  const db = await mongo();
+  let i = 0;
+  const cursor = db.collection("mangaSee").find({});
+  for await (const doc of cursor) {
+    await db.collection("mangaSee").updateOne(
+      { _id: doc._id },
+      {
+        $set: {
+          chapters: doc.chapters.map((chapter: any) => {
+            const newName = fixChapterName(chapter.name.replace(/[^\d.]/g, ""), chapter.type);
+
+            if (newName !== chapter.name) {
+              chapter.name = newName;
+              console.log(newName, chapter.name, i);
+            }
+
+            return chapter;
+          }),
+        },
+      },
+    );
+    i++;
+  }
+})();
+
 /**
  * Not my code, this was taken from the MangaSee frontend.
  * Very annoying angular obfuscation more or less removed.
@@ -297,10 +323,15 @@ function normalizeMangaSeeChapterName(
   const right = chapterName[chapterName.length - 1];
   const res =
     0 === +right ? left.toString().replace(/\./, "_") : `${left}_${right}`;
-  const firstLetter = chapter.Type?.[0]?.toLowerCase();
+
+  return fixChapterName(res, chapter.Type);
+}
+
+function fixChapterName(name: string, type: string) {
+  const firstLetter = type?.[0]?.toLowerCase();
   return `${
     /* handle weird chapter names conflicting with each other */
-    chapter.Type.toLowerCase() === "chapter"
+    type?.toLowerCase() === "chapter"
       ? ""
       : /\w/.test(firstLetter)
       ? firstLetter
@@ -337,7 +368,7 @@ function normalizeMangaSeeChapterName(
           }
           return "spchar";
         })() ?? ""
-  }${res}`;
+  }${name}`.replace(".", "_");
 }
 
 /**

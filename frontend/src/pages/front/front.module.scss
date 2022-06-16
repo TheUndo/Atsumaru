@@ -1,6 +1,7 @@
 .front {
   padding-top: 20px;
   position: relative;
+  padding-bottom: 50px;
   transition: transform 0.1s ease-in;
   transform: scale(var(--modal-scaler, 1));
   @media screen and (pointer: fine) {

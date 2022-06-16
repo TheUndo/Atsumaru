@@ -7,3 +7,4 @@ storage/redis/data/
 storage/
 ./frontend/dev-dist
 .DS_Store
+.expo

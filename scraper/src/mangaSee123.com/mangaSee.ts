@@ -295,7 +295,8 @@ function normalizeMangaSeeChapterName(
   const chapterName = chapter.Chapter ?? "";
   const left = parseInt(chapterName.slice(1, -1));
   const right = chapterName[chapterName.length - 1];
-  const res = 0 === +right ? left.toString() : `${left}.${right}`;
+  const res =
+    0 === +right ? left.toString().replace(/\./, "_") : `${left}_${right}`;
   const firstLetter = chapter.Type?.[0]?.toLowerCase();
   return `${
     /* handle weird chapter names conflicting with each other */

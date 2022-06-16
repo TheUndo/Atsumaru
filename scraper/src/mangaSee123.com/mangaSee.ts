@@ -279,7 +279,7 @@ function extractChapters(html: string) {
 
 } */
 
-(async () => {
+/* (async () => {
   const db = await mongo();
   let i = 0;
   const cursor = db.collection("mangaSee").find({});
@@ -303,7 +303,7 @@ function extractChapters(html: string) {
     );
     i++;
   }
-})();
+})(); */
 
 /**
  * Not my code, this was taken from the MangaSee frontend.

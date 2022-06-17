@@ -9,7 +9,7 @@
 // } from 'workbox-strategies'
 // import { ExpirationPlugin } from 'workbox-expiration'
 
-const version = 1.1;
+const version = 1.2;
 
 importScripts(
   "https://storage.googleapis.com/workbox-cdn/releases/6.1.1/workbox-sw.js"

@@ -15,6 +15,7 @@ import PageProgressIndicatorPosition from "./items/readerItems/PageProgressIndic
 import ReaderBackgroundColor from "./items/readerItems/ReaderBackgroundColors";
 import ReaderUIAppearance from "./items/readerItems/ReaderUIAppearance";
 import ReadingDirection from "./items/readerItems/ReadingDirection";
+import SwiperEngine from "./items/readerItems/SwiperEngine";
 import classes from "./settings.module.scss";
 
 export default function Settings() {
@@ -34,6 +35,7 @@ export default function Settings() {
       <div className={classes.settings}>
         <div className={classes.inner}>
           <ReadingDirection />
+          <SwiperEngine />
           <PageFillMethod />
           <ClickNavigation />
           <KeyboardControls />
@@ -68,9 +70,8 @@ export function Setting({
         className={cm(
           classes.setting,
           mobile && classes.mobile,
-          desktop && classes.desktop
-        )}
-      >
+          desktop && classes.desktop,
+        )}>
         <div className={classes.settingsInner}>
           {dropdown ? (
             <DropDown label={label}>{children}</DropDown>
@@ -104,8 +105,7 @@ function DropDown({
         icon={
           <Icon icon="chevron" orientation={`${hidden ? "" : "-"}.25turn`} />
         }
-        iconLoc="right"
-      >
+        iconLoc="right">
         {label}
       </Button>
       <div
@@ -114,9 +114,8 @@ function DropDown({
         }}
         className={cm(
           classes.dropdownContent,
-          hidden && classes.dropdownContentHidden
-        )}
-      >
+          hidden && classes.dropdownContentHidden,
+        )}>
         <div ref={ref}>
           <div className={cm(classes.dropdown, hidden && classes.hidden)}>
             {children}
@@ -146,15 +145,13 @@ export function RadioSetting<T extends string | number>({
       <div
         className={cm(
           classes.radioSetting,
-          vertical && classes.radioSettingVertical
-        )}
-      >
-        {items.map((item) => (
+          vertical && classes.radioSettingVertical,
+        )}>
+        {items.map(item => (
           <div
             onClick={() => onChange(item.value)}
             className={classes.ratioSettingItem}
-            key={item.value}
-          >
+            key={item.value}>
             {item.content(item.value === currentValue)}
           </div>
         ))}

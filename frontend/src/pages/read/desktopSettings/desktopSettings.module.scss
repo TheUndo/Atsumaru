@@ -6,6 +6,8 @@
   transition: width 0.5s cubic-bezier(.52,.06,.16,.99) 0.05s;
   box-shadow: 0 0 15px -2px #000;
 
+  --width: var(--drawerWidth);
+
   .desktopSettingsDrawer {
     width: var(--width);
     position: absolute;

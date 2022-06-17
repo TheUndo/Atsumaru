@@ -19,7 +19,7 @@ export default function PageItem({
 }) {
   const [{ pagesModifyColors, readingDirection }] = useContext(AppContext)
     ?.settings ?? [{}];
-
+    
   const filter = useMemo(() => {
     switch (pagesModifyColors) {
       case "DARKEN":

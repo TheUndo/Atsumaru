@@ -13,6 +13,7 @@ import Loading from "../../../components/loading/Loading";
 import { MangaInfo } from "../../../types";
 import cm from "../../../utils/classMerger";
 import { clamp } from "../../../utils/utils";
+import SwiperReader from "../swiperReader/SwiperReader";
 import { parsePageUrlParameter, resolvePageUrlParameter } from "../helpers";
 import NextChapterIndicator from "../nextChapterIndicator/NextChaptrerIndicator";
 import Overlay from "../overlay/Overlay";
@@ -45,6 +46,7 @@ export default function RenderPages({
       readerShowDesktopDrawer,
       readerClickNavigation,
       readerClickNavigationDisabled,
+      readerSwipeEngine,
     },
     setSetting,
   ] = useContext(AppContext)?.settings ?? [{}];
@@ -70,6 +72,11 @@ export default function RenderPages({
   const [, progress] = useMemo(
     () => parsePageUrlParameter(initialPage ?? "1"),
     [],
+  );
+
+  const rtl = useMemo(
+    () => readingDirection === "RIGHT-TO-LEFT",
+    [readingDirection],
   );
 
   const chapterLoaded = useMemo(() => {
@@ -103,7 +110,6 @@ export default function RenderPages({
     const { width, height } = ref.current.getBoundingClientRect();
     const size = readingDirection === "TOP-TO-BOTTOM" ? height : width;
     const [page, progress] = parsePageUrlParameter(initialPage);
-
     const value =
       size *
       ((parseInt(page ?? "1") || 1) - 1) *
@@ -254,7 +260,7 @@ export default function RenderPages({
       window.dispatchEvent(closeDropdown);
       if (!ref.current || !desktop || readerClickNavigationDisabled === "YES")
         return;
-      
+
       e.stopPropagation();
       const { left, width } = ref.current?.getBoundingClientRect();
       const relX = e.pageX - left;
@@ -266,14 +272,14 @@ export default function RenderPages({
           relX >= (width * 2) / 3 && relX < (width * 3) / 3,
         ] as const;
         if (leftClick) {
-          pageRelativeNavigate?.(-1);
+          pageRelativeNavigate?.(rtl ? 1 : -1);
         } else if (middleClick) {
           setSetting?.(
             "readerShowDesktopDrawer",
             readerShowDesktopDrawer === "NO" ? "YES" : "NO",
           );
         } else if (rightClick) {
-          pageRelativeNavigate?.(1);
+          pageRelativeNavigate?.(rtl ? -1 : 1);
         }
       } else if (readerClickNavigation === "PREV-NEXT") {
         const [leftClick, rightClick] = [
@@ -281,14 +287,14 @@ export default function RenderPages({
           relX >= width / 2 && relX < width,
         ] as const;
         if (leftClick) {
-          pageRelativeNavigate?.(-1);
+          pageRelativeNavigate?.(rtl ? 1 : -1);
         } else if (rightClick) {
-          pageRelativeNavigate?.(1);
+          pageRelativeNavigate?.(rtl ? -1 : 1);
         }
       } else if (readerClickNavigation === "ONLY-NEXT") {
         const rightClick = relX >= 0 && relX < width;
         if (rightClick) {
-          pageRelativeNavigate?.(1);
+          pageRelativeNavigate?.(rtl ? -1 : 1);
         }
       }
     },
@@ -300,8 +306,15 @@ export default function RenderPages({
       desktop,
       readerClickNavigationDisabled,
       readerClickNavigation,
+      rtl,
     ],
   );
+
+  const useSwiper = useMemo(() => {
+    return (
+      readingDirection !== "TOP-TO-BOTTOM" && readerSwipeEngine === "CUSTOM"
+    );
+  }, [readingDirection, readerSwipeEngine]);
 
   const wisdom = useMemo(() => getWisdom(), []);
 
@@ -353,7 +366,7 @@ export default function RenderPages({
               onKeyDown={e => e.preventDefault()}
               onKeyUp={e => e.preventDefault()}
               onKeyPress={e => e.preventDefault()}>
-              {content}
+              {useSwiper ? <SwiperReader /> : content}
 
               <div
                 className={cm(

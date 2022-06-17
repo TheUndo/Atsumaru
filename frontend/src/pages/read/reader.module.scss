@@ -6,6 +6,7 @@
   isolation: isolate;
   width: 100%;
   z-index: 1000;
+  --drawerWidth: 330px;
 
   transition: height 0.15s ease-in;
 
@@ -54,7 +55,6 @@
 .aside {
   position: relative;
   flex: none;
-  --width: 330px;
   //z-index: 4;
   @media screen and (max-width: 1000px) {
     display: none;

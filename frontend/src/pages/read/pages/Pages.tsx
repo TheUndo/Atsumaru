@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useMemo, useState } from "react";
 import useOnline from "../../../hooks/useOnline";
 import { Page } from "../../../types";
 import isDev from "../../../utils/isDev";
@@ -25,8 +25,9 @@ export default memo(function Pages({
   const online = useOnline();
   const [preloading, setPreloading] = useState<string>();
   const [page] = parsePageUrlParameter((initialPage || currentPage) ?? "1");
-  const pageIndex = pages.findIndex(
-    pageIteration => pageIteration.name === page,
+  const pageIndex = useMemo(
+    () => pages.findIndex(pageIteration => pageIteration.name === page),
+    [pages, page],
   );
 
   useEffect(() => {

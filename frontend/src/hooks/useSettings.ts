@@ -35,6 +35,7 @@ export type SettingsType = {
   readerShowDesktopDrawer: "YES" | "NO";
   readerClickNavigationDisabled: "NO" | "YES";
   readerClickNavigation: "PREV-MENU-NEXT" | "PREV-NEXT" | "ONLY-NEXT";
+  readerSwipeEngine: "NATIVE" | "CUSTOM";
   desktopSideMenuOpen: "NO" | "YES";
 };
 
@@ -70,6 +71,13 @@ const defaultSettings: SettingsType = {
   readerShowDesktopDrawer: "YES",
   readerClickNavigationDisabled: "NO",
   readerClickNavigation: "PREV-MENU-NEXT",
+  readerSwipeEngine: (() => {
+    // @ts-ignore TODO: remove ignore when android branch is merged merged
+    if (window.isAndroid || /firefox/i.test(navigator.userAgent)) {
+      return "CUSTOM";
+    }
+    return "NATIVE";
+  })(),
   desktopSideMenuOpen: "NO",
 };
 

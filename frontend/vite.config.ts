@@ -4,6 +4,9 @@ import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
   envDir: "../",
+  esbuild: {
+    logOverride: { "this-is-undefined-in-esm": "silent" },
+  },
   plugins: [
     react(),
     VitePWA({

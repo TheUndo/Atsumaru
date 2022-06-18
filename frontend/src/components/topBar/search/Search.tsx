@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { useLocation } from "react-router-dom";
 import { AppContext } from "../../../appContext";
 import cm from "../../../utils/classMerger";
 import classes from "./search.module.scss";
@@ -22,7 +22,9 @@ export default function Search({ shown, forwardRef }: Props) {
           onKeyDown={e => {
             const key = (e.nativeEvent as any)?.key as string; // dumbass react
             if (!key) return;
-            else if (/escape/i.test(key)) setQuery?.("");
+            else if (/escape/i.test(key))
+              if (query) setQuery?.("");
+              else (e.target as any).blur();
             else if (/enter/i.test(key)) (e.target as any)?.blur();
           }}
           onChange={e => setQuery?.(e.target.value)}

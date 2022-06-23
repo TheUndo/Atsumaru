@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ASExample from "../../components/atsuSwipe/ASExample";
+/* import ASExample from "../../components/atsuSwipe/ASExample"; */
 import Button from "../../components/button/Button";
 import Dropdown from "../../components/dropdown/Dropdown";
 import Header from "../../components/header/Header";
@@ -13,11 +13,18 @@ type Props = {};
 
 export default function Dev(props: Props) {
   const [selected, setSelected] = useState("test");
-
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <div>
-        <ASExample />
+        <Header level={1}>Loading button</Header>
+        <div>
+          <Button accent loading={loading} onClick={() => setLoading(true)}>Load something</Button>
+        </div>
+        <div style={{ marginTop: "20px" }}>
+          {loading && <Button onClick={() => setLoading(false)}>Reset</Button>}
+        </div>
+        {/* <ASExample /> */}
         <Header level={1}>Show manga page</Header>
         <Button onClick={() => {}}>YEP</Button>
         <Header level={1}>Switcher</Header>
@@ -64,8 +71,7 @@ export default function Dev(props: Props) {
             </MangaLink>
           </PosterGrid>
         </div>
-        <div style={{height: "500px"}}></div>
-
+        <div style={{ height: "500px" }}></div>
 
         <div>
           <Dropdown
@@ -83,7 +89,7 @@ export default function Dev(props: Props) {
           />
         </div>
         <br />
-        <div style={{height: "1000px"}}></div>
+        <div style={{ height: "1000px" }}></div>
       </div>
     </>
   );

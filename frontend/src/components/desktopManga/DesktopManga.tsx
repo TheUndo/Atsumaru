@@ -1,6 +1,7 @@
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import React, {
   ComponentProps,
+  useContext,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -10,9 +11,15 @@ import React, {
 import { createPortal } from "react-dom";
 import { useQuery, UseQueryResult } from "react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AppContext } from "../../appContext";
 import { apiBase } from "../../hooks/useApi";
 import { parseChapterName } from "../../pages/progressSyncing/ProgressSyncing";
 import { resolvePageUrlParameter } from "../../pages/read/helpers";
+import {
+  useIsBookmarked,
+  useRemoveBookmark,
+  useSetBookmark,
+} from "../../state/mangaInfo";
 import { Anilist, MangaInfo, ProgressInfo, ProgressNode } from "../../types";
 import calculateProgressPercentage from "../../utils/calculateProgressPercentage";
 import cm from "../../utils/classMerger";
@@ -38,6 +45,7 @@ export default function DesktopManga({ apiData, slug }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const [signedIn, setSignedIn] = useContext(AppContext).signIn ?? [];
   const exit = () =>
     navigate((location.state as any)?.backgroundLocation.pathname ?? "/");
   const [bookmarked, setBookmarked] = useState(false);
@@ -51,6 +59,35 @@ export default function DesktopManga({ apiData, slug }: Props) {
       enabled: !!anilistID,
     },
   );
+  const setBookmark = useSetBookmark(
+    {
+      enabled: false,
+    },
+    () => setBookmarked(true),
+    apiData.data?.manga,
+  );
+  const removeBookmark = useRemoveBookmark(
+    {
+      enabled: false,
+    },
+    () => setBookmarked(false),
+    apiData.data?.manga,
+  );
+
+  const isBookmarked = useIsBookmarked<{ state: string; bookmark?: unknown }>(
+    {
+      enabled: false,
+    },
+    data => {
+      console.log(data.bookmark);
+      setBookmarked(!!data.bookmark);
+    },
+    apiData.data?.manga,
+  );
+
+  useEffect(() => {
+    if (!!apiData.data?.manga._id) isBookmarked.refetch();
+  }, [apiData]);
 
   const shown = !!slug;
 
@@ -68,7 +105,6 @@ export default function DesktopManga({ apiData, slug }: Props) {
         : "?%",
     [latestProgress, data?.manga],
   ); */
-
   useLayoutEffect(() => {
     if (!ref.current) return;
 
@@ -129,18 +165,50 @@ export default function DesktopManga({ apiData, slug }: Props) {
                       Resume from last
                     </Button>
                   )}
-                  <Button
-                    icon={
-                      <Icon
-                        icon={bookmarked ? "bookmarkSolid" : "bookmarkHollow"}
-                      />
-                    }
-                    iconLoc="right"
-                    beefy
-                    onClick={() => setBookmarked(!bookmarked)}
-                    fullWidth>
-                    Bookmark{bookmarked ? "ed" : ""}
-                  </Button>
+                  {signedIn ? (
+                    <Button
+                      icon={
+                        <Icon
+                          icon={bookmarked ? "bookmarkSolid" : "bookmarkHollow"}
+                        />
+                      }
+                      iconLoc="right"
+                      beefy
+                      loading={
+                        apiData.isLoading ||
+                        isBookmarked.isFetching ||
+                        removeBookmark.isFetching ||
+                        setBookmark.isFetching
+                      }
+                      onClick={() => {
+                        if (!bookmarked) setBookmark.refetch();
+                        else removeBookmark.refetch();
+                      }}
+                      fadedAccent={bookmarked}
+                      fullWidth>
+                      {setBookmark.error || removeBookmark.error ? (
+                        "Error. Try again?"
+                      ) : (
+                        <>Bookmark{bookmarked ? "ed" : ""}</>
+                      )}
+                    </Button>
+                  ) : (
+                    <Button
+                      beefy
+                      iconLoc="right"
+                      onClick={() => {
+                        navigate("/");
+                        setSignedIn?.(true);
+                      }}
+                      fullWidth
+                      icon={
+                        <Icon
+                          icon={bookmarked ? "bookmarkSolid" : "bookmarkHollow"}
+                        />
+                      }>
+                      Log in to bookmark
+                    </Button>
+                  )}
                   {anilistData.status === "success" && (
                     <a
                       href={`https://anilist.co/manga/${anilistData.data.data.id}`}

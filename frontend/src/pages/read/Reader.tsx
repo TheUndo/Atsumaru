@@ -220,7 +220,8 @@ export default function Reader() {
     if (!mangaData || !currentChapter) return;
     const timeout = setTimeout(() => {
       const loc = (location as any)?.state || location;
-      if (/^\/read/.test(loc.pathname))
+      const newLoc = `/read/${vendor}/${mangaData.slug}/${currentChapter.name}/${currentPage}`;
+      if (/^\/read/.test(loc.pathname) && newLoc !== location.pathname)
         navigate(
           `/read/${vendor}/${mangaData.slug}/${currentChapter.name}/${currentPage}`,
           { replace: true },

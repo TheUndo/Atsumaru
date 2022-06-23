@@ -1,4 +1,4 @@
-import React, { Props, useContext } from "react";
+import React, { useContext } from "react";
 import { AppContext } from "../../../../appContext";
 import { SettingsType } from "../../../../hooks/useSettings";
 import Button from "../../../button/Button";
@@ -28,8 +28,7 @@ export default function PageProgressIndicator() {
                           background: "var(--accent)",
                         }
                       : null
-                  }
-                >
+                  }>
                   Summon
                 </Button>
               ),
@@ -46,8 +45,7 @@ export default function PageProgressIndicator() {
                           background: "var(--accent)",
                         }
                       : null
-                  }
-                >
+                  }>
                   Always
                 </Button>
               ),
@@ -64,14 +62,12 @@ export default function PageProgressIndicator() {
                           background: "var(--accent)",
                         }
                       : null
-                  }
-                >
+                  }>
                   Never
                 </Button>
               ),
             },
-          ]}
-        ></RadioSetting>
+          ]}></RadioSetting>
       </Setting>
     </>
   );

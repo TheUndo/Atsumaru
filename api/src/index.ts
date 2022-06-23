@@ -14,6 +14,9 @@ import { Request } from "./types";
 import mangaSeeFront from "./routes/layouts/front/mangaSee";
 import search from "./routes/search/search";
 import getAnilist from "./routes/anilist/get";
+import addBookmark from "./routes/user/addBookmark";
+import getBookmark from "./routes/user/getBookmark";
+import removeBookmark from "./routes/user/removeBookmark";
 
 dotenv.config();
 
@@ -31,9 +34,7 @@ const whitelist = [
   "http://localhost:3000",
   "http://localhost:4000",
   "http://local.com",
-  "http://650a-158-174-187-200.ngrok.io",
-  "https://undo.club",
-  "https://a.undo.club",
+  "http://atsu.local",
   "https://atsu.moe",
   "https://www.atsu.moe",
 ];
@@ -70,8 +71,15 @@ app.get(base("/anilist/:id"), getAnilist);
 /* GET search */
 app.get(base("/search/:query"), search);
 
-/* GET manga details */
+/* manga */
 app.get(base("/manga/:source/:slug"), auth, manga);
+
+/* bookmarks */
+app.put(base("/manga/bookmark"), auth, addBookmark);
+app.post(base("/manga/bookmark"), auth, getBookmark);
+app.delete(base("/manga/bookmark"), auth, removeBookmark);
+
+/* anilist */
 app.post(base("/auth/anilist"), anilistAuth);
 
 app.all("*", (req, res) => {

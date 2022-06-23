@@ -45,6 +45,13 @@ export default function Debug() {
           }
         />
       </Header>
+      {location.host !== "localhost:4000" && (
+        <div>
+          <a href="http://localhost:4000" target="_blanc">
+            <Button icon={<Icon icon="external" />}>View built frontend</Button>
+          </a>
+        </div>
+      )}
 
       {shown && (
         <>
@@ -54,7 +61,7 @@ export default function Debug() {
           {loggedIn && (
             <>
               <hr />
-              <Button onClick={() => refetch()}>
+              <Button loading={isLoading} onClick={() => refetch()}>
                 {isLoading
                   ? "Signing you out..."
                   : error
@@ -71,7 +78,4 @@ export default function Debug() {
       <hr />
     </>
   );
-}
-function query(query: any) {
-  throw new Error("Function not implemented.");
 }

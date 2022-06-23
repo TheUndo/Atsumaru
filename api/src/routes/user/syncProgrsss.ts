@@ -39,7 +39,7 @@ export default async function syncProgress(
   req: Request,
   res: express.Response,
 ) {
-  if (!req.user) return void res.status(403).send({ state: "NOT_LOGGED_IN" });
+  if (!req.user) return void res.status(401).send({ state: "NOT_LOGGED_IN" });
 
   const result = schema.validate(req.body?.currentPrimed);
 

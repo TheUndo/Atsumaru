@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import cm from "../../utils/classMerger";
 import classes from "./button.module.scss";
 import useRipple from "use-ripple-hook";
 import useMedia from "../../hooks/useMedia";
+import Icon from "../icon/Icon";
 
 type Props = {
   children?: React.ReactNode | React.ReactNode[];
@@ -24,6 +25,8 @@ type Props = {
   slim?: boolean;
   accent?: boolean;
   beefy?: boolean;
+  loading?: boolean;
+  fadedAccent?: boolean;
 } & Omit<Partial<React.ComponentProps<"button">>, "ref"> &
   Omit<Partial<React.ComponentProps<typeof Link>>, "ref">;
 
@@ -56,6 +59,8 @@ const Button = (masterProps: Props) => {
     slim,
     accent,
     beefy,
+    loading,
+    fadedAccent,
     ...props
   } = masterProps;
 
@@ -69,8 +74,16 @@ const Button = (masterProps: Props) => {
   const iconContent = (
     <div className={cm(classes.iconCont, "iconCont")}>{icon}</div>
   );
+  const fakeBackground = useMemo(() => {
+    if (fadedAccent)
+      return (
+        <div
+          className={cm(classes.fakeBackground, classes.fadedAccentBg)}></div>
+      );
+  }, [fadedAccent]);
   const child = (
     <>
+      {fakeBackground}
       <div
         className={cm(
           classes.inner,
@@ -83,6 +96,7 @@ const Button = (masterProps: Props) => {
         {icon && loc === "right" && iconContent}
         <legend className={classes.legend}>{legend}</legend>
       </div>
+      <div className={classes.loading}>{<Icon icon="spinner" />}</div>
     </>
   );
 
@@ -100,6 +114,8 @@ const Button = (masterProps: Props) => {
     compact && classes.compact,
     accent && classes.accent,
     beefy && classes.beefy,
+    loading && classes.isLoading,
+    fadedAccent && classes.fadedAccent,
   );
 
   const button = (() => {

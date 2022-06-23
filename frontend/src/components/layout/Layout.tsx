@@ -26,6 +26,7 @@ export default function Layout(props: Props) {
   useLayoutEffect(() => {
     if (!!match) setDesktopNavbarShown?.(!!match);
   }, [match, setDesktopNavbarShown]);
+
   return (
     <>
       <DesktopNavbar />

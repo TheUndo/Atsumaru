@@ -1,4 +1,4 @@
-FROM node:17 AS builder
+FROM node:18 AS builder
 
 ARG anilist_client_id
 ARG anilist_redirect_uri

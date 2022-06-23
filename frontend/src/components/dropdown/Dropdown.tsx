@@ -11,10 +11,10 @@ import cm from "../../utils/classMerger";
 import classes from "./dropdown.module.scss";
 
 type Props<T> = {
-  button: JSX.Element | HTMLElement;
+  button: React.ReactNode;
   items: {
     value: T;
-    content: JSX.Element | HTMLElement;
+    content: React.ReactNode;
   }[];
 };
 
@@ -81,7 +81,7 @@ export default memo(function Dropdown<T>(masterProps: Props<T>) {
       window.removeEventListener("closeDropdown", closeHandler);
     };
   }, [id, idBtn, open]);
-  
+
   return (
     <>
       <div

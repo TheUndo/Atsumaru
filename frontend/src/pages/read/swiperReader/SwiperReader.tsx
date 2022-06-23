@@ -18,8 +18,13 @@ type Props = {};
 
 export default function SwiperReader(props: Props) {
   const [settings] = useContext(AppContext).settings ?? [];
-  const { setLoadPages, currentChapter, initialPage, currentPage } =
-    useReader();
+  const {
+    setLoadPages,
+    currentChapter,
+    initialPage,
+    currentPage,
+    setCurrentPage,
+  } = useReader();
   const pages = useMemo(
     () => currentChapter?.pages ?? [],
     [currentChapter?.pages],
@@ -78,6 +83,11 @@ export default function SwiperReader(props: Props) {
       );
     }
   }, [pages, initialPage, page, online]);
+
+  useEffect(() => {
+    setCurrentPage?.("1");
+    console.log("test")
+  }, [currentChapter]);
 
   if (rtl) return <Renderer key="rtl" rtl={true} pages={reversed} />;
 

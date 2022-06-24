@@ -14,7 +14,6 @@
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.12",
     "@types/joi": "^17.2.3",
-    "@types/mongodb": "^4.0.7",
     "nodemon": "^2.0.15"
   },
   "dependencies": {

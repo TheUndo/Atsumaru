@@ -57,7 +57,7 @@ export default async function mangaSeeFront(
   try {
     const [latest, recentlyRead, sliders] = await Promise.all([
       getLatestUpdates(32),
-      getRecentlyRead(req.user!, "MANGASEE", 32),
+      getRecentlyRead(req.user!, "MANGASEE", 16),
       getSliders(),
     ]);
 

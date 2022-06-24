@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@types/cheerio": "^0.22.30",
-    "@types/mongodb": "^4.0.7",
     "axios": "^0.25.0",
     "cheerio": "^1.0.0-rc.10",
     "fetch": "^1.1.0",

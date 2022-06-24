@@ -14,7 +14,7 @@ function StripWidthControl(props: Props) {
   const [settings, setSetting] = useContext(AppContext)?.settings!;
   return (
     <>
-      <Setting label="Strip width">
+      <Setting label="Page width">
         <RadioSetting
           currentValue={settings.stripWidthControl}
           onChange={(value: SettingsType["stripWidthControl"]) =>

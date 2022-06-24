@@ -29,8 +29,9 @@ import isDev from "./utils/isDev";
 import { useUserInfo } from "./state/user";
 import Library from "./pages/library/Library";
 
+const version = "1.0";
 if ("serviceWorker" in navigator && !isDev()) {
-  navigator.serviceWorker.register("/sw.js");
+  navigator.serviceWorker.register("/sw.js?v=" + version);
 
   navigator.serviceWorker.ready.then(sw => {
     /* navigator.serviceWorker.controller?.postMessage({

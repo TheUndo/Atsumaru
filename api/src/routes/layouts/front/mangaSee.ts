@@ -41,7 +41,10 @@ async function getSliders() {
       if (!items) return;
       return {
         ...value,
-        items,
+        items: items.map(item => ({
+          ...item,
+          manga: { ...item.manga, vendor: "MANGASEE" },
+        })),
       };
     })
     .filter(v => v);

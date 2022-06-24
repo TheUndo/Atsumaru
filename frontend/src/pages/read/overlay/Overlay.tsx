@@ -33,7 +33,7 @@ export default function Overlay() {
         onScroll={console.log}
         className={cm(
           classes.pageContentOverlay,
-          animate && classes.overlayAnimate
+          animate && classes.overlayAnimate,
         )}
         style={
           {
@@ -43,8 +43,7 @@ export default function Overlay() {
                             ? "none"
                             : "all", */
           }
-        }
-      >
+        }>
         {readerClickNavigation !== "ONLY-NEXT" && (
           <div
             className={cm(classes.overlayItem, classes.overlayLeft)}
@@ -52,8 +51,7 @@ export default function Overlay() {
               const next = reversed;
 
               readerCtx.pageRelativeNavigate?.(next ? 1 : -1);
-            }}
-          >
+            }}>
             <Header level={1}>
               {reversed ? (
                 <>
@@ -75,10 +73,9 @@ export default function Overlay() {
             onClick={() => {
               setSetting?.(
                 "readerShowDesktopDrawer",
-                settings?.readerShowDesktopDrawer === "NO" ? "YES" : "NO"
+                settings?.readerShowDesktopDrawer === "NO" ? "YES" : "NO",
               );
-            }}
-          >
+            }}>
             <Header level={1}>
               <div>Settings</div> <Icon icon="settings" />
             </Header>
@@ -91,8 +88,7 @@ export default function Overlay() {
               const next = readerClickNavigation === "ONLY-NEXT" || !reversed;
 
               readerCtx.pageRelativeNavigate?.(next ? 1 : -1);
-            }}
-          >
+            }}>
             <Header level={1}>
               {reversed && readerClickNavigation !== "ONLY-NEXT" ? (
                 <>

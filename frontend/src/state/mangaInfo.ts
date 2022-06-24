@@ -93,3 +93,20 @@ export const useIsBookmarked = <T>(
         }),
     options,
   );
+
+export const useMangaInfo = <T>(
+  options:
+    | Omit<UseQueryOptions<T, unknown, T, QueryKey>, "queryKey" | "queryFn">
+    | undefined,
+  vendor: MangaInfo["vendor"],
+  slug: string,
+) =>
+  useQuery<T>(
+    `mangaInfo:${vendor}:${slug}`,
+    () =>
+      fetch(apiBase + `/manga/info/${vendor}/${slug}`, {
+        ...defaultFetchOptions,
+        method: "GET",
+      }).then(d => d.json()),
+    options,
+  );

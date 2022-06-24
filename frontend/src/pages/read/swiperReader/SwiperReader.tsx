@@ -86,7 +86,6 @@ export default function SwiperReader(props: Props) {
 
   useEffect(() => {
     setCurrentPage?.("1");
-    console.log("test")
   }, [currentChapter]);
 
   if (rtl) return <Renderer key="rtl" rtl={true} pages={reversed} />;
@@ -96,8 +95,7 @@ export default function SwiperReader(props: Props) {
 
 function Renderer({ rtl, pages }: { rtl: boolean; pages: Page[] }) {
   const [settings] = useContext(AppContext).settings ?? [];
-  const { setCurrentPage, loadPages } = useReader();
-
+  const { setCurrentPage, loadPages, setControlsShown } = useReader();
   return (
     <div
       className={cm(classes.swiperCont, rtl && classes.rtl)}
@@ -111,6 +109,9 @@ function Renderer({ rtl, pages }: { rtl: boolean; pages: Page[] }) {
       }>
       <Swiper
         onSlideChange={({ activeIndex }) => {
+          void setControlsShown?.(
+            activeIndex === 0 || activeIndex === pages.length - 1,
+          );
           void setCurrentPage?.(
             resolvePageUrlParameter(
               rtl ? pages.length - activeIndex : activeIndex + 1,

@@ -10,7 +10,7 @@ export async function loadPagesSequentially(
   onload: (page: Page, src?: string) => void,
 ) {
   const chunks = priorityChunking(prioritize, pages, chunkSize);
-  console.log(chunks, prioritize);
+
   for (const c of chunks) {
     await Promise.all(loadPageChunk(c, onload));
   }

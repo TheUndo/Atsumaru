@@ -13,6 +13,7 @@ import { MangaInfo, ProgressInfo } from "../../types";
 import { useQuery, UseQueryResult } from "react-query";
 import useMedia from "../../hooks/useMedia";
 import DesktopManga from "../desktopManga/DesktopManga";
+import { useMangaInfo } from "../../state/mangaInfo";
 
 export type MangaEndPointResponse = {
   manga: MangaInfo;
@@ -120,8 +121,12 @@ const ChapterModal = ({
   const navigate = useNavigate();
   const match = useMatch(`/manga/:vendor/:mangaSlug/chapters`);
   const { vendor, mangaSlug } = match?.params ?? {};
-  const apiData = useApi<MangaEndPointResponse>(
-    `/manga/${vendor}/${mangaSlug}`,
+  const apiData = useMangaInfo<MangaEndPointResponse>(
+    {
+      enabled: !!mangaSlug,
+    },
+    vendor as MangaInfo["vendor"],
+    mangaSlug!,
   );
   const location = useLocation();
 
@@ -134,7 +139,7 @@ const ChapterModal = ({
           state: location.state,
         })
       }>
-      {mangaSlug && (
+      {mangaSlug && apiData?.data?.manga?.chapters && (
         <Chapters
           vendor={vendor as MangaInfo["vendor"]}
           slug={mangaSlug}

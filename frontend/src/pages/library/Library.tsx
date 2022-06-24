@@ -3,7 +3,7 @@ import Carousel, { GenericItem } from "../../components/carousel/Carousel";
 import Header from "../../components/header/Header";
 import Loading, { LoadingPage } from "../../components/loading/Loading";
 import { useUserLibrary } from "../../state/user";
-import classes from "./Library.module.scss";
+import classes from "./library.module.scss";
 
 type Props = {};
 

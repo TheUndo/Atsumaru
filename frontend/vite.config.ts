@@ -27,7 +27,7 @@ export default defineConfig({
         theme_color: "#726ab5",
         background_color: "#0e0e0e",
         display: "standalone",
-        name: "Atsumaru - Manga Reader v1.2",
+        name: "Atsumaru - Manga Reader v1.2.1",
         short_name: "Atsumaru",
         description:
           "Atsumaru - The open source manga/manwha/manhua/webtoon reader for IOS, Android, Windows, Mac OS, Linux and the web",

@@ -295,7 +295,7 @@ function Chapters({
   type Sort = "DESCENDING" | "ASCENDING";
   const [filter, setFilter] = useState<Filters>("OVERVIEW");
   const [sort, setSort] = useState<Sort>("DESCENDING");
-  const e404 = <p>This manga has no chapters yet :(</p>;
+  const e404 = <p>No chapters found</p>;
   const chapters =
     sort === "DESCENDING" ? unsortedChapters : [...unsortedChapters].reverse();
   const content = useMemo(() => {

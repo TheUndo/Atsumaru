@@ -8,6 +8,7 @@ import MangaLink from "../../../components/MangaLink/MangaLink";
 import Settings from "../../../components/settings/Settings";
 import { MangaInfo } from "../../../types";
 import cm from "../../../utils/classMerger";
+import { useReader } from "../ReaderContext";
 import ChapterDropdown from "./chapterDropdown/ChapterDropdown";
 import classes from "./desktopSettings.module.scss";
 
@@ -19,7 +20,7 @@ export default function DesktopSettings({
   vendor?: string;
 }) {
   const [settings, setSetting] = useContext(AppContext).settings ?? [];
-
+  const { desktopControlsVisible } = useReader();
   return (
     <>
       <div
@@ -27,7 +28,14 @@ export default function DesktopSettings({
           classes.desktopSettings,
           settings?.readerShowDesktopDrawer === "NO" &&
             classes.desktopSettingsHidden,
-        )}>
+        )}
+        style={
+          !desktopControlsVisible
+            ? ({
+                "--accent": "#222",
+              } as any)
+            : {}
+        }>
         <div className={classes.desktopSettingsDrawer}>
           <div className={classes.desktopSettingsInner}>
             <div className={classes.desktopSettingsHeader}>
@@ -38,16 +46,14 @@ export default function DesktopSettings({
                 iconLoc="right"
                 compact
                 transparent
-                icon={<Icon icon="arrowWall" />}>{" "}
+                icon={<Icon icon="arrowWall" />}>
+                {" "}
               </Button>
             </div>
             <div className={classes.desktopSettingsHeader}>
               {manga && vendor && (
                 <MangaLink to={`/manga/${vendor}/${manga.slug}`}>
-                  <Button
-                    fullWidth
-                    alignCenter
-                    transparent>
+                  <Button fullWidth alignCenter transparent>
                     <Header level={2}>{manga.title}</Header>
                   </Button>
                 </MangaLink>

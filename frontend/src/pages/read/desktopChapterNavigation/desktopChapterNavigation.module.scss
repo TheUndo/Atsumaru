@@ -3,7 +3,7 @@
   bottom: 0;
   width: 30%;
   transition: all 0.16s ease-in-out;
-  z-index: 1;
+  z-index: 4;
   &.hidden {
     pointer-events: none;
     opacity: 0;

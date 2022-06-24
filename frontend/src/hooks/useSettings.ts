@@ -37,6 +37,7 @@ export type SettingsType = {
   readerClickNavigation: "PREV-MENU-NEXT" | "PREV-NEXT" | "ONLY-NEXT";
   readerSwipeEngine: "NATIVE" | "CUSTOM";
   desktopSideMenuOpen: "NO" | "YES";
+  readerMobileClickNavigation: "NO" | "YES";
 };
 
 const defaultSettings: SettingsType = {
@@ -73,12 +74,13 @@ const defaultSettings: SettingsType = {
   readerClickNavigation: "PREV-MENU-NEXT",
   readerSwipeEngine: (() => {
     // @ts-ignore TODO: remove ignore when android branch is merged merged
-    if (window.isAndroid || /firefox/i.test(navigator.userAgent)) {
+    if (window.isAndroid) {
       return "CUSTOM";
     }
     return "NATIVE";
   })(),
   desktopSideMenuOpen: "NO",
+  readerMobileClickNavigation: "NO",
 };
 
 export default function useSettings() {

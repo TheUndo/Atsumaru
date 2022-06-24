@@ -27,6 +27,7 @@ import UnderConstruction from "./pages/underConstruction/UnderConstruction";
 import { registerSW } from "virtual:pwa-register";
 import isDev from "./utils/isDev";
 import { useUserInfo } from "./state/user";
+import Library from "./pages/library/Library";
 
 if ("serviceWorker" in navigator && !isDev()) {
   navigator.serviceWorker.register("/sw.js");
@@ -135,6 +136,14 @@ function App() {
                 element={
                   <GenericPage>
                     <UnderConstruction />
+                  </GenericPage>
+                }
+              />
+              <Route
+                path="/me"
+                element={
+                  <GenericPage>
+                    <Library />
                   </GenericPage>
                 }
               />

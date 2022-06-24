@@ -17,6 +17,7 @@ import ReaderUIAppearance from "./items/readerItems/ReaderUIAppearance";
 import ReadingDirection from "./items/readerItems/ReadingDirection";
 import SwiperEngine from "./items/readerItems/SwiperEngine";
 import classes from "./settings.module.scss";
+import MobileClickNavigation from "./items/readerItems/MobileClickNavigation";
 
 export default function Settings() {
   const [settings, setSetting] = useContext(AppContext)?.settings ?? [];
@@ -35,6 +36,7 @@ export default function Settings() {
       <div className={classes.settings}>
         <div className={classes.inner}>
           <ReadingDirection />
+          <MobileClickNavigation />
           <SwiperEngine />
           <PageFillMethod />
           <ClickNavigation />

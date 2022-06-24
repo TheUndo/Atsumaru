@@ -84,13 +84,12 @@ export default memo(function Pages({
 
   return (
     <>
-      {pages.map((page, i) => (
+      {pages.map((pageItem, i) => (
         <PageItem
-          page={page}
-          pages={pages}
-          idx={i}
-          key={page.name + chapterName}
-          state={loadPages[page.name]}
+          page={pageItem}
+          active={pageItem.name === page}
+          key={pageItem.name + chapterName}
+          state={loadPages[pageItem.name]}
         />
       ))}
     </>

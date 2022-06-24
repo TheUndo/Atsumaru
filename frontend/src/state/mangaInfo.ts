@@ -3,8 +3,6 @@ import { apiBase } from "../hooks/useApi";
 import { MangaInfo } from "../types";
 import { defaultFetchOptions } from "./common";
 
-
-
 export const useSetBookmark = <T>(
   options:
     | Omit<UseQueryOptions<T, unknown, T, QueryKey>, "queryKey" | "queryFn">
@@ -95,9 +93,9 @@ export const useMangaInfo = <T>(
   slug: string,
 ) =>
   useQuery<T>(
-    `mangaInfo:${vendor}:${slug}`,
+    `mangaInfo`,
     () =>
-      fetch(apiBase + `/manga/info/${vendor}/${slug}`, {
+      fetch(apiBase + `/manga/${vendor}/${slug}`, {
         ...defaultFetchOptions,
         method: "GET",
       }).then(d => d.json()),

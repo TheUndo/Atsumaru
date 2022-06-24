@@ -17,6 +17,7 @@ import getAnilist from "./routes/anilist/get";
 import addBookmark from "./routes/user/addBookmark";
 import getBookmark from "./routes/user/getBookmark";
 import removeBookmark from "./routes/user/removeBookmark";
+import userLibrary from "./routes/layouts/library/library";
 
 dotenv.config();
 
@@ -30,14 +31,22 @@ app.use(cookieParser());
 
 app.listen(3000, () => console.log("Api running"));
 
+const localHostnames =
+  process.env.DEPLOYED === "TRUE"
+    ? []
+    : [
+        "http://localhost:3000",
+        "http://localhost:4000",
+        "http://local.com",
+        "http://atsu.local",
+      ];
+
 const whitelist = [
-  "http://localhost:3000",
-  "http://localhost:4000",
-  "http://local.com",
-  "http://atsu.local",
+  ...localHostnames,
   "https://atsu.moe",
   "https://www.atsu.moe",
 ];
+
 const corsOptions = {
   credentials: true,
   origin: function (origin: any, callback: any) {
@@ -55,6 +64,8 @@ app.get(base("/auth/myself"), auth, myself);
 app.get(base("/auth/logout"), auth, logout);
 app.post(base("/user/sync-progress"), auth, syncProgress);
 
+/* layouts */
+app.get(base("/layout/library"), auth, userLibrary);
 app.get(base("/layout/:source/front"), auth, (req: Request, res) => {
   switch (req.params.source) {
     case "s1":

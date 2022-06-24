@@ -17,3 +17,19 @@ export const useUserInfo = <T>(
       }).then(d => d.json()),
     options,
   );
+
+export const useUserLibrary = <T>(
+  options: Omit<
+    UseQueryOptions<T, unknown, T, QueryKey>,
+    "queryKey" | "queryFn"
+  >,
+) =>
+  useQuery<T>(
+    "userLibrary",
+    () =>
+      fetch(apiBase + "/layout/library", {
+        ...defaultFetchOptions,
+        method: "GET",
+      }).then(d => d.json()),
+    options,
+  );

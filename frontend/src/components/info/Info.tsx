@@ -121,9 +121,10 @@ const ChapterModal = ({
   const navigate = useNavigate();
   const match = useMatch(`/manga/:vendor/:mangaSlug/chapters`);
   const { vendor, mangaSlug } = match?.params ?? {};
+
   const apiData = useMangaInfo<MangaEndPointResponse>(
     {
-      enabled: !!mangaSlug,
+      enabled: !!mangaSlug && !!vendor,
     },
     vendor as MangaInfo["vendor"],
     mangaSlug!,

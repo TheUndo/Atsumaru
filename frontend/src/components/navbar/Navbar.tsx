@@ -25,6 +25,7 @@ export const items: NavbarItemType[] = [
     icon: <Icon icon="home" />,
     activeIcon: <Icon icon="homeSolid" />,
   }),
+
   () => ({
     to: "/explore",
     legend: "Explore",
@@ -42,8 +43,7 @@ export const items: NavbarItemType[] = [
   (ctx?: AppContext) =>
     ctx?.loggedIn?.[0]
       ? {
-          /* to: "/profile", */
-          onClick: () => {},
+          to: "/me",
           legend: ctx.loggedIn[0].name,
           icon: <Icon icon="user" />,
           activeIcon: <Icon icon="userSolid" />,

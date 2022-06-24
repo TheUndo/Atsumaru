@@ -2,24 +2,23 @@ import React, { useContext, useMemo } from "react";
 import { AppContext } from "../../../appContext";
 import { Page } from "../../../types";
 import cm from "../../../utils/classMerger";
+import { parsePageUrlParameter } from "../helpers";
 import ImageItem from "../imageItem/ImageItem";
 import { PageState } from "../ReaderContext";
 import classes from "./pageItem.module.scss";
 
 export default function PageItem({
   page,
-  pages,
-  idx,
   state,
+  active,
 }: {
   page: Page;
-  pages: Page[];
-  idx: number;
   state: PageState;
+  active: boolean;
 }) {
   const [{ pagesModifyColors, readingDirection }] = useContext(AppContext)
     ?.settings ?? [{}];
-    
+
   const filter = useMemo(() => {
     switch (pagesModifyColors) {
       case "DARKEN":
@@ -40,12 +39,12 @@ export default function PageItem({
           classes.page,
           `scroll-to-${page.name}`,
           "page",
-          readingDirection === "TOP-TO-BOTTOM" && classes.topToBottom
+          readingDirection === "TOP-TO-BOTTOM" && classes.topToBottom,
+          active && "active-page",
         )}
         style={{
           filter,
-        }}
-      >
+        }}>
         <ImageItem {...state} page={page} />
       </div>
     </>

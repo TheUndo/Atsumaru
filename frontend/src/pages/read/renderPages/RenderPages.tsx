@@ -20,6 +20,8 @@ import Overlay from "../overlay/Overlay";
 import Pages from "../pages/Pages";
 import { ReaderContext, ReaderCtx } from "../ReaderContext";
 import classes from "./renderPages.module.scss";
+import AbsoluteReader from "../absoluteReader/AbsoluteReader";
+import useMedia from "../../../hooks/useMedia";
 
 type Props = {};
 
@@ -46,6 +48,7 @@ export default function RenderPages({
       readerShowDesktopDrawer,
       readerClickNavigation,
       readerClickNavigationDisabled,
+      readerMobileClickNavigation,
       readerSwipeEngine,
     },
     setSetting,
@@ -84,8 +87,22 @@ export default function RenderPages({
     return values.length && values.every(v => v.loaded);
   }, [loadPages]);
 
+  const mobile = useMedia(
+    ["(max-width: 1000px)", "(min-width: 1000px)"],
+    [true, false],
+    false,
+  );
+  const useAbsoluteRenderer = useMemo(
+    () => readingDirection !== "TOP-TO-BOTTOM" && !mobile,
+    [readingDirection, mobile],
+  );
+
   const content = chapter ? (
-    <Pages chapterName={chapter.name} pages={chapter.pages} />
+    useAbsoluteRenderer ? (
+      <AbsoluteReader />
+    ) : (
+      <Pages chapterName={chapter.name} pages={chapter.pages} />
+    )
   ) : (
     <Loading />
   );
@@ -193,7 +210,7 @@ export default function RenderPages({
         ];
       })(scrolling, scrollSize, size);
 
-      if (scrolling !== scrollSize) {
+      if (scrolling !== scrollSize && !useAbsoluteRenderer) {
         void setCurrentPage?.(resolvePageUrlParameter(currentPage, progress));
       }
       void setShowIndicator(
@@ -214,7 +231,14 @@ export default function RenderPages({
         setOverScrollingDirection(scrolling - size < 0 ? "prev" : "next");
       else setOverScrollingDirection(void "neither");
     },
-    [ref, currentChapter, threshold, readingDirection, getScrolling],
+    [
+      ref,
+      currentChapter,
+      threshold,
+      readingDirection,
+      getScrolling,
+      useAbsoluteRenderer,
+    ],
   );
 
   useEffect(() => {
@@ -253,13 +277,14 @@ export default function RenderPages({
   })(readingDirection);
   const desktop = window.matchMedia("(pointer: fine)").matches;
 
-  // handle click navigation for TOP-TO-BOTTOM (otherwise handled by Overlay)
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       const closeDropdown = new CustomEvent("closeDropdown");
       window.dispatchEvent(closeDropdown);
-      if (!ref.current || !desktop || readerClickNavigationDisabled === "YES")
-        return;
+      if (!ref.current) return;
+
+      if (desktop && readerClickNavigationDisabled === "YES") return;
+      if (mobile && readerMobileClickNavigation === "NO") return;
 
       e.stopPropagation();
       const { left, width } = ref.current?.getBoundingClientRect();
@@ -312,9 +337,11 @@ export default function RenderPages({
 
   const useSwiper = useMemo(() => {
     return (
-      readingDirection !== "TOP-TO-BOTTOM" && readerSwipeEngine === "CUSTOM"
+      readingDirection !== "TOP-TO-BOTTOM" &&
+      readerSwipeEngine === "CUSTOM" &&
+      mobile
     );
-  }, [readingDirection, readerSwipeEngine]);
+  }, [readingDirection, readerSwipeEngine, mobile]);
 
   const wisdom = useMemo(() => getWisdom(), []);
 

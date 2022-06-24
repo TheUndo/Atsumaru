@@ -1,7 +1,6 @@
 .settings {
   position: relative;
   padding: 1rem 0;
-  
 }
 
 .settingsInner {
@@ -12,7 +11,11 @@
 .setting {
   position: relative;
   .settingLabel {
-    padding: 0.5rem 0;
+    padding: 0.2rem 0;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    font-weight: bold;
+    opacity: 0.7;
   }
   margin-bottom: 1rem;
   &.mobile {

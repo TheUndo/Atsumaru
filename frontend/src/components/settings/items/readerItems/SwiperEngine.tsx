@@ -12,7 +12,7 @@ export default function PageFillMethod() {
   if (settings.readingDirection === "TOP-TO-BOTTOM") return <></>;
 
   return (
-    <Setting label="Page render engine">
+    <Setting mobile label="Page render engine">
       <RadioSetting
         currentValue={settings.readerSwipeEngine}
         onChange={(value: SettingsType["readerSwipeEngine"]) =>

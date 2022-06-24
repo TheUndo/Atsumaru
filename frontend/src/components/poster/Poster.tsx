@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useRipple from "use-ripple-hook";
 import useImage from "../../hooks/useImage";
 import { GridDisplayType, MangaInfo, ProgressInfo } from "../../types";
@@ -36,7 +36,7 @@ export default function Poster(props: Props) {
     fail,
     retry,
   } = useImage([manga?.cover], failImage);
-
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +62,10 @@ export default function Poster(props: Props) {
       <>
         <div
           onMouseDown={event}
-          className={cm(classes.posterList, props.displayType === "DETAILS" && classes.details)}
+          className={cm(
+            classes.posterList,
+            props.displayType === "DETAILS" && classes.details,
+          )}
           {...compProps}>
           <div ref={ripple} className={classes.content}>
             <div className={classes.posterWrapper}>{Image}</div>
@@ -103,6 +106,11 @@ export default function Poster(props: Props) {
                 e.stopPropagation();
                 navigate(
                   `/manga/${resolveVendorSlug(manga.vendor)}/${manga.slug}`,
+                  {
+                    state: {
+                      backgroundLocation: location,
+                    },
+                  },
                 );
               }}
               icon={<Icon icon="info" />}

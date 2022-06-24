@@ -1,0 +1,22 @@
+.reader {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  .inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  :global(.page) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: var(--reader-bg);
+    &:global(.active-page) {
+      z-index: 2;
+      pointer-events: all;
+    }
+  }
+}

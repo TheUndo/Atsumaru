@@ -16,6 +16,7 @@ import Loading, { LoadingPage } from "../../components/loading/Loading";
 import { apiBase } from "../../hooks/useApi";
 import { Chapter, MangaInfo } from "../../types";
 import cm from "../../utils/classMerger";
+import isDev from "../../utils/isDev";
 import E404 from "../e404/E404";
 import ProgressSyncing from "../progressSyncing/ProgressSyncing";
 import DesktopChapterNavigation from "./desktopChapterNavigation/DesktopChapterNavigation";
@@ -31,6 +32,13 @@ import ReaderContextProvider, { PageState, ReaderCtx } from "./ReaderContext";
 import ReaderMeta from "./readerMeta/ReaderMeta";
 import RenderPages from "./renderPages/RenderPages";
 import SettingsContainer from "./settingsContainer/SettingsContainer";
+
+const debugCurrentPageChange = (() => {
+  if (!isDev()) return false;
+
+  /* set this to true to see where setCurrentPage was called from in console */
+  return false;
+})();
 
 export default function Reader() {
   const { readSlug, chapter, page, vendor } = useParams();
@@ -50,6 +58,7 @@ export default function Reader() {
       readerBackgroundColor,
       readerCustomBackgroundColor,
     },
+    setSetting,
   ] = appCtx?.settings ?? [{}];
   // is undefined after mount to enable correct page scrolling on chapter change.
   const [initialPage, setInitialPage] = useState<undefined | string>(
@@ -76,6 +85,22 @@ export default function Reader() {
   const previousChapter = mangaData?.chapters[currentChapterIndex + 1];
   const [sidebarShown] = appCtx.desktopNavbar ?? [];
   const [loadPages, setLoadPages] = useState<{ [k: string]: PageState }>({});
+  const [hasMounted, setHasMounted] = useState(false);
+
+  /*
+    sets the correct reading direction the user previously used on this manga
+    checks mounted to avoid unwanted settings change, ensures it only fires once.
+  */
+  useEffect(() => {
+    if (hasMounted) return;
+
+    const dir = apiData.data?.progress?.preferredDirection;
+    console.log(dir, "SET DIR");
+    if (dir) {
+      setSetting?.("readingDirection", dir);
+    }
+    if (apiData.data) setHasMounted(true);
+  }, [apiData, hasMounted]);
 
   useEffect(() => {
     setLoadPages(
@@ -161,7 +186,11 @@ export default function Reader() {
     setInitialPage,
     chapters: mangaData?.chapters ?? [],
     currentPage,
-    setCurrentPage,
+    setCurrentPage: (...args: Parameters<typeof setCurrentPage>) => {
+      if (debugCurrentPageChange)
+        console.trace("CURRENT PAGE CHANGED", ...args);
+      return setCurrentPage(...args);
+    },
     chapterLoaded,
     setChapterLoaded,
     vendor: vendor as MangaInfo["vendor"],
@@ -272,7 +301,7 @@ export default function Reader() {
             <div className={classes.content}>
               <ReaderMeta />
               {value?.currentChapter && <PagePreviewThumbnails />}
-              {mangaData?.chapters?.length ? (
+              {mangaData?.chapters?.length && hasMounted ? (
                 <RenderPages
                   hideControls={value.setControlsShown}
                   manga={mangaData}

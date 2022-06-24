@@ -120,12 +120,7 @@ function Renderer({ rtl, pages }: { rtl: boolean; pages: Page[] }) {
         }}>
         {pages.map((page, i) => (
           <SwiperSlide key={page.name}>
-            <PageItem
-              page={page}
-              pages={pages}
-              idx={i}
-              state={loadPages[page.name]}
-            />
+            <PageItem page={page} active state={loadPages[page.name]} />
           </SwiperSlide>
         ))}
         <Controls />

@@ -45,7 +45,9 @@ export default function DesktopManga({ apiData, slug }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const [signedIn, setSignedIn] = useContext(AppContext).signIn ?? [];
+  const appCtx = useContext(AppContext);
+  const [signedIn, setSignedIn] = appCtx.signIn ?? [];
+  const [loggedIn] = appCtx.loggedIn ?? [];
   const exit = () =>
     navigate((location.state as any)?.backgroundLocation.pathname ?? "/");
   const [bookmarked, setBookmarked] = useState(false);
@@ -165,7 +167,7 @@ export default function DesktopManga({ apiData, slug }: Props) {
                       Resume from last
                     </Button>
                   )}
-                  {signedIn ? (
+                  {loggedIn ? (
                     <Button
                       icon={
                         <Icon

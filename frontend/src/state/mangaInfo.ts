@@ -1,16 +1,9 @@
 import { QueryKey, useQuery, UseQueryOptions } from "react-query";
 import { apiBase } from "../hooks/useApi";
 import { MangaInfo } from "../types";
+import { defaultFetchOptions } from "./common";
 
-const defaultFetchOptions = {
-  credentials: "include",
-  mode: "cors",
-  redirect: "follow",
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
-} as const;
+
 
 export const useSetBookmark = <T>(
   options:

@@ -58,16 +58,17 @@ export default async function getBookmarks(
 
     const sorted = result.flat().sort((x, y) => {
       const xMS = items
-        .find(item => item.mangaID === x._id)
+        .find(item => item.mangaID.toString() === x._id.toString())
         ?.date.getMilliseconds();
       const yMS = items
-        .find(item => item.mangaID === y._id)
+        .find(item => item.mangaID.toString() === y._id.toString())
         ?.date.getMilliseconds();
+
       if (!xMS || !yMS) return 0;
       return yMS - xMS;
     });
-    console.log(sorted);
-    return [];
+
+    return sorted.map(manga => ({ manga }));
   } catch (e) {
     return [];
   }

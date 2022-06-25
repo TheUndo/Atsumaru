@@ -8,23 +8,27 @@ import classes from "./library.module.scss";
 type Props = {};
 
 export default function Library(props: Props) {
-  const { data, isLoading } = useUserLibrary<{
+  const { data, isLoading, refetch, isRefetching } = useUserLibrary<{
     layout: GenericItem[];
   }>({});
 
   return (
     <div className={classes.library}>
-      {isLoading && (
+      {isLoading ? (
         <LoadingPage>
           <Loading />
         </LoadingPage>
-      )}
-      {data && data.layout.length ? (
-        data.layout.map(item => <Carousel key={item.key} item={item} />)
+      ) : data && data.layout.length ? (
+        data.layout.map(item => (
+          <Carousel
+            key={item.key}
+            onRefresh={refetch}
+            isRefreshing={isRefetching}
+            item={item}
+          />
+        ))
       ) : (
-        <>
-          <Header level={2}>Unable to fetch library</Header>
-        </>
+        <Header level={2}>Unable to fetch library</Header>
       )}
     </div>
   );

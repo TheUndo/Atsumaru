@@ -14,7 +14,7 @@ import classes from "./carousel.module.scss";
 import cm from "../../utils/classMerger";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import resolveVendorSlug from "../../utils/resolveVendorSlug";
-import Swiper, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import Swiper, { Pagination, Scrollbar, A11y } from "swiper";
 import {
   Swiper as SwiperComponent,
   SwiperSlide,
@@ -29,7 +29,6 @@ import { resolvePageUrlParameter } from "../../pages/read/helpers";
 import Icon from "../icon/Icon";
 import Button from "../button/Button";
 import getLatestProgress from "../../utils/getLatestProgress";
-import MangaLink from "../MangaLink/MangaLink";
 
 export type GenericItem = {
   header: string;
@@ -51,6 +50,8 @@ export type ProgressItem = Omit<GenericItem, "items"> & {
 
 type Props = {
   item: GenericItem | ProgressItem;
+  onRefresh?: () => void;
+  isRefreshing?: boolean;
 };
 
 const CarouselContext = createContext<{
@@ -76,9 +77,21 @@ export default function Carousel(props: Props) {
     <>
       <CarouselContext.Provider value={{ swiper }}>
         <div className={classes.carousel}>
-          <CarouselHeader item={item} />
+          <CarouselHeader onRefresh={props.onRefresh} item={item} />
           <div className={cm(classes.content)}>
-            {mobile ? (
+            {!item.items.length ? (
+              <div>
+                <p>Nothing to display</p>
+                {props.onRefresh && (
+                  <Button
+                    loading={props.isRefreshing}
+                    onClick={props.onRefresh}
+                    icon={<Icon scale={0.8} icon="reload" />}>
+                    Try again
+                  </Button>
+                )}
+              </div>
+            ) : mobile ? (
               item.items.map(({ manga, progress }) => (
                 <Item key={manga.slug} progress={progress} manga={manga} />
               ))
@@ -92,7 +105,13 @@ export default function Carousel(props: Props) {
   );
 }
 
-function CarouselHeader({ item }: { item: GenericItem | ProgressItem }) {
+function CarouselHeader({
+  item,
+  onRefresh,
+}: {
+  item: GenericItem | ProgressItem;
+  onRefresh?: () => void;
+}) {
   const ctx = useContext(CarouselContext);
   const [swiper] = ctx.swiper ?? [];
 
@@ -100,30 +119,37 @@ function CarouselHeader({ item }: { item: GenericItem | ProgressItem }) {
     <Header level={1}>
       <div className={classes.header}>
         <div className={classes.title}>{item.header}</div>
-        <div className={classes.controls}>
-          <Button icon={<Icon scale={0.8} icon="reload" />} />
-          <div className={classes.unit}>
-            <Button
-              onClick={() => swiper?.slidePrev()}
-              icon={<Icon icon="chevron" orientation=".5turn" />}
-            />
-            <Button
-              onClick={() => swiper?.slideNext()}
-              icon={<Icon icon="chevron" />}
-            />
-          </div>
-          <Button
-            hoverReveal
-            iconLoc="right"
-            icon={<Icon icon="arrow" orientation=".25turn" />}>
-            View all
-          </Button>
-        </div>
-        <div className={classes.mobileControls}>
-          <Link to="#">
-            View all <Icon icon="arrow" orientation=".25turn" />
-          </Link>
-        </div>
+        {!!item.items.length && (
+          <>
+            <div className={classes.controls}>
+              <Button
+                onClick={onRefresh}
+                icon={<Icon scale={0.8} icon="reload" />}
+              />
+              <div className={classes.unit}>
+                <Button
+                  onClick={() => swiper?.slidePrev()}
+                  icon={<Icon icon="chevron" orientation=".5turn" />}
+                />
+                <Button
+                  onClick={() => swiper?.slideNext()}
+                  icon={<Icon icon="chevron" />}
+                />
+              </div>
+              <Button
+                hoverReveal
+                iconLoc="right"
+                icon={<Icon icon="arrow" orientation=".25turn" />}>
+                View all
+              </Button>
+            </div>
+            <div className={classes.mobileControls}>
+              <Link to="#">
+                View all <Icon icon="arrow" orientation=".25turn" />
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </Header>
   );
@@ -201,11 +227,17 @@ function Item({
         : `/manga/${resolveVendorSlug(manga.vendor)}/${manga.slug}`,
     [manga, progress, latestProgress],
   );
+
   const poster = useCallback(
     (read: boolean) => (
       <Poster
         onClick={() => {
-          if (read) navigate(url, { state: location.state });
+          if (read)
+            navigate(url, {
+              state: {
+                backgroundLocation: location,
+              },
+            });
         }}
         label={manga.title}
         progress={

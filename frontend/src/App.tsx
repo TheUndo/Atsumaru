@@ -18,7 +18,7 @@ import { BurgerButton } from "./components/desktopNavbar/DesktopNavbar";
 import Layout, { GenericPage } from "./components/layout/Layout";
 import Signup from "./components/signup/Signup";
 import Search from "./pages/search/Search";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import ReactDOM from "react-dom/client";
 import Dev from "./pages/dev/Dev";
 import { AppContext, User } from "./appContext";
@@ -29,7 +29,7 @@ import isDev from "./utils/isDev";
 import { useUserInfo } from "./state/user";
 import Library from "./pages/library/Library";
 
-const version = "1.0";
+const version = "1.1";
 if ("serviceWorker" in navigator && !isDev()) {
   navigator.serviceWorker.register("/sw.js?v=" + version);
 

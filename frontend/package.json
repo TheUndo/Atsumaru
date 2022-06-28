@@ -16,6 +16,7 @@
     "react-router-dom": "^6.2.1",
     "react-simple-oauth2-login": "^0.5.3",
     "react-use-measure": "^2.1.1",
+    "recoil": "^0.7.4",
     "sass": "^1.49.0",
     "swiper": "^8.2.4",
     "upgrade": "^1.1.0",

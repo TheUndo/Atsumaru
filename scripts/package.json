@@ -1,0 +1,11 @@
+{
+  "name": "atsu-scripts",
+  "version": "1.0.0",
+  "description": "Atsumaru's dev scripts",
+  "main": "atsuDev.js",
+  "scripts": {
+    "start": "node atsuDev.js"
+  },
+  "author": "Undo",
+  "license": "ISC"
+}

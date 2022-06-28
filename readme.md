@@ -74,7 +74,7 @@ Install the following beforehand
 Open your terminal and run the following commands
 1. Clone the repository
    ```sh
-   git clone https://github.com/TheUndo/atsumaru.git&& cd atsumaru
+   git clone https://github.com/TheUndo/atsumaru.git atsumaru && cd atsumaru
     ```
 3. Configure environment
 
@@ -105,33 +105,16 @@ Install the following beforehand
 Run in your terminal
 1. Clone the repository
    ```sh
-   git clone https://github.com/TheUndo/atsumaru.git
+   git clone https://github.com/TheUndo/atsumaru.git atsumaru
     ```
-    ```sh
-   cd Atsumaru
+2. CD into the project
+   ```sh
+   cd atsumaru
     ```
-3. Copy `.env.dev.example` as `.env`
-
-   *bash/zsh:*
+3. Make development build
    ```sh
-   $ cp .env.dev.example .env
+   make dev
    ```
-   *Windows cmd/powershell:*
-   ```sh
-   copy .env.dev.example .env
-   ```
-4. Build and start the backend. Omit the `-d` flag if you want to use another terminal for the frontend
-   ```sh
-   docker-compose up -d
-   ```
-5. Start the frontend
-   ```sh
-   cd ./frontend
-   ```
-   ```sh
-   npm i --force && npm run dev
-   ```
-   Open <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> to view the development build.
 
 ## Technical details
 | Role                 | Technology                                                                                                                              |

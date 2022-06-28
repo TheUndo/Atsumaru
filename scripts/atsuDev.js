@@ -47,7 +47,7 @@ function install(absPath) {
 }
 
 async function cpEnv(absPath) {
-  log(`CHECKING \x1b[37m\x1b[4m${path}`);
+  log(`CHECKING \x1b[37m\x1b[4m${absPath}`);
   const envPath = path.join(__dirname, "..", "/.env");
   try {
     await fs.stat(envPath);

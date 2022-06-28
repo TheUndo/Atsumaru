@@ -2,7 +2,7 @@ const path = require("path");
 const child_process = require("child_process");
 const { promises: fs } = require("fs");
 
-const checks = ["../frontend", "../api", "../scraper"];
+const checks = ["../frontend", "../api", "../scraper", "."];
 
 const log = (...args) =>
   console.info("\x1b[36m[\x1b[35mATSU DEV\x1b[36m]", ...args, "\x1b[0m");

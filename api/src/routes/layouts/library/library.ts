@@ -15,11 +15,13 @@ export default async function userLibrary(req: Request, res: express.Response) {
     return void res.send({
       layout: [
         recentlyRead.length && {
+          type: "carousel",
           header: "Continue reading",
           key: "continue-reading",
           items: recentlyRead,
         },
         recentlyRead.length && {
+          type: "carousel",
           header: "Bookmarks",
           key: "bookmarks",
           items: bookmarks,

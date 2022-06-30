@@ -37,7 +37,9 @@ export default function Layout(props: Props) {
             classes.navbar,
             desktopNavbarShown && classes.shown,
           )}></section>
+          {/* IDS ONLY USED FOR PORTALING */}
         <section id="freeContent" className={classes.freeContent}>
+          <div id="freeContentHeader"></div>
           {props.children}
           <Outlet />
         </section>

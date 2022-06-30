@@ -1,6 +1,7 @@
 import React from "react";
 import Carousel, { GenericItem } from "../../components/carousel/Carousel";
 import Header from "../../components/header/Header";
+import LayoutRenderer from "../../components/layoutRenderer/LayoutRenderer";
 import Loading, { LoadingPage } from "../../components/loading/Loading";
 import { useUserLibrary } from "../../state/user";
 import classes from "./library.module.scss";
@@ -19,14 +20,11 @@ export default function Library(props: Props) {
           <Loading />
         </LoadingPage>
       ) : data && data.layout.length ? (
-        data.layout.map(item => (
-          <Carousel
-            key={item.key}
-            onRefresh={refetch}
-            isRefreshing={isRefetching}
-            item={item}
-          />
-        ))
+        <LayoutRenderer
+          layout={data.layout}
+          isRefetching={isRefetching || isLoading}
+          refetch={refetch}
+        />
       ) : (
         <Header level={2}>Unable to fetch library</Header>
       )}

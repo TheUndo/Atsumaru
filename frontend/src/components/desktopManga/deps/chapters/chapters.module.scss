@@ -1,0 +1,26 @@
+.chaptersCont {
+  max-width: 700px;
+
+  margin-top: 40px;
+  .chapterInner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .chaptersTitle {
+    padding-bottom: 0.5rem;
+  }
+
+  .chapters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+}
+
+.switchers {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}

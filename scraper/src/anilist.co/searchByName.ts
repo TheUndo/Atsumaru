@@ -1,4 +1,5 @@
 import axios from "axios";
+import anilist from "./common";
 
 const query = `
 query ($title: String) {
@@ -58,8 +59,6 @@ query ($title: String) {
 }
 `;
 
-// Define the config we'll need for our Api request
-const url = "https://graphql.anilist.co";
 
 // Make the HTTP Api request
 
@@ -78,7 +77,7 @@ export default async function performSearch(titles: string[]) {
         },
     } as const;
     try {
-        const { data } = await axios.post(url, JSON.stringify(options.body), {
+        const { data } = await axios.post(anilist.url, JSON.stringify(options.body), {
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",

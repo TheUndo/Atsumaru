@@ -30,14 +30,41 @@ import Icon from "../icon/Icon";
 import Button from "../button/Button";
 import getLatestProgress from "../../utils/getLatestProgress";
 
+export type ShowcaseItem = {
+  key: string;
+  items: {
+    manga: {
+      vendor: MangaInfo["vendor"];
+      slug: string;
+      genres: string[];
+    };
+    anilist: {
+      id: number;
+      title: {
+        romaji?: string | null;
+        english?: string | null;
+      };
+      coverImage: {
+        extraLarge?: string | null;
+        large?: string | null;
+        color?: string | null;
+      };
+      description: string;
+      bannerImage?: null | string;
+    };
+  }[];
+  type: "showcase";
+};
+
 export type GenericItem = {
   header: string;
   key: string;
   items: {
     manga: MangaInfo;
     progress: undefined;
+    type: "GENERIC_ITEM" | "PROGRESS_ITEM";
   }[];
-  type: "GENERIC_ITEM" | "PROGRESS_ITEM";
+  type: "carousel";
 };
 
 export type ProgressItem = Omit<GenericItem, "items"> & {
@@ -233,11 +260,16 @@ function Item({
       <Poster
         onClick={() => {
           if (read)
-            navigate(url, {
-              state: {
-                backgroundLocation: location,
-              },
-            });
+            navigate(
+              url,
+              /^\/read/.test(url)
+                ? {}
+                : {
+                    state: {
+                      backgroundLocation: location,
+                    },
+                  },
+            );
         }}
         label={manga.title}
         progress={

@@ -19,7 +19,7 @@ type Props = {
   chapters: Chapter[];
   slug: string;
   vendor: MangaInfo["vendor"];
-  progress: ProgressInfo | undefined;
+  progress?: ProgressInfo | undefined;
 };
 
 export default function Chapters({ chapters, slug, vendor, progress }: Props) {

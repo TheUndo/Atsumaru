@@ -1,4 +1,5 @@
 import * as express from "express";
+import { mangaSeeAnilistTrending } from "../../../actions/getAnilistTrending";
 import { getLatestUpdates } from "../../../actions/mangaSee";
 import { getRecentlyRead } from "../../../actions/readProgress";
 import mongo from "../../../db/mongo";
@@ -9,14 +10,17 @@ async function getSliders() {
 
   const map = {
     hotUpdates: {
+      type: "carousel",
       header: "Hot updates",
       key: "hot-updates",
     },
     topTen: {
+      type: "carousel",
       header: "Top 10",
       key: "top-ten",
     },
     newSeries: {
+      type: "carousel",
       header: "New manga",
       key: "new-series",
     },
@@ -55,7 +59,8 @@ export default async function mangaSeeFront(
   res: express.Response,
 ) {
   try {
-    const [latest, recentlyRead, sliders] = await Promise.all([
+    const [trending, latest, recentlyRead, sliders] = await Promise.all([
+      mangaSeeAnilistTrending(),
       getLatestUpdates(32),
       getRecentlyRead(req.user!, "MANGASEE", 16),
       getSliders(),
@@ -63,13 +68,20 @@ export default async function mangaSeeFront(
 
     return void res.send({
       layout: [
+        trending && {
+          type: "showcase",
+          key: "trending-showcase",
+          items: trending,
+        },
         recentlyRead.length && {
+          type: "carousel",
           header: "Continue reading",
           key: "continue-reading",
           items: recentlyRead,
         },
         ...sliders,
         {
+          type: "carousel",
           header: "Latest updates",
           key: "latest-updates",
           items: latest,

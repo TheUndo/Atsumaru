@@ -1,0 +1,20 @@
+.inlineGenre {
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+.genres {
+  display: flex;
+  gap: 0.3em;
+  align-items: center;
+  .genre {
+    padding: 2px;
+    color: var(--color);
+    border-radius: 3px;
+    &:hover {
+      color: var(--accent);
+      background: var(--bg3);
+    }
+  }
+}

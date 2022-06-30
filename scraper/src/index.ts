@@ -1,13 +1,10 @@
+import getTrendingAnilist from "./anilist.co/getTrending";
 import performSearch from "./anilist.co/searchByName";
 import {
   msFrontPageUpsert,
   pushMangaFromSlugs,
 } from "./mangaSee123.com/impureDbOps";
-import {
-  scrapeFrontPage,
-  scrapeInfoPage,
-  scrapeSearch,
-} from "./mangaSee123.com/mangaSee";
+import { scrapeFrontPage, scrapeSearch } from "./mangaSee123.com/mangaSee";
 import ensureIndex, { ensureDocuments } from "./search/ensureIndex";
 import log from "./utils/logger";
 import sleep from "./utils/sleep";
@@ -16,6 +13,15 @@ void ensureIndex()
   .then(() => ensureDocuments())
   .catch(console.error);
 //performSearch(["Koujo Denka no Katei Kyoushi"]).then(console.log);
+
+/* trending */
+
+(async () => {
+  for (;;) {
+    await getTrendingAnilist();
+    await sleep(21600000);
+  }
+})();
 
 /* front page */
 (async () => {

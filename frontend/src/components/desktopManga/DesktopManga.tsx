@@ -1,16 +1,14 @@
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import React, {
-  ComponentProps,
   useContext,
   useEffect,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
 import { useQuery, UseQueryResult } from "react-query";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../../appContext";
 import { apiBase } from "../../hooks/useApi";
 import { parseChapterName } from "../../pages/progressSyncing/ProgressSyncing";
@@ -20,7 +18,7 @@ import {
   useRemoveBookmark,
   useSetBookmark,
 } from "../../state/mangaInfo";
-import { Anilist, MangaInfo, ProgressInfo, ProgressNode } from "../../types";
+import { Anilist, ProgressNode } from "../../types";
 import calculateProgressPercentage from "../../utils/calculateProgressPercentage";
 import cm from "../../utils/classMerger";
 import getLatestProgress from "../../utils/getLatestProgress";
@@ -28,11 +26,15 @@ import resolveVendorSlug from "../../utils/resolveVendorSlug";
 import Button from "../button/Button";
 import Header from "../header/Header";
 import Icon from "../icon/Icon";
-import { ChapterItem } from "../info/Chapters";
 import { MangaEndPointResponse } from "../info/Info";
 import Loading from "../loading/Loading";
 import Poster from "../poster/Poster";
-import Switcher, { SwitcherItemStruct } from "../switcher/Switcher";
+import Chapters from "./deps/chapters/Chapters";
+import Desc from "./deps/desc/desc";
+import Genres from "./deps/genres/Genres";
+import Label from "./deps/label/Label";
+import Nav from "./deps/nav/Nav";
+import switcherItem from "./deps/switcherItem/SwitcherItem";
 import classes from "./desktopManga.module.scss";
 
 type Props = {
@@ -257,7 +259,7 @@ export default function DesktopManga({ apiData, slug }: Props) {
                   )}>
                   <h1>{data?.manga.title}</h1>
                 </div>
-                {status === "success" && <Genres data={data.manga} />}
+                {status === "success" && <Genres genres={data.manga.genres} />}
                 <div className={classes.desc}>
                   {isLoading ? (
                     <Loading />
@@ -281,319 +283,4 @@ export default function DesktopManga({ apiData, slug }: Props) {
     </div>,
     document.getElementById("root")!,
   );
-}
-
-function Chapters({
-  data,
-  progress,
-}: {
-  data: MangaInfo;
-  progress: ProgressInfo | undefined;
-}) {
-  const { chapters: unsortedChapters, vendor, slug } = data;
-  type Filters = "OVERVIEW" | "ALL" | "READ" | "UNREAD";
-  type Sort = "DESCENDING" | "ASCENDING";
-  const [filter, setFilter] = useState<Filters>("OVERVIEW");
-  const [sort, setSort] = useState<Sort>("DESCENDING");
-  const e404 = <p>No chapters found</p>;
-  const chapters =
-    sort === "DESCENDING" ? unsortedChapters : [...unsortedChapters].reverse();
-  const content = useMemo(() => {
-    switch (filter) {
-      case "OVERVIEW":
-        const gutter = 6;
-        return (
-          <>
-            {chapters.length > gutter * 2 ? (
-              <>
-                <div className={classes.chapters}>
-                  {chapters.slice(0, gutter).map(chapter => (
-                    <ChapterItem
-                      vendor={vendor}
-                      slug={slug}
-                      chapter={chapter}
-                      key={chapter.name}
-                      progress={progress}
-                    />
-                  ))}
-                </div>
-                <div className={classes.chapterEllipsis}>
-                  <Button
-                    onClick={() => setFilter("ALL")}
-                    alignCenter
-                    fullWidth
-                    transparent
-                    compact>
-                    ...
-                  </Button>
-                </div>
-                <div className={classes.chapters}>
-                  {chapters.slice(-gutter).map(chapter => (
-                    <ChapterItem
-                      progress={progress}
-                      vendor={vendor}
-                      slug={slug}
-                      chapter={chapter}
-                      key={chapter.name}
-                    />
-                  ))}
-                </div>
-              </>
-            ) : chapters.length ? (
-              <>
-                <div className={classes.chapters}>
-                  {chapters.map(chapter => (
-                    <ChapterItem
-                      progress={progress}
-                      vendor={vendor}
-                      slug={slug}
-                      chapter={chapter}
-                      key={chapter.name}
-                    />
-                  ))}
-                </div>
-              </>
-            ) : (
-              e404
-            )}
-
-            <Button
-              icon={<Icon icon="omniDirectional" orientation=".12turn" />}
-              fullWidth
-              onClick={() => setFilter("ALL")}
-              compact>
-              Show all chapters
-            </Button>
-          </>
-        );
-      case "ALL":
-        if (!chapters.length) return e404;
-        return (
-          <div className={classes.chapters}>
-            {chapters.map(chapter => (
-              <ChapterItem
-                progress={progress}
-                vendor={vendor}
-                slug={slug}
-                chapter={chapter}
-                key={chapter.name}
-              />
-            ))}
-          </div>
-        );
-      case "READ":
-        const resolvedChapters = chapters.filter(
-          chapter => !!progress?.chapterProgress[chapter.name],
-        );
-        if (!resolvedChapters.length) return e404;
-        return (
-          <div className={classes.chapters}>
-            {resolvedChapters.map(chapter => (
-              <ChapterItem
-                progress={progress}
-                vendor={vendor}
-                slug={slug}
-                chapter={chapter}
-                key={chapter.name}
-              />
-            ))}
-          </div>
-        );
-      case "UNREAD": {
-        const resolvedChapters = chapters.filter(
-          chapter => !progress?.chapterProgress[chapter.name],
-        );
-        if (!resolvedChapters.length) return e404;
-        return (
-          <div className={classes.chapters}>
-            {resolvedChapters.map(chapter => (
-              <ChapterItem
-                progress={progress}
-                vendor={vendor}
-                slug={slug}
-                chapter={chapter}
-                key={chapter.name}
-              />
-            ))}
-          </div>
-        );
-      }
-      default:
-        return "Oops, unsupported filter (thonk)";
-    }
-  }, [filter, e404, chapters, sort]);
-
-  return (
-    <div className={classes.chaptersCont}>
-      <div className={classes.chaptersTitle}>
-        <Header level={2}>
-          Chapters {chapters.length && <>({chapters.length})</>}
-        </Header>
-        <Label>Filter chapters</Label>
-        <div className={classes.switchers}>
-          <Switcher
-            variant="dark"
-            selected={filter}
-            onChange={setFilter}
-            items={[
-              switcherItem<Filters>("OVERVIEW", "Overview"),
-              switcherItem<Filters>("ALL", "All"),
-              switcherItem<Filters>("READ", "Read"),
-              switcherItem<Filters>("UNREAD", "Unread"),
-            ]}
-          />
-          <Switcher
-            variant="dark"
-            selected={sort}
-            onChange={setSort}
-            items={[
-              switcherItem<Sort>("DESCENDING", "", {
-                icon: <Icon icon="arrow" orientation=".5turn" />,
-              }),
-              switcherItem<Sort>("ASCENDING", "", {
-                icon: <Icon icon="arrow" />,
-              }),
-            ]}
-          />
-        </div>
-      </div>
-      <div className={classes.chapterInner}>{content}</div>
-    </div>
-  );
-}
-
-function switcherItem<T>(
-  value: T,
-  children: React.ReactNode,
-  buttonProps?: ComponentProps<typeof Button>,
-) {
-  return {
-    value,
-    content: (
-      forwardRef: Parameters<SwitcherItemStruct<T>["content"]>[0],
-      props: Parameters<SwitcherItemStruct<T>["content"]>[1],
-      selected: Parameters<SwitcherItemStruct<T>["content"]>[2],
-    ) => (
-      <Button
-        noHoverEffect
-        compact
-        transparent
-        alignCenter
-        forwardRef={forwardRef}
-        style={{
-          color: value === selected ? "#fff" : "var(--color)",
-          fontWeight: "bold",
-        }}
-        {...buttonProps}
-        {...props}>
-        {children}
-      </Button>
-    ),
-  };
-}
-
-function Desc({ data, anilist }: { data: MangaInfo; anilist?: Anilist }) {
-  type Options = "ORIGINAL" | "ANILIST";
-  const [description, setDescription] = useState<Options>("ORIGINAL");
-
-  return (
-    <>
-      {anilist &&
-        anilist.data.description?.replace(/^\s+|\s+$/g, "") !==
-          data.description && (
-          <>
-            <Label>Description source</Label>
-            <Switcher
-              variant="dark"
-              selected={description}
-              onChange={setDescription}
-              items={[
-                switcherItem<Options>("ORIGINAL", "Original"),
-                switcherItem<Options>("ANILIST", "Anilist"),
-              ]}
-            />
-          </>
-        )}
-      <p>
-        {anilist ? (
-          description === "ANILIST" ? (
-            <div
-              dangerouslySetInnerHTML={{
-                __html:
-                  anilist.data.description?.replace(/^\s+|\s+$/g, "") ||
-                  "<i>No anilist synopsis available</i>",
-              }}></div>
-          ) : (
-            data?.description
-          )
-        ) : (
-          data?.description
-        )}
-      </p>
-    </>
-  );
-}
-
-function Genres({ data }: { data: MangaInfo }) {
-  const res = data.genres.map((genre, i) => (
-    <div key={genre} className={classes.inlineGenre}>
-      {i !== 0 && "•"}
-      <Link to={`/genres/${genre}`}>
-        <div className={classes.genre}>{genre}</div>
-      </Link>
-    </div>
-  ));
-
-  return <div className={classes.genres}>{res}</div>;
-}
-
-function Nav({
-  forwardRef,
-  data,
-}: {
-  forwardRef: React.RefObject<HTMLDivElement>;
-  data?: MangaInfo;
-}) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [scrollPos, setScrollPos] = useState(0);
-  const exit = () =>
-    navigate((location.state as any)?.backgroundLocation.pathname ?? "/");
-  useEffect(() => {
-    const handler = () => {
-      if (!forwardRef.current) return;
-      setScrollPos(forwardRef.current.scrollTop);
-    };
-    forwardRef.current?.addEventListener("scroll", handler);
-    return () => forwardRef.current?.removeEventListener("scroll", handler);
-  }, [forwardRef]);
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && data) exit();
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [data]);
-
-  return (
-    <div
-      onClick={e => void e.stopPropagation()}
-      className={cm(classes.nav, scrollPos > 100 && classes.fixed)}>
-      <Button
-        onClick={exit}
-        transparent
-        icon={<Icon icon="chevron" orientation=".5turn" />}>
-        Back
-      </Button>
-      <div
-        className={cm(classes.navTitle, scrollPos > 230 && classes.showTitle)}>
-        {data?.title}
-      </div>
-    </div>
-  );
-}
-
-function Label({ children }: { children: React.ReactNode }) {
-  return <div className={classes.switcherLabel}>{children}</div>;
 }

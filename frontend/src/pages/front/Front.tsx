@@ -7,6 +7,7 @@ import Debug from "../../components/debug/Debug";
 import Disclaimer from "../../components/disclaimer/Disclaimer";
 import Header from "../../components/header/Header";
 import Icon from "../../components/icon/Icon";
+import LayoutRenderer from "../../components/layoutRenderer/LayoutRenderer";
 import Loading from "../../components/loading/Loading";
 import { apiBase } from "../../hooks/useApi";
 import useOnline from "../../hooks/useOnline";
@@ -67,7 +68,7 @@ export default function Front() {
               />
             </>
           ) : data ? (
-            data.layout.map(item => <Carousel key={item.key} item={item} />)
+            <LayoutRenderer layout={data.layout} />
           ) : (
             <></>
           )

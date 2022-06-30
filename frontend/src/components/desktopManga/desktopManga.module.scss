@@ -55,27 +55,6 @@
   }
 }
 
-.inlineGenre {
-  display: inline-block;
-  display: flex;
-  align-items: center;
-  gap: 0.3em;
-}
-.genres {
-  display: flex;
-  gap: 0.3em;
-  align-items: center;
-  .genre {
-    padding: 2px;
-    color: var(--color);
-    border-radius: 3px;
-    &:hover {
-      color: var(--accent);
-      background: var(--bg3);
-    }
-  }
-}
-
 .topSection {
   display: flex;
   gap: 2rem;
@@ -121,65 +100,3 @@
   }
 }
 
-.switcherLabel {
-  font-size: 0.8rem;
-  margin-top: 20px;
-  font-weight: bold;
-}
-
-.nav {
-  position: sticky;
-  top: 0.5rem;
-  width: calc(100% + 1rem);
-  margin-left: -0.5rem;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.15s ease-out;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  color: #ccc;
-  &.fixed {
-    background: rgba(27, 27, 27, 0.9);
-    box-shadow: 0 0 40px rgb(0, 0, 0);
-  }
-  .navTitle {
-    font-size: 1.1rem;
-    text-align: right;
-    flex: 1;
-    padding: 0 1rem;
-    transition: opacity 0.15s ease;
-    opacity: 0;
-    &.showTitle {
-      opacity: 1;
-    }
-  }
-}
-
-.chaptersCont {
-  max-width: 700px;
-
-  margin-top: 40px;
-  .chapterInner {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-  .chaptersTitle {
-    padding-bottom: 0.5rem;
-  }
-
-  .chapters {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-}
-
-.switchers {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}

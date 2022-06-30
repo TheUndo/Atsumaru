@@ -37,6 +37,7 @@ export type ShowcaseItem = {
       vendor: MangaInfo["vendor"];
       slug: string;
       genres: string[];
+      title?: string;
     };
     anilist: {
       id: number;

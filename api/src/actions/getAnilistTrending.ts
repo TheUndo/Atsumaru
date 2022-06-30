@@ -47,6 +47,7 @@ export async function mangaSeeAnilistTrending() {
       slug: 1,
       genres: 1,
       anilistID: 1,
+      title: 1,
     })
     .toArray();
 

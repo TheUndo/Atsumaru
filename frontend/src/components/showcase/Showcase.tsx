@@ -70,7 +70,7 @@ function Item({
         }}></div>
       <div className={classes.content}>
         <div className={classes.animate} style={delay(1)}>
-          <Header level={1}>{item.anilist.title.english}</Header>
+          <Header level={1}>{item.anilist.title.english ?? item.manga.title}</Header>
         </div>
         <div className={classes.genres}>
           <Genres

@@ -37,6 +37,10 @@ Install the following beforehand
    ```sh
    sudo pacman -S docker
    ```
+   ```sh
+   sudo pacman -S docker-compose
+   ```
+   **Note**: You need to restart your device afterwards. If you are having trouble refer to the bible.
   </details>
 
   <details>

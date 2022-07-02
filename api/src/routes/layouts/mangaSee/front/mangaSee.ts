@@ -1,9 +1,10 @@
 import * as express from "express";
-import { mangaSeeAnilistTrending } from "../../../actions/getAnilistTrending";
-import { getLatestUpdates } from "../../../actions/mangaSee";
-import { getRecentlyRead } from "../../../actions/readProgress";
-import mongo from "../../../db/mongo";
-import { Request } from "../../../types";
+import { mangaSeeAnilistTrending } from "../../../../actions/getAnilistTrending";
+import { getLatestUpdates } from "../../../../actions/mangaSee";
+import { getRecentlyRead } from "../../../../actions/readProgress";
+import mongo from "../../../../db/mongo";
+import { createLayout } from "../../../../layout/layout";
+import { Request } from "../../../../types";
 
 async function getSliders() {
   const db = await mongo();
@@ -58,15 +59,16 @@ export default async function mangaSeeFront(
   req: Request,
   res: express.Response,
 ) {
+  const source = req.params.source as string;
   try {
     const [trending, latest, recentlyRead, sliders] = await Promise.all([
       mangaSeeAnilistTrending(),
       getLatestUpdates(32),
-      getRecentlyRead(req.user!, "MANGASEE", 16),
+      getRecentlyRead(req.user!, 16),
       getSliders(),
     ]);
 
-    return void res.send({
+    /* return void res.send({
       layout: [
         trending && {
           type: "showcase",
@@ -87,6 +89,28 @@ export default async function mangaSeeFront(
           items: latest,
         },
       ].filter(v => v),
+    }); */
+
+    return void res.send({
+      layout: createLayout([
+        trending && {
+          type: "SHOWCASE",
+          key: "trending-showcase",
+          fetch: `/layouts/${source}/trending-showcase`,
+        },
+        recentlyRead.length && {
+          type: "CAROUSEL",
+          title: "Continue reading",
+          key: "continue-reading",
+          fetch: `/layouts/common/continue-reading`,
+        },
+        {
+          type: "CAROUSEL",
+          title: "Latest updates",
+          key: "latest-updates",
+          fetch: `/layouts/${source}/latest-updates`,
+        },
+      ]),
     });
   } catch (e) {
     console.error(e);

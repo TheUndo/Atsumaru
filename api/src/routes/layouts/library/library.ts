@@ -8,7 +8,7 @@ export default async function userLibrary(req: Request, res: express.Response) {
 
   try {
     const [recentlyRead, bookmarks] = await Promise.all([
-      getRecentlyRead(req.user!, "MANGASEE", 32),
+      getRecentlyRead(req.user!, 32),
       getBookmarks(req.user._id, 0, 20),
     ]);
 

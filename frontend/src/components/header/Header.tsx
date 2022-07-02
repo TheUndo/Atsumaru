@@ -5,7 +5,7 @@ import classes from "./header.module.scss";
 
 type Props = {
   level: 1 | 2 | 3 | 4 | 5 | 6;
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
 } & React.ComponentProps<"h1">;
 
 export default function Header(props: Props) {

@@ -3,15 +3,25 @@
   display: flex;
   align-items: center;
   gap: 0.3em;
+  &.isSkeleton {
+    margin-top: 0.4em;
+    color: #444;
+  }
 }
 .genres {
   display: flex;
   gap: 0.3em;
   align-items: center;
+
   .genre {
     padding: 2px;
     color: var(--color);
     border-radius: 3px;
+    &.skeleton {
+      width: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      height: 0.8em;
+    }
     &:hover {
       color: var(--accent);
       background: var(--bg3);

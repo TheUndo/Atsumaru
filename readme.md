@@ -89,7 +89,7 @@ Open your terminal and run the following commands
 4. 
    start Atsumaru (this may take a few minutes)
    ```sh
-   docker-compose up -d
+   docker compose up -d
    ```
 
 When installed and running open [localhost:4000](http://localhost:4000) and view Atsumaru locally! (it may take some time to become fully operational)

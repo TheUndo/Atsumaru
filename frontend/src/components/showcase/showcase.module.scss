@@ -103,3 +103,38 @@
     display: none;
   }
 }
+
+.invisible {
+  visibility: hidden;
+}
+.fakeTitle {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  > * {
+    position: relative;
+    height: 0.8em;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.1em;
+    &:nth-child(1) {
+      width: 80%;
+    }
+    &:nth-child(2) {
+      width: 50%;
+    }
+  }
+}
+
+.fakeDesc {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  border-radius: 0.1em;
+  > * {
+    background: rgba(255, 255, 255, 0.03);
+    height: 0.8em;
+  }
+}

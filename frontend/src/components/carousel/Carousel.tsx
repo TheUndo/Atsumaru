@@ -29,6 +29,8 @@ import { resolvePageUrlParameter } from "../../pages/read/helpers";
 import Icon from "../icon/Icon";
 import Button from "../button/Button";
 import getLatestProgress from "../../utils/getLatestProgress";
+import { useQuery } from "react-query";
+import { apiBase } from "../../hooks/useApi";
 
 export type ShowcaseItem = {
   key: string;
@@ -58,28 +60,27 @@ export type ShowcaseItem = {
 };
 
 export type GenericItem = {
-  header: string;
+  title: string;
   key: string;
   items: {
     manga: MangaInfo;
     progress: undefined;
     type: "GENERIC_ITEM" | "PROGRESS_ITEM";
   }[];
-  type: "carousel";
 };
 
 export type ProgressItem = Omit<GenericItem, "items"> & {
-  type: "PROGRESS_ITEM";
   items: {
     manga: MangaInfo;
     progress: ProgressInfo;
   }[];
 };
 
+type Data = GenericItem | ProgressItem;
+
 type Props = {
-  item: GenericItem | ProgressItem;
-  onRefresh?: () => void;
-  isRefreshing?: boolean;
+  src: string;
+  title: React.ReactNode;
 };
 
 const CarouselContext = createContext<{
@@ -89,8 +90,14 @@ const CarouselContext = createContext<{
   ];
 }>({});
 
-export default function Carousel(props: Props) {
-  const { item } = props;
+export default function Carousel({ src, title }: Props) {
+  const { refetch, status, isLoading, isRefetching, error, data, isError } =
+    useQuery<Data>(["front", src], () =>
+      fetch(apiBase + src, {
+        credentials: "include",
+      }).then(res => res.json()),
+    );
+
   const swiper = useState<Swiper>();
   const mobile = useMedia(
     ["(pointer: coarse)", "(pointer: fine)"],
@@ -101,30 +108,37 @@ export default function Carousel(props: Props) {
   /* const ref = useRef(null); */
   /* const { onMouseDown } = useDraggableScroll(ref); */
 
+  const skeleton = useMemo(() => isLoading, [isLoading]);
+
+  console.log(data)
+
+  if (!data?.items?.length && !isLoading) return <></>;
+
+  if (status === "error")
+    return (
+      <Header level={3}>
+        Error ({title}): {error + ""}
+      </Header>
+    );
+
   return (
     <>
       <CarouselContext.Provider value={{ swiper }}>
         <div className={classes.carousel}>
-          <CarouselHeader onRefresh={props.onRefresh} item={item} />
-          <div className={cm(classes.content)}>
-            {!item.items.length ? (
-              <div>
-                <p>Nothing to display</p>
-                {props.onRefresh && (
-                  <Button
-                    loading={props.isRefreshing}
-                    onClick={props.onRefresh}
-                    icon={<Icon scale={0.8} icon="reload" />}>
-                    Try again
-                  </Button>
-                )}
-              </div>
-            ) : mobile ? (
-              item.items.map(({ manga, progress }) => (
-                <Item key={manga.slug} progress={progress} manga={manga} />
-              ))
+          <CarouselHeader data={data} onRefresh={refetch} title={title} />
+          <div
+            className={cm(classes.content)}
+            style={
+              !skeleton
+                ? {}
+                : {
+                    overflow: "hidden",
+                  }
+            }>
+            {mobile ? (
+              <Mobile skeleton={skeleton} data={data} />
             ) : (
-              <Desktop layout={item} />
+              <Desktop skeleton={skeleton} data={data} />
             )}
           </div>
         </div>
@@ -134,10 +148,12 @@ export default function Carousel(props: Props) {
 }
 
 function CarouselHeader({
-  item,
+  data,
+  title,
   onRefresh,
 }: {
-  item: GenericItem | ProgressItem;
+  data?: Data;
+  title: React.ReactNode;
   onRefresh?: () => void;
 }) {
   const ctx = useContext(CarouselContext);
@@ -146,8 +162,8 @@ function CarouselHeader({
   return (
     <Header level={1}>
       <div className={classes.header}>
-        <div className={classes.title}>{item.header}</div>
-        {!!item.items.length && (
+        <div className={classes.title}>{title}</div>
+        {!!data?.items?.length && (
           <>
             <div className={classes.controls}>
               <Button
@@ -183,7 +199,27 @@ function CarouselHeader({
   );
 }
 
-function Desktop({ layout }: { layout: GenericItem | ProgressItem }) {
+const dummyItems = () => ({
+  manga: undefined,
+  progress: undefined,
+});
+
+function Mobile({ data, skeleton }: { data?: Data; skeleton: boolean }) {
+  const items = useMemo(
+    () => (skeleton ? [...Array(10)].map(dummyItems) : data?.items ?? []),
+    [skeleton, data],
+  );
+
+  return (
+    <>
+      {items.map(({ manga, progress }, i) => (
+        <Item key={manga?.slug + "" + i} progress={progress} manga={manga} />
+      ))}
+    </>
+  );
+}
+
+function Desktop({ data, skeleton }: { data?: Data; skeleton: boolean }) {
   const columns = useMedia(
     [
       "(min-width: 1400px)",
@@ -194,6 +230,11 @@ function Desktop({ layout }: { layout: GenericItem | ProgressItem }) {
     [5, 4, 3, 2],
     5,
   );
+
+  const items = useMemo(() => {
+    if (skeleton) return [...Array(columns)].map(dummyItems);
+    return data?.items ?? [];
+  }, [skeleton, columns, data]);
 
   return (
     <div className={classes.desktop}>
@@ -206,8 +247,8 @@ function Desktop({ layout }: { layout: GenericItem | ProgressItem }) {
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         onSlideChange={() => void 0}>
-        {layout.items.map(({ manga, progress }) => (
-          <SwiperSlide key={manga.slug}>
+        {items.map(({ manga, progress }, i) => (
+          <SwiperSlide key={manga?.slug + "" + i}>
             <SwiperHook />
             <div className={classes.desktopInner}>
               <Item progress={progress} manga={manga} />
@@ -234,7 +275,7 @@ function Item({
   manga,
   progress,
 }: {
-  manga: MangaInfo;
+  manga?: MangaInfo;
   progress?: ProgressInfo;
 }) {
   const navigate = useNavigate();
@@ -245,7 +286,9 @@ function Item({
   const location = useLocation();
   const url = useMemo(
     () =>
-      progress && latestProgress
+      !manga
+        ? ""
+        : progress && latestProgress
         ? `/read/${resolveVendorSlug(manga.vendor)}/${manga.slug}/${
             latestProgress.chapter
           }/${resolvePageUrlParameter(
@@ -272,7 +315,7 @@ function Item({
                   },
             );
         }}
-        label={manga.title}
+        label={manga?.title}
         progress={
           progress && latestProgress
             ? {

@@ -11,13 +11,18 @@ import myself from "./routes/auth/myself";
 import logout from "./routes/auth/logout";
 import syncProgress from "./routes/user/syncProgrsss";
 import { Request } from "./types";
-import mangaSeeFront from "./routes/layouts/front/mangaSee";
+import mangaSeeFront from "./routes/layouts/mangaSee/front/mangaSee";
 import search from "./routes/search/search";
 import getAnilist from "./routes/anilist/get";
 import addBookmark from "./routes/user/addBookmark";
 import getBookmark from "./routes/user/getBookmark";
 import removeBookmark from "./routes/user/removeBookmark";
 import userLibrary from "./routes/layouts/library/library";
+import continueReading from "./routes/layouts/common/continueRading";
+import mangaSeeAnilistTrendingLayout from "./routes/layouts/mangaSee/trendingShowcase";
+import mangaSeeSliders from "./routes/layouts/mangaSee/sliders";
+import mangaSeeLatestUpdates from "./routes/layouts/mangaSee/latestUpdates";
+import bookmarks from "./routes/layouts/common/bookmarks";
 
 dotenv.config();
 
@@ -66,6 +71,25 @@ app.post(base("/user/sync-progress"), auth, syncProgress);
 
 /* layouts */
 app.get(base("/layout/library"), auth, userLibrary);
+app.get(
+  base("/layouts/common/continue-reading"),
+  auth,
+  continueReading,
+); /* common */
+app.get(
+  base("/layouts/common/bookmarks"),
+  auth,
+  bookmarks,
+); /* common */
+app.get(
+  base("/layouts/s1/trending-showcase"),
+  mangaSeeAnilistTrendingLayout,
+); /* mangaSee */
+app.get(base("/layouts/s1/sliders/:key"), mangaSeeSliders); /* mangaSee */
+app.get(
+  base("/layouts/s1/latest-updates"),
+  mangaSeeLatestUpdates,
+); /* mangaSee */
 app.get(base("/layout/:source/front"), auth, (req: Request, res) => {
   switch (req.params.source) {
     case "s1":

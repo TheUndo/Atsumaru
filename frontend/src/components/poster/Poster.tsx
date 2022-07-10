@@ -30,6 +30,7 @@ const failImage = "https://i.imgur.com/SIyOAeP.png";
 export default function Poster(props: Props) {
   const { manga, label, progress, ...compProps } = props;
   const [ripple, event] = useRipple();
+  const random = useMemo(() => Math.random(), []);
   const {
     src: image,
     loading,
@@ -51,7 +52,11 @@ export default function Poster(props: Props) {
         style={{
           backgroundImage: `url("${fail ? failImage : image}")`,
         }}>
-        {loading && <div className={classes.loader}></div>}
+        {loading && (
+          <div className={classes.loaderCont}>
+            <div className={cm(classes.loader, classes.loading)}></div>
+          </div>
+        )}
       </div>
     ),
     [ripple, fail, image, loading],
@@ -72,7 +77,7 @@ export default function Poster(props: Props) {
             <div className={classes.info}>
               <div>
                 <Header className={classes.title} level={4}>
-                  {manga?.title ?? "Unknown manga"}
+                  {manga?.title}
                 </Header>
               </div>
               <div className={classes.genres}>
@@ -118,7 +123,25 @@ export default function Poster(props: Props) {
             />
           </div>
         )}
-        <div className={classes.label}>{label}</div>
+        <div className={classes.label}>
+          {label ||
+            (!manga && (
+              <div className={classes.fakeTitle}>
+                <div
+                  style={{
+                    width: `calc(80% + ${random} * 20%)`,
+                  }}>
+                  <div className={classes.loading}></div>
+                </div>
+                <div
+                  style={{
+                    width: `calc(10% + ${random} * 85%)`,
+                  }}>
+                  <div className={classes.loading}></div>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     </>
   );

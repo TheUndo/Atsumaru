@@ -1,0 +1,318 @@
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.82
+# Built for i686-pc-mingw32
+# Copyright (C) 2010  Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Sun Jul 10 11:13:33 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# default
+.SHELLFLAGS := -c
+# makefile
+MAKEFLAGS = Rrqp
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+HOMEDRIVE = C:
+# automatic
+@F = $(notdir $@)
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# makefile
+CURDIR := c:/Users/Admin/Documents/manga
+# default
+SHELL := sh.exe
+# environment
+WINDIR = C:\Windows
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
+# environment
+VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
+# environment
+ONEDRIVE = C:\Users\Admin\OneDrive
+# environment
+GITHUB_TOKEN = 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
+# environment
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+# makefile (from `Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
+# environment
+TMP = C:\Users\Admin\AppData\Local\Temp
+# environment
+PROGRAMW6432 = C:\Program Files
+# environment
+PROGRAMDATA = C:\ProgramData
+# environment
+VSCODE_CWD = C:\Windows\System32
+# environment
+PATH = C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files (x86)\Streamlink\bin;C:\msys64\mingw64\bin;C:\Program Files\VideoLAN\VLC;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\mpv.install\tools;C:\Program Files\Go\bin;C:\FPC\3.2.2\bin\i386-Win32;C:\Program Files\Git\cmd;C:\Users\Admin\scoop\shims;C:\Users\Admin\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Admin\AppData\Local\Programs\Python\Python310\;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Admin\AppData\Local\GitHubDesktop\bin;C:\Users\Admin\AppData\Roaming\npm;C:\Program Files\Git\bin;C:\Users\Admin\.dotnet\tools;C:\Users\Admin\go\bin;C:\ngrok;C:\Users\Admin\AppData\Roaming\cabal\bin;C:\tools\ghc-9.2.3\bin;
+# environment
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# environment
+CHOCOLATEYLASTPATHUPDATE = 133010912588895562
+# environment
+PROCESSOR_ARCHITECTURE = x86
+# environment
+USERPROFILE = C:\Users\Admin
+# environment
+CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
+# environment
+ALLUSERSPROFILE = C:\ProgramData
+# environment
+GOPATH = C:\Users\Admin\go
+# environment
+NUMBER_OF_PROCESSORS = 24
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine archives
+# automatic
+%F = $(notdir $%)
+# environment
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_20840_NDQTNGOQQRYKUWJZ
+# environment
+COMPUTERNAME = YETI
+# environment
+PROGRAMFILES = C:\Program Files (x86)
+# environment
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+USERNAME = Admin
+# environment
+PUBLIC = C:\Users\Public
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+CHOCOLATEYTOOLSLOCATION = C:\tools
+# environment
+VSCODE_CODE_CACHE_PATH = C:\Users\Admin\AppData\Roaming\Code\CachedData\92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+# environment
+LOGONSERVER = \\YETI
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# environment
+USERDOMAIN = YETI
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+OMP_NUM_THREADS = 24
+# default
+MAKE_VERSION := 3.82
+# makefile
+.DEFAULT_GOAL := dev
+# environment
+ACSVCPORT = 17532
+# environment
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+LOCALAPPDATA = C:\Users\Admin\AppData\Local
+# environment
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\Windows\system32\WindowsPowerShell\v1.0\Modules;C:\Program Files\Intel\Wired Networking\
+# default
+MAKE_COMMAND := make.exe
+# environment
+PROCESSOR_ARCHITEW6432 = AMD64
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# environment
+PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
+# environment
+OS = Windows_NT
+# environment
+VSCODE_IPC_HOOK = \\.\pipe\1fa9692ca970862365dc969f915639a2-1.69.0-main-sock
+# environment
+HOMEPATH = \Users\Admin
+# environment
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# environment
+PROMPT = $P$G
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+SYSTEMROOT = C:\Windows
+# environment
+_MSYS2_PREFIX = x86_64
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+APPDATA = C:\Users\Admin\AppData\Roaming
+# environment
+TEMP = C:\Users\Admin\AppData\Local\Temp
+# environment
+AMDRMPATH = C:\Program Files\AMD\RyzenMaster\
+# environment
+COMSPEC = C:\Windows\system32\cmd.exe
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# environment
+SYSTEMDRIVE = C:
+# environment
+SESSIONNAME = Console
+# environment
+PROCESSOR_REVISION = 7100
+# default
+.RECIPEPREFIX := 
+# environment
+_MSYS2_BASH = C:\msys64\usr\bin\bash.exe
+# environment
+LANG = C
+# environment
+PROCESSOR_LEVEL = 23
+# environment
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
+# environment
+VSCODE_PID = 20840
+# environment
+USERDOMAIN_ROAMINGPROFILE = YETI
+# variable set hash-table stats:
+# Load=96/1024=9%, Rehash=0, Collisions=11/114=10%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# \Program Files\Git\cmd;C: could not be stat'd.
+# \Program Files (x86)\Razer Chroma SDK\bin;C: could not be stat'd.
+# \Program Files\Razer\ChromaBroadcast\bin;C: could not be stat'd.
+# \Users\Admin\AppData\Roaming\cabal\bin;C: could not be stat'd.
+# \Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C: could not be stat'd.
+# \Program Files\nodejs\;C: could not be stat'd.
+# . (key c:/Users/Admin/Documents/manga, mtime 1656769555): 26 files, no impossibilities.
+# \Windows;C: could not be stat'd.
+# \Users\Admin\AppData\Local\Programs\Python\Python310\;C: could not be stat'd.
+# \Users\Admin\AppData\Roaming\npm;C: could not be stat'd.
+# \ProgramData\chocolatey\bin;C: could not be stat'd.
+# \Program Files\Docker\Docker\resources\bin;C: could not be stat'd.
+# \Program Files\Go\bin;C: could not be stat'd.
+# C: could not be stat'd.
+# \Users\Admin\AppData\Local\Microsoft\WindowsApps;C: could not be stat'd.
+# \Windows\System32\Wbem;C: could not be stat'd.
+# \Users\Admin\AppData\Local\GitHubDesktop\bin;C: could not be stat'd.
+# \msys64\mingw64\bin;C: could not be stat'd.
+# \Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C: could not be stat'd.
+# \ProgramData\chocolatey\lib\mpv.install\tools;C: could not be stat'd.
+# \Program Files (x86)\Razer\ChromaBroadcast\bin;C: could not be stat'd.
+# \Program Files\dotnet\;C: could not be stat'd.
+# \Users\Admin\.dotnet\tools;C: could not be stat'd.
+# \Program Files (x86)\Streamlink\bin;C: could not be stat'd.
+# \Program Files\Razer Chroma SDK\bin;C: could not be stat'd.
+# \Windows\System32\OpenSSH\;C: could not be stat'd.
+# \FPC\3.2.2\bin\i386-Win32;C: could not be stat'd.
+# \Users\Admin\AppData\Local\Programs\Python\Python310\Scripts\;C: could not be stat'd.
+# \ProgramData\DockerDesktop\version-bin;C: could not be stat'd.
+# \ngrok;C: could not be stat'd.
+# \Users\Admin\scoop\shims;C: could not be stat'd.
+# \Windows\system32;C: could not be stat'd.
+# \ProgramData\Oracle\Java\javapath;C: could not be stat'd.
+# \Program Files\Git\bin;C: could not be stat'd.
+# \Program Files\VideoLAN\VLC;C: could not be stat'd.
+# \tools\ghc-9.2.3\bin;: could not be stat'd.
+# \Windows\System32\WindowsPowerShell\v1.0\;C: could not be stat'd.
+# \Program Files (x86)\Common Files\Oracle\Java\javapath;C: could not be stat'd.
+# \Users\Admin\go\bin;C: could not be stat'd.
+
+# 26 files, no impossibilities in 39 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-02 15:45:55
+#  File has been updated.
+#  Successfully updated.
+
+dev:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from `Makefile', line 2):
+	node ./scripts/atsuDev.js
+	docker-compose up -d
+	node ./scripts/openBrowser.js
+	cd frontend && \
+	npm run dev
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=5/1024=0%, Rehash=0, Collisions=0/15=0%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 0 / lookups = 72 / hits = 72
+# # of strcache buffers: 1 (* 8176 B/buffer = 8176 B)
+# strcache used: total = 0 (1594) / max = 0 / min = 8176 / avg = 0
+# strcache free: total = 0 (6582) / max = 0 / min = 8176 / avg = 0
+
+# strcache hash-table stats:
+# Load=68/8192=1%, Rehash=0, Collisions=2/72=3%
+# Finished Make data base on Sun Jul 10 11:13:33 2022
+
+ 
+make.exe: *** No rule to make target `all'.  Stop.
+

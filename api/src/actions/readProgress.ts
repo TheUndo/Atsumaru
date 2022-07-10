@@ -4,11 +4,7 @@ import mongo from "../db/mongo";
 import { ProjectedReadProgress, User } from "../types";
 import { mongoCollectionByVendor } from "../utils";
 
-export async function getRecentlyRead(
-  user: User,
-  vendor: typeof vendors[number],
-  limit: number,
-) {
+export async function getRecentlyRead(user: User, limit: number, skip = 0) {
   if (!user) return [];
   const db = await mongo();
   try {
@@ -21,14 +17,15 @@ export async function getRecentlyRead(
         lastUpdated: -1,
       })
       .limit(Math.min(limit, 100))
+      .skip(skip)
       .map(async doc => ({
         type: "PROGRESS_ITEM",
         progress: doc,
         manga: {
-          ...(await db.collection(mongoCollectionByVendor(vendor)).findOne({
+          ...(await db.collection(mongoCollectionByVendor(doc.vendor)).findOne({
             slug: doc.mangaSlug,
           })),
-          vendor: "MANGASEE",
+          vendor: doc.vendor,
         },
       }))
       .toArray();

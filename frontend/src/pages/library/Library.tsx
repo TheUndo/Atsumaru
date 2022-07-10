@@ -1,33 +1,17 @@
 import React from "react";
-import Carousel, { GenericItem } from "../../components/carousel/Carousel";
-import Header from "../../components/header/Header";
+import { useMatch } from "react-router-dom";
 import LayoutRenderer from "../../components/layoutRenderer/LayoutRenderer";
-import Loading, { LoadingPage } from "../../components/loading/Loading";
-import { useUserLibrary } from "../../state/user";
+import { apiBase } from "../../hooks/useApi";
 import classes from "./library.module.scss";
 
 type Props = {};
 
 export default function Library(props: Props) {
-  const { data, isLoading, refetch, isRefetching } = useUserLibrary<{
-    layout: GenericItem[];
-  }>({});
+  const match = useMatch("/me");
 
   return (
     <div className={classes.library}>
-      {isLoading ? (
-        <LoadingPage>
-          <Loading />
-        </LoadingPage>
-      ) : data && data.layout.length ? (
-        <LayoutRenderer
-          layout={data.layout}
-          isRefetching={isRefetching || isLoading}
-          refetch={refetch}
-        />
-      ) : (
-        <Header level={2}>Unable to fetch library</Header>
-      )}
+      <LayoutRenderer enabled={!!match} src={`${apiBase}/layout/library`} />
     </div>
   );
 }

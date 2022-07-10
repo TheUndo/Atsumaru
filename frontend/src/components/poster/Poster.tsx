@@ -124,20 +124,23 @@ export default function Poster(props: Props) {
           </div>
         )}
         <div className={classes.label}>
-          {label || (
-            <div className={classes.fakeTitle}>
-              <div style={{
-                width: `calc(80% + ${random} * 20%)`
-              }}>
-                <div className={classes.loading}></div>
+          {label ||
+            (!manga && (
+              <div className={classes.fakeTitle}>
+                <div
+                  style={{
+                    width: `calc(80% + ${random} * 20%)`,
+                  }}>
+                  <div className={classes.loading}></div>
+                </div>
+                <div
+                  style={{
+                    width: `calc(10% + ${random} * 85%)`,
+                  }}>
+                  <div className={classes.loading}></div>
+                </div>
               </div>
-              <div style={{
-                width: `calc(10% + ${random} * 85%)`
-              }}>
-                <div className={classes.loading}></div>
-              </div>
-            </div>
-          )}
+            ))}
         </div>
       </div>
     </>

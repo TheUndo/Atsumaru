@@ -20,6 +20,9 @@ import removeBookmark from "./routes/user/removeBookmark";
 import userLibrary from "./routes/layouts/library/library";
 import continueReading from "./routes/layouts/common/continueRading";
 import mangaSeeAnilistTrendingLayout from "./routes/layouts/mangaSee/trendingShowcase";
+import mangaSeeSliders from "./routes/layouts/mangaSee/sliders";
+import mangaSeeLatestUpdates from "./routes/layouts/mangaSee/latestUpdates";
+import bookmarks from "./routes/layouts/common/bookmarks";
 
 dotenv.config();
 
@@ -74,8 +77,18 @@ app.get(
   continueReading,
 ); /* common */
 app.get(
+  base("/layouts/common/bookmarks"),
+  auth,
+  bookmarks,
+); /* common */
+app.get(
   base("/layouts/s1/trending-showcase"),
   mangaSeeAnilistTrendingLayout,
+); /* mangaSee */
+app.get(base("/layouts/s1/sliders/:key"), mangaSeeSliders); /* mangaSee */
+app.get(
+  base("/layouts/s1/latest-updates"),
+  mangaSeeLatestUpdates,
 ); /* mangaSee */
 app.get(base("/layout/:source/front"), auth, (req: Request, res) => {
   switch (req.params.source) {

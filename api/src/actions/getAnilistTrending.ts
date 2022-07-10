@@ -62,6 +62,7 @@ export async function mangaSeeAnilistTrending() {
           vendor: "MANGASEE",
           slug: mangaSee.slug,
           genres: mangaSee.genres,
+          title: mangaSee.title,
         },
         anilist,
       };

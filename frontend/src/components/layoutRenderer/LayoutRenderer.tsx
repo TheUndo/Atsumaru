@@ -1,24 +1,18 @@
-import React, { useContext, useEffect } from "react";
-import { isError, useQuery } from "react-query";
-import { useMatch } from "react-router-dom";
-import { AppContext } from "../../appContext";
-import useOnline from "../../hooks/useOnline";
+import React from "react";
+import { useQuery } from "react-query";
 import { LayoutItems } from "../../types/layouts";
-import Carousel, { GenericItem, ShowcaseItem } from "../carousel/Carousel";
+import Carousel from "../carousel/Carousel";
 import Header from "../header/Header";
 import Loading, { LoadingPage } from "../loading/Loading";
 import Showcase from "../showcase/Showcase";
-import classes from "./layoutRenderer.module.scss";
 
 type Props = {
   src: string;
+  enabled: boolean;
 };
 
-export default function LayoutRenderer({ src }: Props) {
-  const isOnline = useOnline();
-  const [loggedIn] = useContext(AppContext).loggedIn ?? [];
-  const frontMatch = useMatch("/");
-  const { refetch, isLoading, error, data, isError } = useQuery<{
+export default function LayoutRenderer({ src, enabled }: Props) {
+  const { isLoading, error, data, isError } = useQuery<{
     layout: LayoutItems[];
   }>(
     ["front", src],
@@ -28,7 +22,7 @@ export default function LayoutRenderer({ src }: Props) {
       }).then(res => res.json()),
     {
       retry: false,
-      enabled: !!frontMatch,
+      enabled,
     },
   );
 
@@ -63,7 +57,7 @@ export default function LayoutRenderer({ src }: Props) {
             case "CAROUSEL":
               return <Carousel title={item.title} src={item.fetch} />;
             case "SHOWCASE":
-              return <Showcase src={item.fetch} />
+              return <Showcase src={item.fetch} />;
             default:
               return <></>;
           }

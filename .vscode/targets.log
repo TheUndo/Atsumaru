@@ -5,9 +5,8 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sat Jul 02 10:11:18 2022
+# Make data base, printed on Sun Jul 10 11:13:33 2022
 
 # Variables
 
@@ -19,8 +18,6 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 .SHELLFLAGS := -c
 # makefile
 MAKEFLAGS = Rrqp
-# environment
-VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -40,6 +37,8 @@ WINDIR = C:\Windows
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
 # environment
+VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
+# environment
 ONEDRIVE = C:\Users\Admin\OneDrive
 # environment
 GITHUB_TOKEN = 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
@@ -52,15 +51,11 @@ FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 TMP = C:\Users\Admin\AppData\Local\Temp
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
 PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-3ed7c25c-d871-4900-b1da-da56becbbc22-sock
-# environment
-VSCODE_CWD = C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code
+VSCODE_CWD = C:\Windows\System32
 # environment
 PATH = C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files (x86)\Streamlink\bin;C:\msys64\mingw64\bin;C:\Program Files\VideoLAN\VLC;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\mpv.install\tools;C:\Program Files\Go\bin;C:\FPC\3.2.2\bin\i386-Win32;C:\Program Files\Git\cmd;C:\Users\Admin\scoop\shims;C:\Users\Admin\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Admin\AppData\Local\Programs\Python\Python310\;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Admin\AppData\Local\GitHubDesktop\bin;C:\Users\Admin\AppData\Roaming\npm;C:\Program Files\Git\bin;C:\Users\Admin\.dotnet\tools;C:\Users\Admin\go\bin;C:\ngrok;C:\Users\Admin\AppData\Roaming\cabal\bin;C:\tools\ghc-9.2.3\bin;
 # environment
@@ -78,8 +73,6 @@ ALLUSERSPROFILE = C:\ProgramData
 # environment
 GOPATH = C:\Users\Admin\go
 # environment
-VSCODE_LOG_STACK = false
-# environment
 NUMBER_OF_PROCESSORS = 24
 # environment
 ELECTRON_RUN_AS_NODE = 1
@@ -88,9 +81,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_30420_JWFPMTEPDVQRXQTH
-# environment
-VSCODE_PIPE_LOGGING = true
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_20840_NDQTNGOQQRYKUWJZ
 # environment
 COMPUTERNAME = YETI
 # environment
@@ -108,7 +99,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 CHOCOLATEYTOOLSLOCATION = C:\tools
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\Admin\AppData\Roaming\Code\CachedData\30d9c6cd9483b2cc586687151bcbcd635f373630
+VSCODE_CODE_CACHE_PATH = C:\Users\Admin\AppData\Roaming\Code\CachedData\92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
@@ -154,7 +145,7 @@ PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 # environment
 OS = Windows_NT
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\1fa9692ca970862365dc969f915639a2-1.68.1-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\1fa9692ca970862365dc969f915639a2-1.69.0-main-sock
 # environment
 HOMEPATH = \Users\Admin
 # environment
@@ -208,11 +199,11 @@ PROCESSOR_LEVEL = 23
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 30420
+VSCODE_PID = 20840
 # environment
 USERDOMAIN_ROAMINGPROFILE = YETI
 # variable set hash-table stats:
-# Load=100/1024=10%, Rehash=0, Collisions=11/118=9%
+# Load=96/1024=9%, Rehash=0, Collisions=11/114=10%
 
 # Pattern-specific Variable Values
 
@@ -226,7 +217,7 @@ USERDOMAIN_ROAMINGPROFILE = YETI
 # \Users\Admin\AppData\Roaming\cabal\bin;C: could not be stat'd.
 # \Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C: could not be stat'd.
 # \Program Files\nodejs\;C: could not be stat'd.
-# . (key c:/Users/Admin/Documents/manga, mtime 1656443914): 26 files, no impossibilities.
+# . (key c:/Users/Admin/Documents/manga, mtime 1656769555): 26 files, no impossibilities.
 # \Windows;C: could not be stat'd.
 # \Users\Admin\AppData\Local\Programs\Python\Python310\;C: could not be stat'd.
 # \Users\Admin\AppData\Roaming\npm;C: could not be stat'd.
@@ -284,7 +275,7 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-28 21:30:42
+#  Last modified 2022-07-02 15:45:55
 #  File has been updated.
 #  Successfully updated.
 
@@ -320,7 +311,7 @@ dev:
 
 # strcache hash-table stats:
 # Load=68/8192=1%, Rehash=0, Collisions=2/72=3%
-# Finished Make data base on Sat Jul 02 10:11:18 2022
+# Finished Make data base on Sun Jul 10 11:13:33 2022
 
  
 make.exe: *** No rule to make target `all'.  Stop.

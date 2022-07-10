@@ -1,32 +1,26 @@
 import * as express from "express";
-import getBookmarks from "../../../actions/getBookmarks";
-import { getRecentlyRead } from "../../../actions/readProgress";
+import { createLayout } from "../../../layout/layout";
 import { Request } from "../../../types";
 
 export default async function userLibrary(req: Request, res: express.Response) {
   if (!req.user) return void res.status(401).send({ state: "NOT_LOGGED_IN" });
 
   try {
-    const [recentlyRead, bookmarks] = await Promise.all([
-      getRecentlyRead(req.user!, 32),
-      getBookmarks(req.user._id, 0, 20),
-    ]);
-
     return void res.send({
-      layout: [
-        recentlyRead.length && {
-          type: "carousel",
-          header: "Continue reading",
+      layout: createLayout([
+        {
+          type: "CAROUSEL",
+          title: "Continue reading",
           key: "continue-reading",
-          items: recentlyRead,
+          fetch: `/layouts/common/continue-reading`,
         },
-        recentlyRead.length && {
-          type: "carousel",
-          header: "Bookmarks",
+        {
+          type: "CAROUSEL",
+          title: "Bookmarks",
           key: "bookmarks",
-          items: bookmarks,
+          fetch: `/layouts/common/bookmarks`,
         },
-      ].filter(v => v),
+      ]),
     });
   } catch (e) {
     console.error(e);

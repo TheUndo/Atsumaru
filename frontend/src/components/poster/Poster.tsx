@@ -110,9 +110,7 @@ export default function Poster(props: Props) {
               onClick={e => {
                 e.stopPropagation();
                 navigate(
-                  `/manga/${resolveVendorSlug(manga.vendor) || "s1"}/${
-                    manga.slug
-                  }`,
+                  `/manga/${resolveVendorSlug(manga.vendor)}/${manga.slug}`,
                   {
                     state: {
                       backgroundLocation: location,

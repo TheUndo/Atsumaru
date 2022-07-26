@@ -30,7 +30,7 @@ export default defineConfig({
         name: "Atsumaru - Manga Reader v1.2.4",
         short_name: "Atsumaru",
         description:
-          "Atsumaru - The open source manga/Manhwa/manhua/webtoon reader for IOS, Android, Windows, Mac OS, Linux and the web",
+          "Atsumaru - The open source manga/manhwa/manhua/webtoon reader for IOS, Android, Windows, Mac OS, Linux and the web",
         icons: [
           {
             src: "/icon-192x192.png",

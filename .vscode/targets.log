@@ -6,7 +6,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 10 11:13:33 2022
+# Make data base, printed on Tue Jul 26 20:37:21 2022
 
 # Variables
 
@@ -57,7 +57,7 @@ PROGRAMDATA = C:\ProgramData
 # environment
 VSCODE_CWD = C:\Windows\System32
 # environment
-PATH = C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files (x86)\Streamlink\bin;C:\msys64\mingw64\bin;C:\Program Files\VideoLAN\VLC;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\mpv.install\tools;C:\Program Files\Go\bin;C:\FPC\3.2.2\bin\i386-Win32;C:\Program Files\Git\cmd;C:\Users\Admin\scoop\shims;C:\Users\Admin\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Admin\AppData\Local\Programs\Python\Python310\;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Admin\AppData\Local\GitHubDesktop\bin;C:\Users\Admin\AppData\Roaming\npm;C:\Program Files\Git\bin;C:\Users\Admin\.dotnet\tools;C:\Users\Admin\go\bin;C:\ngrok;C:\Users\Admin\AppData\Roaming\cabal\bin;C:\tools\ghc-9.2.3\bin;
+PATH = C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files (x86)\Streamlink\bin;C:\msys64\mingw64\bin;C:\Program Files\VideoLAN\VLC;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\mpv.install\tools;C:\Program Files\Go\bin;C:\FPC\3.2.2\bin\i386-Win32;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\Users\Admin\scoop\shims;C:\Users\Admin\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Admin\AppData\Local\Programs\Python\Python310\;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Admin\AppData\Local\GitHubDesktop\bin;C:\Users\Admin\AppData\Roaming\npm;C:\Program Files\Git\bin;C:\Users\Admin\.dotnet\tools;C:\Users\Admin\go\bin;C:\ngrok;C:\Users\Admin\AppData\Roaming\cabal\bin;C:\tools\ghc-9.2.3\bin;
 # environment
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # environment
@@ -81,7 +81,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_20840_NDQTNGOQQRYKUWJZ
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_29308_GMDJOEJUQTGNXQXF
 # environment
 COMPUTERNAME = YETI
 # environment
@@ -99,7 +99,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 CHOCOLATEYTOOLSLOCATION = C:\tools
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\Admin\AppData\Roaming\Code\CachedData\92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9
+VSCODE_CODE_CACHE_PATH = C:\Users\Admin\AppData\Roaming\Code\CachedData\3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
@@ -145,7 +145,7 @@ PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 # environment
 OS = Windows_NT
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\1fa9692ca970862365dc969f915639a2-1.69.0-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\1fa9692ca970862365dc969f915639a2-1.69.2-main-sock
 # environment
 HOMEPATH = \Users\Admin
 # environment
@@ -188,6 +188,8 @@ SYSTEMDRIVE = C:
 SESSIONNAME = Console
 # environment
 PROCESSOR_REVISION = 7100
+# environment
+VBOX_HWVIRTEX_IGNORE_SVM_IN_USE = 1
 # default
 .RECIPEPREFIX := 
 # environment
@@ -199,11 +201,11 @@ PROCESSOR_LEVEL = 23
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 20840
+VSCODE_PID = 29308
 # environment
 USERDOMAIN_ROAMINGPROFILE = YETI
 # variable set hash-table stats:
-# Load=96/1024=9%, Rehash=0, Collisions=11/114=10%
+# Load=97/1024=9%, Rehash=0, Collisions=11/115=10%
 
 # Pattern-specific Variable Values
 
@@ -211,18 +213,22 @@ USERDOMAIN_ROAMINGPROFILE = YETI
 
 # Directories
 
+# \Program Files (x86)\NVIDIA Corporation\PhysX\Common;C: could not be stat'd.
 # \Program Files\Git\cmd;C: could not be stat'd.
 # \Program Files (x86)\Razer Chroma SDK\bin;C: could not be stat'd.
 # \Program Files\Razer\ChromaBroadcast\bin;C: could not be stat'd.
 # \Users\Admin\AppData\Roaming\cabal\bin;C: could not be stat'd.
 # \Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C: could not be stat'd.
 # \Program Files\nodejs\;C: could not be stat'd.
-# . (key c:/Users/Admin/Documents/manga, mtime 1656769555): 26 files, no impossibilities.
+# . (key c:/Users/Admin/Documents/manga, mtime 1657444631): 26 files, no impossibilities.
 # \Windows;C: could not be stat'd.
 # \Users\Admin\AppData\Local\Programs\Python\Python310\;C: could not be stat'd.
 # \Users\Admin\AppData\Roaming\npm;C: could not be stat'd.
 # \ProgramData\chocolatey\bin;C: could not be stat'd.
-# \Program Files\Docker\Docker\resources\bin;C: could not be stat'd.
+# \Program Files\Docker\Docker\resources\bin 
+make.exe: *** No rule to make target `all'.  Stop.
+
+;C: could not be stat'd.
 # \Program Files\Go\bin;C: could not be stat'd.
 # C: could not be stat'd.
 # \Users\Admin\AppData\Local\Microsoft\WindowsApps;C: could not be stat'd.
@@ -246,12 +252,13 @@ USERDOMAIN_ROAMINGPROFILE = YETI
 # \ProgramData\Oracle\Java\javapath;C: could not be stat'd.
 # \Program Files\Git\bin;C: could not be stat'd.
 # \Program Files\VideoLAN\VLC;C: could not be stat'd.
+# \Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C: could not be stat'd.
 # \tools\ghc-9.2.3\bin;: could not be stat'd.
 # \Windows\System32\WindowsPowerShell\v1.0\;C: could not be stat'd.
 # \Program Files (x86)\Common Files\Oracle\Java\javapath;C: could not be stat'd.
 # \Users\Admin\go\bin;C: could not be stat'd.
 
-# 26 files, no impossibilities in 39 directories.
+# 26 files, no impossibilities in 41 directories.
 
 # Implicit Rules
 
@@ -275,7 +282,7 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-02 15:45:55
+#  Last modified 2022-07-10 11:17:11
 #  File has been updated.
 #  Successfully updated.
 
@@ -285,7 +292,7 @@ dev:
 #  File has not been updated.
 #  recipe to execute (from `Makefile', line 2):
 	node ./scripts/atsuDev.js
-	docker-compose up -d
+	docker compose up -d
 	node ./scripts/openBrowser.js
 	cd frontend && \
 	npm run dev
@@ -304,15 +311,13 @@ dev:
 
 # No general (`VPATH' variable) search path.
 
-# # of strings in strcache: 0 / lookups = 72 / hits = 72
+# # of strings in strcache: 0 / lookups = 74 / hits = 74
 # # of strcache buffers: 1 (* 8176 B/buffer = 8176 B)
-# strcache used: total = 0 (1594) / max = 0 / min = 8176 / avg = 0
-# strcache free: total = 0 (6582) / max = 0 / min = 8176 / avg = 0
+# strcache used: total = 0 (1700) / max = 0 / min = 8176 / avg = 0
+# strcache free: total = 0 (6476) / max = 0 / min = 8176 / avg = 0
 
 # strcache hash-table stats:
-# Load=68/8192=1%, Rehash=0, Collisions=2/72=3%
-# Finished Make data base on Sun Jul 10 11:13:33 2022
+# Load=70/8192=1%, Rehash=0, Collisions=2/74=3%
+# Finished Make data base on Tue Jul 26 20:37:21 2022
 
  
-make.exe: *** No rule to make target `all'.  Stop.
-

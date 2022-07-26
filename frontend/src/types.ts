@@ -62,7 +62,7 @@ export type Anilist = {
   data: {
     id: number;
     idMal: number | null;
-    format: "MANGA" | "MANWHA" | "MANHUA";
+    format: "MANGA" | "Manhwa" | "MANHUA";
     status: "RELEASING" | "FINISHED";
     description?: string;
     startDate: {
@@ -100,7 +100,7 @@ export type Anilist = {
       isAdult: boolean;
     }[];
     isAdult: boolean;
-    type: "MANGA" | "MANWHA" | "MANHUA";
+    type: "MANGA" | "Manhwa" | "MANHUA";
     title: {
       romaji?: string;
       english?: string;

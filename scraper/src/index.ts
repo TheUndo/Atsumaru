@@ -1,5 +1,6 @@
 import getTrendingAnilist from "./anilist.co/getTrending";
 import performSearch from "./anilist.co/searchByName";
+import imageProber from "./mangaSee123.com/imageProber";
 import {
   msFrontPageUpsert,
   pushMangaFromSlugs,
@@ -13,6 +14,8 @@ void ensureIndex()
   .then(() => ensureDocuments())
   .catch(console.error);
 //performSearch(["Koujo Denka no Katei Kyoushi"]).then(console.log);
+
+imageProber();
 
 /* trending */
 

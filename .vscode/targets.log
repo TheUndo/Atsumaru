@@ -5,8 +5,9 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Tue Jul 26 20:37:21 2022
+# Make data base, printed on Mon Nov 07 20:30:05 2022
 
 # Variables
 
@@ -34,7 +35,8 @@ CURDIR := c:/Users/Admin/Documents/manga
 SHELL := sh.exe
 # environment
 WINDIR = C:\Windows
-# environment
+# environm 
+ent
 VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
 # environment
 VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
@@ -81,7 +83,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_29308_GMDJOEJUQTGNXQXF
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_29880_OWEMXIORAHQDWZPX
 # environment
 COMPUTERNAME = YETI
 # environment
@@ -99,7 +101,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 CHOCOLATEYTOOLSLOCATION = C:\tools
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\Admin\AppData\Roaming\Code\CachedData\3b889b090b5ad5793f524b5d1d39fda662b96a2a
+VSCODE_CODE_CACHE_PATH = C:\Users\Admin\AppData\Roaming\Code\CachedData\d045a5eda657f4d7b676dedbfa7aab8207f8a075
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
@@ -145,7 +147,7 @@ PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 # environment
 OS = Windows_NT
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\1fa9692ca970862365dc969f915639a2-1.69.2-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\1fa9692ca970862365dc969f915639a2-1.72.2-main-sock
 # environment
 HOMEPATH = \Users\Admin
 # environment
@@ -177,6 +179,8 @@ MAKEFILES :=
 # automatic
 <F = $(notdir $<)
 # environment
+RLSSVCPORT = 22112
+# environment
 LC_ALL = C
 # automatic
 ^F = $(notdir $^)
@@ -201,11 +205,11 @@ PROCESSOR_LEVEL = 23
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 29308
+VSCODE_PID = 29880
 # environment
 USERDOMAIN_ROAMINGPROFILE = YETI
 # variable set hash-table stats:
-# Load=97/1024=9%, Rehash=0, Collisions=11/115=10%
+# Load=98/1024=10%, Rehash=0, Collisions=11/116=9%
 
 # Pattern-specific Variable Values
 
@@ -220,15 +224,12 @@ USERDOMAIN_ROAMINGPROFILE = YETI
 # \Users\Admin\AppData\Roaming\cabal\bin;C: could not be stat'd.
 # \Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C: could not be stat'd.
 # \Program Files\nodejs\;C: could not be stat'd.
-# . (key c:/Users/Admin/Documents/manga, mtime 1657444631): 26 files, no impossibilities.
+# . (key c:/Users/Admin/Documents/manga, mtime 1657441031): 26 files, no impossibilities.
 # \Windows;C: could not be stat'd.
 # \Users\Admin\AppData\Local\Programs\Python\Python310\;C: could not be stat'd.
 # \Users\Admin\AppData\Roaming\npm;C: could not be stat'd.
 # \ProgramData\chocolatey\bin;C: could not be stat'd.
-# \Program Files\Docker\Docker\resources\bin 
-make.exe: *** No rule to make target `all'.  Stop.
-
-;C: could not be stat'd.
+# \Program Files\Docker\Docker\resources\bin;C: could not be stat'd.
 # \Program Files\Go\bin;C: could not be stat'd.
 # C: could not be stat'd.
 # \Users\Admin\AppData\Local\Microsoft\WindowsApps;C: could not be stat'd.
@@ -282,7 +283,7 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 11:17:11
+#  Last modified 2022-07-10 10:17:11
 #  File has been updated.
 #  Successfully updated.
 
@@ -316,8 +317,11 @@ dev:
 # strcache used: total = 0 (1700) / max = 0 / min = 8176 / avg = 0
 # strcache free: total = 0 (6476) / max = 0 / min = 8176 / avg = 0
 
-# strcache hash-table stats:
+# strcache hash-table s 
+make.exe: *** No rule to make target `all'.  Stop.
+
+tats:
 # Load=70/8192=1%, Rehash=0, Collisions=2/74=3%
-# Finished Make data base on Tue Jul 26 20:37:21 2022
+# Finished Make data base on Mon Nov 07 20:30:05 2022
 
  

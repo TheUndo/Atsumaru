@@ -92,6 +92,7 @@ export async function scrapeFrontPage(): Promise<
  */
 export async function scrapeInfoPage(
   slug: string,
+  forceScrape: boolean = false,
 ): Promise<MangaSee.MangaInfo | undefined> {
   const url = msURL(`/manga/${slug}`);
 
@@ -191,7 +192,7 @@ export async function scrapeInfoPage(
         const existingChapter = search?.chapters.find(
           v => v.chapterURL === chapter.chapterURL,
         );
-        if (existingChapter) {
+        if (existingChapter && !forceScrape) {
           void acc.push(existingChapter);
           //void log("Skipping chapter scrape");
           continue;
@@ -329,46 +330,48 @@ function normalizeMangaSeeChapterName(
 
 function fixChapterName(name: string, type: string) {
   const firstLetter = type?.[0]?.toLowerCase();
-  return `${
-    /* handle weird chapter names conflicting with each other */
-    type?.toLowerCase() === "chapter"
-      ? ""
-      : /\w/.test(firstLetter)
-      ? firstLetter
-      : (() => {
-          switch (firstLetter) {
-            case "#":
-              return "no";
-            case "!":
-              return "bang";
-            case "$":
-              return "cash";
-            case "=":
-              return "equals";
-            case "-":
-              return "mi";
-            case "+":
-              return "pl";
-            case "*":
-              return "mu";
-            case "/":
-              return "di";
-            case "^":
-              return "hat";
-            case "~":
-              return "tilde";
-            case "&":
-              return "and";
-            case "@":
-              return "at";
-            case '"':
-              return "qo";
-            case "'":
-              return "sqo";
-          }
-          return "spchar";
-        })() ?? ""
-  }${name}`.replace(".", "_");
+  return (
+    `${
+      /* handle weird chapter names conflicting with each other */
+      type?.toLowerCase() === "chapter"
+        ? ""
+        : /\w/.test(firstLetter)
+        ? firstLetter
+        : (() => {
+            switch (firstLetter) {
+              case "#":
+                return "no";
+              case "!":
+                return "bang";
+              case "$":
+                return "cash";
+              case "=":
+                return "equals";
+              case "-":
+                return "mi";
+              case "+":
+                return "pl";
+              case "*":
+                return "mu";
+              case "/":
+                return "di";
+              case "^":
+                return "hat";
+              case "~":
+                return "tilde";
+              case "&":
+                return "and";
+              case "@":
+                return "at";
+              case '"':
+                return "qo";
+              case "'":
+                return "sqo";
+            }
+            return "spchar";
+          })() ?? ""
+    }${name}`.replace(".", "_")
+  );
 }
 
 /**

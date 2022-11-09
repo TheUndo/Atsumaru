@@ -14,7 +14,7 @@ export default async function imageProber() {
     const doc = (await cursor.next()) as MangaSee.MangaInfo;
 
     if (doc) {
-      for (const chapter of doc?.chapters ?? []) {
+      chapterScrape: for (const chapter of doc?.chapters ?? []) {
         if (chapter) {
           const page = chapter.pages[0];
           if (page) {
@@ -51,6 +51,7 @@ export default async function imageProber() {
                   }
                 }
                 sleep(1000);
+                break chapterScrape;
               } else {
                 //log("[PROBER]: image succeeded! :)", page.pageURLs.toString());
                 sleep(300);

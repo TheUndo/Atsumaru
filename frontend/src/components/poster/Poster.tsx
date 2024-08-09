@@ -49,11 +49,15 @@ export default function Poster(props: Props) {
       <div
         ref={ripple}
         className={classes.posterImage}>
-        <img style={{
-          position: "relative",
-          width: "100%",
-          height: "100%",
-        }} src={fail ? failImage : image} />
+        <img
+          referrerPolicy="no-referrer"
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }} src={fail ? failImage : image}
+        />
         {loading && (
           <div className={classes.loaderCont}>
             <div className={cm(classes.loader, classes.loading)}></div>

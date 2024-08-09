@@ -1,4 +1,4 @@
-FROM node:20 AS builder
+FROM node:20-bullseye AS builder
 
 ARG anilist_client_id
 ARG anilist_redirect_uri
@@ -10,6 +10,7 @@ COPY . .
 ENV VITE_ANILIST_CLIENT_ID=$anilist_client_id
 ENV VITE_ANILIST_REDIRECT_URI=$anilist_redirect_uri
 
+RUN ulimit -S 1024
 RUN npm --force i
 
 RUN npm run build

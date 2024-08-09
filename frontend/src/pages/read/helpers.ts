@@ -31,7 +31,7 @@ export async function loadPage(
   for (const src of page.pageURLs) {
     const attempt = await new Promise<string | null>(res => {
       const image = new Image();
-      image.referrerPolicy = "origin";
+      image.referrerPolicy = "no-referrer";
       image.addEventListener("load", () => res(src));
       image.addEventListener("error", () => res(null));
       image.src = src;

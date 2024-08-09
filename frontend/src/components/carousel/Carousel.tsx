@@ -110,8 +110,6 @@ export default function Carousel({ src, title }: Props) {
 
   const skeleton = useMemo(() => isLoading, [isLoading]);
 
-  console.log(data)
-
   if (!data?.items?.length && !isLoading) return <></>;
 
   if (status === "error")

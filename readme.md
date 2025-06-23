@@ -1,141 +1,16 @@
-> ## Atsumaru is currently in beta
-> We're still working on vital components for the reader, follow this repo for updates or join our [Discord server](https://discord.gg/Tj4QmEF4uV).
-***
+# Atsumaru is no longer open source
 
+I created Atsumaru back in 2022 (it's 2025 as of writing this) with the goal of creating an awesome site that the users could use and contribute to. The users came but unfortunetely nobody wanted to contribute. Most people with a few exceptions only wanted to get instructions on how to deploy a for-profit version of the site. This was upsetting to say the least but I suppose that's the way things work in this industry.
 
+And that's why I'm closing the code, it did more harm than good to have it open.
 
-# [Atsumaru - Manga Reader](https://atsu.moe/)
-### Atsumaru is an open source manga reader application for Android, IOS & the web
-### Website: [atsu.moe](https://atsu.moe/)
+## Will the Atsumaru 2.0 be open source?
 
-<img src="https://i.imgur.com/90NXyNI.png" width="500px" /> 
+After creating Atsumaru 2.0, a greatly improved and fully self hosted version I decided not to open source it. If enough people want to make actual contributions to the code then I may consider opening it again especially now that the infra is much more complex and expensive to operate (checkmate cheapskates).
 
+Unfortunetely open sourcing is unlikely. Atsumaru will continue to be ad-free and great just not open sourced.
 
+Old Atsumaru 1.0 code is on the [`dev`](https://github.com/TheUndo/Atsumaru/tree/dev) branch.
 
-## Features
-- Advanced, fully customizable reader
-- Offline mode
-- Anilist.co integration
-- Multiple sources
-- Community driven
-- Progress tracking
-
-## Contributing
-Contributions of any kind are welcomed. Feel free to make pull requests with new features, improvements or modification that would benefit the application. Opening relevant issues is also welcomed and appreciated.
-
-For support/discussion visit the [Atsumaru Discord server](https://discord.gg/Tj4QmEF4uV),
-
-## Installing for non-development
-### Prerequisites
-Install the following beforehand
-- [Git cli](https://git-scm.com/downloads)
-- [Docker (docker-compose)](https://www.docker.com/get-started)
-
-   <details>
-   <summary>Arch</summary>
-   
-   ```sh
-   sudo pacman -S docker
-   ```
-   ```sh
-   sudo pacman -S docker-compose
-   ```
-   **Note**: You need to restart your device afterwards. If you are having trouble refer to the bible.
-  </details>
-
-  <details>
-   <summary>Ubuntu</summary>
-   
-   Guide: https://docs.docker.com/engine/install/ubuntu/
-  </details>
-
-   <details>
-   <summary>Mac OS</summary>
-   
-   ```sh
-   brew install docker-compose
-   ```
-  </details>
-
-  <details>
-   <summary>Windows</summary>
-   With chocololatey:
-   
-   ```sh
-   choco install docker-compose
-   ```
-
-   *or*
-
-   With installer: https://www.docker.com/get-started/
-  </details>
-  <details>
-   <summary>Other OS</summary>
-   Google/Duck it or use this link: https://www.docker.com/get-started/
-  </details>
-
-### Steps
-Open your terminal and run the following commands
-1. Clone the repository
-   ```sh
-   git clone https://github.com/TheUndo/atsumaru.git atsumaru && cd atsumaru
-    ```
-3. Configure environment
-
-   *bash/zsh:*
-   ```sh
-   $ cp .env.prod.example .env
-   ```
-   *Windows*
-   ```sh
-   copy .env.prod.example .env
-   ```
-4. 
-   start Atsumaru (this may take a few minutes)
-   ```sh
-   docker compose up -d
-   ```
-
-When installed and running open [localhost:4000](http://localhost:4000) and view Atsumaru locally! (it may take some time to become fully operational)
-
-## Installing for development
-All major operating systems are supported GNU/Linux, Windows, Mac OS.
-### Prerequisites
-Install the following beforehand
-- [Docker (docker-compose)](https://www.docker.com/get-started)
-- [Node.js](https://nodejs.dev/)
-
-### Steps
-Run in your terminal
-1. Clone the repository
-   ```sh
-   git clone https://github.com/TheUndo/atsumaru.git atsumaru
-    ```
-2. CD into the project
-   ```sh
-   cd atsumaru
-    ```
-3. Make development build
-   ```sh
-   make dev
-   ```
-
-## Technical details
-| Role                 | Technology                                                                                                                              |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Database             | <a href="https://www.mongodb.com/" target="_blank">MongoDB</a>                                                                          |
-| Backend              | [Node.js](https://nodejs.dev/) + <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a>                               |
-| Frontend UI          | <a href="https://reactjs.org/" target="_blank">React</a> + <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a>     |
-| Frontend bundler     | <a href="https://vitejs.dev/" target="_blank">Vite</a> (<a href="https://rollupjs.org/guide/en/" target="_blank">rollup</a> internally) |
-| Router/Reverse proxy | <a href="https://nginx.org/en/" target="_blank">NGINX</a>                                                                               |
-| Cache                | <a href="https://redis.io/" target="_blank">Redis</a>                                                                                   |
-| Search engine        | <a href="https://www.meilisearch.com/" target="_blank">Meilisearch</a>                                                                  |
-| Containerization     | <a href="https://docs.docker.com/compose/" target="_blank">Docker compose</a>                                                           |
-
-### Why Docker?
-We use Docker to provide seamless support cross platform, for managing multiple micro services written in different languages and for offering great scaling options. Atsumaru uses over 8 different technologies, it's therefore very hard to install everything with the correct version, and make them behave together the same across Linux, Windows and Mac OS. Docker completely solves this issue.
-
-### Why TypeScript?
-TypeScript is a strictly typed superset of JavaScript, it allows for static type checking at compile time. TypeScript helps greatly in eliminating needless type errors which often occur with vanilla JavaScript. This is very useful for large projects like Atsumaru and ensures your code can be understood by others and their IDEs.
-
-If you want to contribute but you do not know TypeScript, this is likely not an issue. Since TypeScript is incredibly powerful it will infer most types and provide helpful error messages to guide you, as mentioned before, TypeScript is a superset of JavaScript, it uses JavaScript syntax and compiles to JavaScript. If you need help, we're more than happy to provide support in our [Discord server](https://discord.gg/Tj4QmEF4uV).
+Best,
+Undo

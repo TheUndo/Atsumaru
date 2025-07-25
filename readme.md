@@ -12,7 +12,7 @@ Discord: https://discord.gg/Tj4QmEF4uV
 - Granualar and reliable progress tracking (never lose track again)
 - Notifications for new chapters
 - Advanced prefetching for optimal reading experience
-- Over 10,000 series ranging from most poplular to obscure, we got 'em all
+- Over 9,000 series ranging from most poplular to very obscure
 
 ## Need help?
 
@@ -20,7 +20,7 @@ I'm happy assist you in any matter, either open an issue here or join the Discor
 
 ## Support/business inquiries
 
-Send en email to `undo.senpai@yahoo.com` or message me on Discord
+Send an email to `undo.senpai@yahoo.com` or message me on Discord
 
 ## Atsumaru is no longer open source
 

@@ -16,7 +16,7 @@ Discord: https://discord.gg/Tj4QmEF4uV
 
 ## Need help?
 
-I'm happy assist you in any matter, either open an issue here or join the Discord server.
+I'm happy assist you in any matter, please join the Discord server.
 
 ## Support/business inquiries
 

@@ -1,6 +1,6 @@
 # Atsumaru
 
-Fast, ad-free, fully self hosted Manga, Manwha and Manhua reader for the web and mobile (PWA)
+Fast, ad-free, fully self hosted Manga, Manhwa and Manhua reader for the web and mobile (PWA)
 
 Website: https://atsu.moe
 
